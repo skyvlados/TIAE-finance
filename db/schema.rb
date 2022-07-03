@@ -10,22 +10,22 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[7.0].define(version: 2022_07_01_090631) do
+ActiveRecord::Schema[7.0].define(version: 2022_07_03_105601) do
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
 
   create_table "categories", force: :cascade do |t|
-    t.text "name"
+    t.text "name", null: false
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
   end
 
   create_table "operations", force: :cascade do |t|
-    t.integer "type"
-    t.bigint "category_id"
-    t.datetime "date", precision: nil
-    t.decimal "amount"
-    t.integer "currency"
+    t.integer "categories_type", null: false
+    t.bigint "category_id", null: false
+    t.datetime "date", precision: nil, null: false
+    t.decimal "amount", null: false
+    t.integer "currency", null: false
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
     t.index ["category_id"], name: "index_operations_on_category_id"
