@@ -1,9 +1,9 @@
 <h1>Create form</h1>
 <%= form_with model: @operation do |form| %>
   <div>
-    <%= form.label :categories_type %><br>
-    <%= form.text_field :categories_type %>
-    <% @operation.errors.full_messages_for(:categories_type).each do |message| %>
+    <%= form.label :direction %><br>
+    <%= form.select :direction, [["income", "income"],["expenditure", "expenditure"]], selected: 2 %>
+    <% @operation.errors.full_messages_for(:direction).each do |message| %>
         <div><%= message %></div>
     <% end %>
   </div>
@@ -28,16 +28,14 @@
         <div><%= message %></div>
     <% end %>
   </div>
-  <label>Currency</label>
-  <br><select name="currency" id="currency">
-    <option value="" selected disabled hidden></option>
-    <option value="1">RUB</option>
-    <option value="2">USD</option>
-    <option value="3">EUR</option>
+  <div>
+    <%= form.label :currency %><br>
+    <%= form.select :currency, [["RUB", "RUB"],["USD", "USD"],["EUR", "EUR"]], selected: 1 %>
     <% @operation.errors.full_messages_for(:currency).each do |message| %>
-      <div><%= message %></div>
-      <% end %>
-</select>
+        <div><%= message %></div>
+    <% end %>
+  </div>
+
 
   <div>
     <%= form.submit 'Save' %>

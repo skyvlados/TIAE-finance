@@ -1,2 +1,10 @@
-<h1>Operations#show</h1>
-<p>Find me in app/views/operations/show.html.erb</p>
+<h1>Show form</h1>
+
+<div>Direction: <%= @operation.direction %></div>
+<div>Category: <%= @operation.category.name %></div>
+<div>Amount: <%= @operation.amount %></div>
+<div>Currency: <%= @operation.currency %></div>
+<div>Date: <%= @operation.date.strftime("%d-%m-%Y") %></div>
+
+<%= link_to 'Back to list', operations_path %>
+<%= link_to 'Edit', edit_operation_path(@operation) %>

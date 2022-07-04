@@ -21,7 +21,7 @@ ActiveRecord::Schema[7.0].define(version: 2022_07_03_105601) do
   end
 
   create_table "operations", force: :cascade do |t|
-    t.integer "categories_type", null: false
+    t.integer "direction", null: false
     t.bigint "category_id", null: false
     t.datetime "date", precision: nil, null: false
     t.decimal "amount", null: false

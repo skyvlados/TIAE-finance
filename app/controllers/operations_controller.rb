@@ -1,6 +1,6 @@
 class OperationsController < ApplicationController
   def index
-    @operations=Operation.all
+    @operations=Operation.includes(:category).all
   end
 
   def show
@@ -21,19 +21,24 @@ class OperationsController < ApplicationController
   end
 
   def edit
+    @operation=Operation.find(params[:id])
   end
 
   def update
+    @operation=Operation.find(params[:id])
+    if @operation.update(operation_params)
+      redirect_to action: "index"
+    else
+      render :new, status: :unprocessable_entity
+    end
   end
 
   def destroy
+    Operation.find(params[:id]).destroy
+    redirect_to operations_path, status: 303
   end
 
   def operation_params
-    params.require(:operation).permit(:categories_type)
-    params.require(:operation).permit(:category_id)
-    params.require(:operation).permit(:date)
-    params.require(:operation).permit(:amount)
-    params.require(:operation).permit(:currency)
+    params.require(:operation).permit(:direction, :category_id, :date, :amount, :currency)
   end
 end

@@ -4,23 +4,23 @@
       <tr>
         <th>id</th>
         <th>category</th>
-        <th>category_type</th>
+        <th>direction</th>
         <th>amount</th>
         <th>currency</th>
         <th>data</th>
         <th>actions</th>
       </tr>
-<% @operations.each do |operation|  %>
+<% @operations.each do |operation| %>
       <tr>
         <td><%= operation.id %></td>
-        <td><%= operation.category_id %></td>
-        <td><%= operation.categories_type %></td>
+        <td><%= operation.category.name %></td>
+        <td><%= operation.direction %></td>
         <td><%= operation.amount %></td>
         <td><%= operation.currency %></td>
         <td><%= operation.date %></td>
         <td>
           <%= link_to 'Show', operation %>
-          <%= link_to 'Edit', [:edit, category] %>
+          <%= link_to 'Edit', [:edit, operation] %>
           <%= link_to "Destroy", operation, data: {
                               turbo_method: :delete,
                               turbo_confirm: "Are you sure?"
@@ -29,3 +29,4 @@
       </tr>
 <% end %>
 </table>
+<%= link_to 'Back to Home Page', root_path %>
