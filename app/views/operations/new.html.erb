@@ -2,7 +2,7 @@
 <%= form_with model: @operation do |form| %>
   <div>
     <%= form.label :direction %><br>
-    <%= form.select :direction, [["income", "income"],["expenditure", "expenditure"]], selected: 2 %>
+    <%= form.select :direction, Operation.directions.keys.map { |key| [key, key] } %>
     <% @operation.errors.full_messages_for(:direction).each do |message| %>
         <div><%= message %></div>
     <% end %>
@@ -30,7 +30,7 @@
   </div>
   <div>
     <%= form.label :currency %><br>
-    <%= form.select :currency, [["RUB", "RUB"],["USD", "USD"],["EUR", "EUR"]], selected: 1 %>
+    <%= form.select :currency, Operation.currencies.keys.map { |key| [key, key] } %>
     <% @operation.errors.full_messages_for(:currency).each do |message| %>
         <div><%= message %></div>
     <% end %>

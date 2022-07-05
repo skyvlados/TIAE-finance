@@ -2,8 +2,7 @@
 
 <div>Direction: <%= @operation.direction %></div>
 <div>Category: <%= @operation.category.name %></div>
-<div>Amount: <%= @operation.amount %></div>
-<div>Currency: <%= @operation.currency %></div>
+<div>Amount: <%= human_amount(@operation.amount, @operation.currency) %></div>
 <div>Date: <%= @operation.date.strftime("%d-%m-%Y") %></div>
 
 <%= link_to 'Back to list', operations_path %>
