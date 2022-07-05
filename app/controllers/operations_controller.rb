@@ -14,7 +14,8 @@ class OperationsController < ApplicationController
   def create
     @operation=Operation.new(operation_params)
     if @operation.save
-        redirect_to action: "index"
+      flash[:notice]="Operation '#{@operation.id}' successfully saved!"
+      redirect_to action: "index"
     else
         render :new, status: :unprocessable_entity
     end
@@ -27,6 +28,7 @@ class OperationsController < ApplicationController
   def update
     @operation=Operation.find(params[:id])
     if @operation.update(operation_params)
+      flash[:notice]="Operation successfully updated!"
       redirect_to action: "index"
     else
       render :new, status: :unprocessable_entity
@@ -35,6 +37,7 @@ class OperationsController < ApplicationController
 
   def destroy
     Operation.find(params[:id]).destroy
+    flash[:notice]="Operation successfully deleted!"
     redirect_to operations_path, status: 303
   end
 

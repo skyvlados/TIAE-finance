@@ -1,4 +1,9 @@
 <h1>Operations list</h1>
+<% flash.each do |type, msg| %>
+  <div>
+    <span><%= msg %></span>
+  </div>
+<% end %>
 <%= link_to 'Create', new_operation_path %>
 <table border>
       <tr>
