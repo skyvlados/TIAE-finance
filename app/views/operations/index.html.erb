@@ -1,0 +1,32 @@
+<h1>Operations list</h1>
+<%= link_to 'Create', new_operation_path %>
+<table border>
+      <tr>
+        <th>id</th>
+        <th>category</th>
+        <th>direction</th>
+        <th>amount</th>
+        <th>currency</th>
+        <th>data</th>
+        <th>actions</th>
+      </tr>
+<% @operations.each do |operation| %>
+      <tr>
+        <td><%= operation.id %></td>
+        <td><%= operation.category.name %></td>
+        <td><%= operation.direction %></td>
+        <td><%= operation.amount %></td>
+        <td><%= operation.currency %></td>
+        <td><%= operation.date %></td>
+        <td>
+          <%= link_to 'Show', operation %>
+          <%= link_to 'Edit', [:edit, operation] %>
+          <%= link_to "Destroy", operation, data: {
+                              turbo_method: :delete,
+                              turbo_confirm: "Are you sure?"
+                            } %>
+        </td>
+      </tr>
+<% end %>
+</table>
+<%= link_to 'Back to Home Page', root_path %>

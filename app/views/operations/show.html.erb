@@ -1,0 +1,9 @@
+<h1>Show form</h1>
+
+<div>Direction: <%= @operation.direction %></div>
+<div>Category: <%= @operation.category.name %></div>
+<div>Amount: <%= human_amount(@operation.amount, @operation.currency) %></div>
+<div>Date: <%= @operation.date.strftime("%d-%m-%Y") %></div>
+
+<%= link_to 'Back to list', operations_path %>
+<%= link_to 'Edit', edit_operation_path(@operation) %>
