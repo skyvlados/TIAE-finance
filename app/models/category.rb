@@ -1,5 +1,5 @@
 class Category < ApplicationRecord
     has_many :operations
     
-    validates :name, presence: true
+    validates :name, presence: true, uniqueness: true
 end
