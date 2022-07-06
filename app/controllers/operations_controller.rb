@@ -36,8 +36,9 @@ class OperationsController < ApplicationController
   end
 
   def destroy
-    Operation.find(params[:id]).destroy
-    flash[:notice]="Operation successfully deleted!"
+    operation=Operation.find(params[:id])
+    operation.destroy
+    flash[:notice]="Operation '#{operation.id}' successfully deleted!"
     redirect_to operations_path, status: 303
   end
 

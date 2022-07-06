@@ -27,8 +27,9 @@ class CategoriesController < ApplicationController
 
   def update
     @category=Category.find(params[:id])
+    oldName=@category.name
     if @category.update(category_params)
-      flash[:notice]="Category successfully updated!"
+      flash[:notice]="Category '#{oldName}' successfully updated to '#{@category.name}'!"
       redirect_to action: "index"
     else
       render :new, status: :unprocessable_entity
@@ -36,8 +37,9 @@ class CategoriesController < ApplicationController
   end
 
   def destroy
-    Category.find(params[:id]).destroy
-    flash[:notice]="Category successfully deleted!"
+    category=Category.find(params[:id])
+    category.destroy
+    flash[:notice]="Category '#{category.name}' successfully deleted!"
     redirect_to categories_path, status: 303
   end
 
