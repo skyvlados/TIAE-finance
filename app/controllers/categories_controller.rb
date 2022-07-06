@@ -29,9 +29,10 @@ class CategoriesController < ApplicationController
 
   def update
     @category = Category.find(params[:id])
-    oldName = @category.name
+    old_name = @category.name
+
     if @category.update(category_params)
-      flash[:notice] = "Category '#{oldName}' successfully updated to '#{@category.name}'!"
+      flash[:notice] = "Category '#{old_name}' successfully updated to '#{@category.name}'!"
       redirect_to action: 'index'
     else
       render :new, status: :unprocessable_entity
