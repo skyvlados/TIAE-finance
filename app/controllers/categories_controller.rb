@@ -14,6 +14,7 @@ class CategoriesController < ApplicationController
   def create
     @category=Category.new(category_params)
       if @category.save
+        flash[:notice]="Category '#{@category.name}' successfully saved!"
         redirect_to action: "index"
       else
         render :new, status: :unprocessable_entity
@@ -26,7 +27,9 @@ class CategoriesController < ApplicationController
 
   def update
     @category=Category.find(params[:id])
+    oldName=@category.name
     if @category.update(category_params)
+      flash[:notice]="Category '#{oldName}' successfully updated to '#{@category.name}'!"
       redirect_to action: "index"
     else
       render :new, status: :unprocessable_entity
@@ -34,7 +37,12 @@ class CategoriesController < ApplicationController
   end
 
   def destroy
-    Category.find(params[:id]).destroy
+    @category=Category.find(params[:id])
+    @category.destroy
+    flash[:notice]="Category '#{@category.name}' successfully deleted!"
+    redirect_to categories_path, status: 303
+  rescue ActiveRecord::InvalidForeignKey
+    flash[:error]="Category '#{@category.name}' cannot be deleted due to being associated with an operation!"
     redirect_to categories_path, status: 303
   end
 
