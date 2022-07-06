@@ -37,9 +37,12 @@ class CategoriesController < ApplicationController
   end
 
   def destroy
-    category=Category.find(params[:id])
-    category.destroy
-    flash[:notice]="Category '#{category.name}' successfully deleted!"
+    @category=Category.find(params[:id])
+    @category.destroy
+    flash[:notice]="Category '#{@category.name}' successfully deleted!"
+    redirect_to categories_path, status: 303
+  rescue ActiveRecord::InvalidForeignKey
+    flash[:notice]="Category '#{@category.name}' cannot be deleted due to being associated with an operation!"
     redirect_to categories_path, status: 303
   end
 
