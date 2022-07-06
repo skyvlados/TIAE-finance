@@ -1,0 +1,13 @@
+<%= form_with model: @category do |form| %>
+  <div>
+    <%= form.label :name %><br>
+    <%= form.text_field :name %>
+    <% @category.errors.full_messages_for(:name).each do |message| %>
+        <div><%= message %></div>
+    <% end %>
+  </div>
+  <div>
+    <%= form.submit button_text %>
+    <%= link_to '<button>Back to list</button>'.html_safe, categories_path %>
+  </div>
+<% end %>
