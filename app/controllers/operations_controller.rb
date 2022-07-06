@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 class OperationsController < ApplicationController
   def index
     @operations = Operation.includes(:category).all
