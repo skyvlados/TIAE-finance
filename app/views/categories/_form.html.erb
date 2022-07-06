@@ -7,7 +7,7 @@
     <% end %>
   </div>
   <div>
-    <%= form.submit %>
+    <%= form.submit local_assigns[:button_name] || "Submit" %>
     <%= link_to '<button>Back to list</button>'.html_safe, categories_path %>
   </div>
 <% end %>
