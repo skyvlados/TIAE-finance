@@ -19,6 +19,7 @@ class OperationsController < ApplicationController
       flash[:notice] = "Operation '#{@operation.id}' successfully saved!"
       redirect_to action: 'index'
     else
+      @operation.errors
       render :new, status: :unprocessable_entity
     end
   end
