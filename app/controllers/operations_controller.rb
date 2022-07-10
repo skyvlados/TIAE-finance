@@ -2,7 +2,7 @@
 
 class OperationsController < ApplicationController
   def index
-    @operations = Operation.includes(:category).all
+    @operations = Operation.includes(:category).all.order('id ASC').paginate(:page => params[:page], :per_page => 10)
   end
 
   def show
