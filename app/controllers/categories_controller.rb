@@ -2,9 +2,8 @@
 
 class CategoriesController < ApplicationController
   def index
-    @pagy, @categories = Category.all.order('id ASC')
-                            .then { |scope| pagy(scope, items: params[:items]) }
-    # @pagy, @categories = pagy(Category.all.order('id ASC'))
+    @pagy, @categories = Category.all.order(id: :asc)
+                                 .then { |scope| pagy(scope, items: params[:items]) }
   end
 
   def show
