@@ -27,7 +27,7 @@ class OperationFlowTest < ActionDispatch::IntegrationTest
   test 'can edit an caregory' do
     category = Category.create(name: 'test')
     category2 = Category.create(name: 'test2')
-    operation = Operation.create(category:, direction: 'income', date: '2020-01-01', amount: 200,
+    operation = Operation.create(category: category, direction: 'income', date: '2020-01-01', amount: 200,
                                  currency: 'RUB')
 
     put "/operations/#{operation.id}",
@@ -41,7 +41,7 @@ class OperationFlowTest < ActionDispatch::IntegrationTest
 
   test 'can delete an caregory' do
     category = Category.create(name: 'test')
-    operation = Operation.create(category:, direction: 'income', date: '2020-01-01', amount: 200,
+    operation = Operation.create(category: category, direction: 'income', date: '2020-01-01', amount: 200,
                                  currency: 'RUB')
 
     delete "/operations/#{operation.id}"
