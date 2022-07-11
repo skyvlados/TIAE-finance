@@ -30,7 +30,7 @@ class CategoryTest < ActiveSupport::TestCase
   test 'should not delete category' do
     category = Category.new(name: 'Test name')
     category.save
-    operation = Operation.create(direction: 1, category:, date: '2021-01-01', amount: 100, currency: 1)
+    Operation.create(direction: 1, category:, date: '2021-01-01', amount: 100, currency: 1)
     assert_raises(ActiveRecord::InvalidForeignKey) { category.destroy }
   end
 

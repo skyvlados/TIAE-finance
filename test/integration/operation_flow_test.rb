@@ -11,15 +11,15 @@ class OperationFlowTest < ActionDispatch::IntegrationTest
 
   test 'can create an operation' do
     category = Category.create(name: 'test')
-    
+
     post '/operations',
-                     params: { operation: { category_id: category.id, direction: 'income', date: '2020-01-01', amount: 100,
-                                            currency: 'RUB' } }
+         params: { operation: { category_id: category.id, direction: 'income', date: '2020-01-01', amount: 100,
+                                currency: 'RUB' } }
     assert_response :redirect
     follow_redirect!
     assert_response :success
 
-    operation=Operation.find_by(amount: 100)
+    operation = Operation.find_by(amount: 100)
 
     assert_select 'span', "Operation '#{operation.id}' successfully saved!"
   end
@@ -27,7 +27,7 @@ class OperationFlowTest < ActionDispatch::IntegrationTest
   test 'can edit an caregory' do
     category = Category.create(name: 'test')
     category2 = Category.create(name: 'test2')
-    operation = Operation.create(category: category, direction: 'income', date: '2020-01-01', amount: 200,
+    operation = Operation.create(category:, direction: 'income', date: '2020-01-01', amount: 200,
                                  currency: 'RUB')
 
     put "/operations/#{operation.id}",
@@ -41,7 +41,7 @@ class OperationFlowTest < ActionDispatch::IntegrationTest
 
   test 'can delete an caregory' do
     category = Category.create(name: 'test')
-    operation = Operation.create(category: category, direction: 'income', date: '2020-01-01', amount: 200,
+    operation = Operation.create(category:, direction: 'income', date: '2020-01-01', amount: 200,
                                  currency: 'RUB')
 
     delete "/operations/#{operation.id}"
