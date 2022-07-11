@@ -132,6 +132,8 @@ GEM
     nio4r (2.5.8)
     nokogiri (1.13.6-x86_64-darwin)
       racc (~> 1.4)
+    pagy (5.10.1)
+      activesupport
     parallel (1.22.1)
     parser (3.1.2.0)
       ast (~> 2.4.1)
@@ -227,7 +229,6 @@ GEM
     websocket-driver (0.7.5)
       websocket-extensions (>= 0.1.0)
     websocket-extensions (0.1.5)
-    will_paginate (3.3.1)
     xpath (3.2.0)
       nokogiri (~> 1.8)
     zeitwerk (2.6.0)
@@ -241,6 +242,7 @@ DEPENDENCIES
   debug
   importmap-rails
   jbuilder
+  pagy (~> 5.10)
   pg (~> 1.1)
   puma (~> 5.0)
   rails (~> 7.0.3)
@@ -253,7 +255,6 @@ DEPENDENCIES
   tzinfo-data
   web-console
   webdrivers
-  will_paginate (~> 3.0)
 
 RUBY VERSION
    ruby 3.1.2p20

@@ -2,7 +2,9 @@
 
 class CategoriesController < ApplicationController
   def index
-    @categories = Category.all.order('id ASC').paginate(page: params[:page], per_page: 10)
+    @pagy, @categories = Category.all.order('id ASC')
+                            .then { |scope| pagy(scope, items: params[:items]) }
+    # @pagy, @categories = pagy(Category.all.order('id ASC'))
   end
 
   def show

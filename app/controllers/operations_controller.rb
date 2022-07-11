@@ -2,7 +2,8 @@
 
 class OperationsController < ApplicationController
   def index
-    @operations = Operation.includes(:category).all.order('id ASC').paginate(page: params[:page], per_page: 10)
+    @pagy, @operations = Operation.all.order('id ASC')
+                            .then { |scope| pagy(scope, items: params[:items]) }
   end
 
   def show
