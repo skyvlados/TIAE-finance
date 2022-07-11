@@ -2,7 +2,8 @@
 
 class OperationsController < ApplicationController
   def index
-    @operations = Operation.includes(:category).all
+    @pagy, @operations = Operation.all.order(id: :asc)
+                                  .then { |scope| pagy(scope, items: params[:items]) }
   end
 
   def show
