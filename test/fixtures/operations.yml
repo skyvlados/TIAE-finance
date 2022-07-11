@@ -1,13 +1,13 @@
 # Read about fixtures at https://api.rubyonrails.org/classes/ActiveRecord/FixtureSet.html
 
-one:
-  type: 1
-  date: 2022-07-01 12:06:31
-  amount: 9.99
-  currency: 1
+# one:
+#   type: 1
+#   date: 2022-07-01 12:06:31
+#   amount: 9.99
+#   currency: 1
 
-two:
-  type: 1
-  date: 2022-07-01 12:06:31
-  amount: 9.99
-  currency: 1
+# two:
+#   type: 1
+#   date: 2022-07-01 12:06:31
+#   amount: 9.99
+#   currency: 1
