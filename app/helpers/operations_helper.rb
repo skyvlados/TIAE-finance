@@ -8,7 +8,7 @@ module OperationsHelper
   }.freeze
 
   def human_amount(amount, currency)
-    "#{amount} #{CURRENCIES.fetch(currency.downcase.to_sym, currency)}"
+    "#{amount} #{CURRENCIES.fetch(currency.downcase.to_sym, currency.upcase)}"
   end
 
   def button_text
