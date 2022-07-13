@@ -4,6 +4,11 @@ class OperationsController < ApplicationController
   def index
     @pagy, @operations = Operation.all.order(id: :asc)
                                   .then { |scope| pagy(scope, items: params[:items]) }
+
+    @totals_operations = Operation
+                         .order(direction: :asc)
+                         .group(:currency, :direction)
+                         .pluck('sum(amount)', 'currency', 'direction')
   end
 
   def show
