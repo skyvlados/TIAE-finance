@@ -1,6 +1,6 @@
 <h1>Operations list</h1>
 <%= link_to 'Create', new_operation_path %>
-<%= form_with url: "/operations", method: "get"  do |form| %>
+<%= form_with url: operations_path, method: "get"  do |form| %>
     <%= form.label "Currencies:" %>
     <%= form.select :currency, Operation.currencies.keys.map { |key| [key, key] }, selected: params[:currency], include_blank: "All currencies" %>
     <%= form.submit("Filter") %>

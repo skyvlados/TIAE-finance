@@ -2,7 +2,7 @@
 
 class OperationsController < ApplicationController
   def index
-    @pagy, @operations = Operation.where(currency: params[:currency]).order(id: :asc)
+    @pagy, @operations = Operation.where(index_params).order(id: :asc)
                                   .then { |scope| pagy(scope, items: params[:items]) }
   end
 
@@ -45,7 +45,13 @@ class OperationsController < ApplicationController
     redirect_to operations_path, status: 303
   end
 
+  private
+
   def operation_params
     params.require(:operation).permit(:direction, :category_id, :date, :amount, :currency)
+  end
+
+  def index_params
+    params.permit(:currency)
   end
 end
