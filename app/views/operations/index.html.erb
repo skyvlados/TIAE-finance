@@ -3,6 +3,10 @@
 <%= form_with url: operations_path, method: "get"  do |form| %>
     <%= form.label "Currencies:" %>
     <%= form.select :currency, Operation.currencies.keys.map { |key| [key, key] }, selected: params[:currency], include_blank: "All currencies" %>
+    <%= form.label "Directions:" %>
+    <%= form.select :direction, Operation.directions.keys.map { |key| [key, key] }, selected: params[:direction], include_blank: "All directions" %>
+    <%= form.label "Categories:" %>
+    <%= form.select :category, Category.all.map { |object| [object.name, object.id] }, selected: params[:category], include_blank: "All categories" %>
     <%= form.submit("Filter") %>
 <% end %>
 <table border>

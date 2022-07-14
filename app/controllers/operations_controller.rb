@@ -1,9 +1,14 @@
 # frozen_string_literal: true
 
 class OperationsController < ApplicationController
-  def index
-    @pagy, @operations = Operation.where(index_params).order(id: :asc)
-                                  .then { |scope| pagy(scope, items: params[:items]) }
+  def index # rubocop:disable Metrics/AbcSize
+    scope = Operation.order(id: :asc)
+
+    scope = scope.where(currency: params[:currency])   if params[:currency].present?
+    scope = scope.where(category: params[:category])   if params[:category].present?
+    scope = scope.where(direction: params[:direction]) if params[:direction].present?
+
+    @pagy, @operations = pagy(scope, items: params[:items])
   end
 
   def show
@@ -52,6 +57,6 @@ class OperationsController < ApplicationController
   end
 
   def index_params
-    params.permit(:currency)
+    params.permit(:currency, :direction, :category_id)
   end
 end
