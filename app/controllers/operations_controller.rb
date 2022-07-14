@@ -1,12 +1,13 @@
 # frozen_string_literal: true
 
 class OperationsController < ApplicationController
-  def index # rubocop:disable Metrics/AbcSize
+  def index
     scope = Operation.order(id: :asc)
 
-    scope = scope.where(currency: params[:currency])   if params[:currency].present?
-    scope = scope.where(category: params[:category])   if params[:category].present?
-    scope = scope.where(direction: params[:direction]) if params[:direction].present?
+    filters = %w[currency category direction]
+    filters.each do |filter|
+      scope = scope.where("#{filter}": params[:"#{filter}"]) if params[filter.to_s].present?
+    end
 
     @pagy, @operations = pagy(scope, items: params[:items])
   end
