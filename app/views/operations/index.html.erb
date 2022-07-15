@@ -7,6 +7,9 @@
     <%= form.select :direction, Operation.directions.keys.map { |key| [key, key] }, selected: params[:direction], include_blank: "All directions" %>
     <%= form.label "Categories:" %>
     <%= form.select :category, Category.all.map { |object| [object.name, object.id] }, selected: params[:category], include_blank: "All categories" %>
+    <%= form.label "Page size:" %>
+    <% page_size=%i[5 10 25 50]%>
+    <%= form.select :page_size, page_size.each { |key| [key, key] }, selected: params[:page_size], prompt: 'Select page size'%>
     <%= form.submit("Filter") %>
 <% end %>
 <table border>

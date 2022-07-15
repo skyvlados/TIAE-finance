@@ -1,16 +1,15 @@
 # frozen_string_literal: true
 
 class OperationsController < ApplicationController
+  FILTERS = %i[currency category direction].freeze
+  SCOPE = Operation.order(id: :asc)
   def index
-    scope = Operation.order(id: :asc)
-
-    filters = %i[currency category direction]
-
-    filters.each do |filter|
-      scope = scope.where(filter => params[filter]) if params[filter].present?
+    scope = nil
+    FILTERS.each do |filter|
+      scope = SCOPE.where(filter => params[filter]) if params[filter].present?
     end
 
-    @pagy, @operations = pagy(scope, items: params[:items])
+    @pagy, @operations = pagy(scope || SCOPE, items: params[:page_size])
   end
 
   def show
