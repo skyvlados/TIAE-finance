@@ -2,14 +2,13 @@
 
 class OperationsController < ApplicationController
   FILTERS = %i[currency category direction].freeze
-  SCOPE = Operation.order(id: :asc)
   def index
-    scope = nil
+    scope = Operation.order(id: :asc)
     FILTERS.each do |filter|
-      scope = SCOPE.where(filter => params[filter]) if params[filter].present?
+      scope = scope.where(filter => params[filter]) if params[filter].present?
     end
 
-    @pagy, @operations = pagy(scope || SCOPE, items: params[:page_size])
+    @pagy, @operations = pagy(scope, items: params[:page_size])
   end
 
   def show
