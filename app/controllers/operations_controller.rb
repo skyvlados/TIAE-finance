@@ -4,9 +4,10 @@ class OperationsController < ApplicationController
   def index
     scope = Operation.order(id: :asc)
 
-    filters = %w[currency category direction]
+    filters = %i[currency category direction]
+
     filters.each do |filter|
-      scope = scope.where("#{filter}": params[:"#{filter}"]) if params[filter.to_s].present?
+      scope = scope.where(filter => params[filter]) if params[filter].present?
     end
 
     @pagy, @operations = pagy(scope, items: params[:items])
