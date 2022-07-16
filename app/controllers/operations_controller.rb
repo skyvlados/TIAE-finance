@@ -1,10 +1,15 @@
 # frozen_string_literal: true
 
 class OperationsController < ApplicationController
+  FILTERS = %i[currency category direction].freeze
   def index
-    @pagy, @operations = Operation.all.order(id: :asc)
-                                  .then { |scope| pagy(scope, items: params[:items]) }
+    scope = Operation.order(id: :asc)
+    FILTERS.each do |filter|
+      scope = scope.where(filter => params[filter]) if params[filter].present?
+    end
 
+    @pagy, @operations = pagy(scope, items: params[:page_size])
+    
     @totals_operations = Operation
                          .order(direction: :asc)
                          .group(:currency, :direction)
@@ -50,7 +55,13 @@ class OperationsController < ApplicationController
     redirect_to operations_path, status: 303
   end
 
+  private
+
   def operation_params
     params.require(:operation).permit(:direction, :category_id, :date, :amount, :currency)
+  end
+
+  def index_params
+    params.permit(:currency, :direction, :category_id)
   end
 end
