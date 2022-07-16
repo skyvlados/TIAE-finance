@@ -1,5 +1,17 @@
 <h1>Operations list</h1>
 <%= link_to 'Create', new_operation_path %>
+<%= form_with url: operations_path, method: "get"  do |form| %>
+    <%= form.label "Currencies:" %>
+    <%= form.select :currency, Operation.currencies.keys.map { |key| [key, key] }, selected: params[:currency], include_blank: "All currencies" %>
+    <%= form.label "Directions:" %>
+    <%= form.select :direction, Operation.directions.keys.map { |key| [key, key] }, selected: params[:direction], include_blank: "All directions" %>
+    <%= form.label "Categories:" %>
+    <%= form.select :category, Category.all.map { |object| [object.name, object.id] }, selected: params[:category], include_blank: "All categories" %>
+    <%= form.label "Page size:" %>
+    <% page_size=%i[5 10 25 50]%>
+    <%= form.select :page_size, page_size.each { |key| [key, key] }, selected: params[:page_size], prompt: 'Select page size'%>
+    <%= form.submit("Filter") %>
+<% end %>
 <table border>
       <tr>
         <th>id</th>
