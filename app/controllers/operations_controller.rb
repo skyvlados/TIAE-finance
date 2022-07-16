@@ -1,12 +1,11 @@
 # frozen_string_literal: true
 
 class OperationsController < ApplicationController
-  
   def index
     service = OperationQuery.new(params)
     scope = service.call
     @pagy, @operations = pagy(scope, items: params[:page_size])
-    
+
     @totals_operations = Operation
                          .order(direction: :asc)
                          .group(:currency, :direction)
