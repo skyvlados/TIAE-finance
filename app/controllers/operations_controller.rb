@@ -9,6 +9,11 @@ class OperationsController < ApplicationController
     end
 
     @pagy, @operations = pagy(scope, items: params[:page_size])
+    
+    @totals_operations = Operation
+                         .order(direction: :asc)
+                         .group(:currency, :direction)
+                         .pluck('sum(amount)', 'currency', 'direction')
   end
 
   def show

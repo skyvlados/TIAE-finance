@@ -42,4 +42,19 @@
 <% end %>
 </table>
 <%= render partial: "shared/pagination" %>
+<h2>Totals</h2>
+<table border>
+      <tr>
+        <th>amount</th>
+        <th>currency</th>
+        <th>direction</th>
+      </tr>
+<% @totals_operations.each do |operation| %>
+  <tr>
+    <% operation.each do |value| %>
+      <td><%= value %></td>
+    <% end %>
+  </tr>
+<% end %>
+</table>
 <%= link_to 'Back to Home Page', root_path %>
