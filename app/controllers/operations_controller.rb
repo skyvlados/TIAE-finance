@@ -1,17 +1,11 @@
 # frozen_string_literal: true
 
 class OperationsController < ApplicationController
-  FILTERS = %i[currency category direction].freeze
   def index
-    scope = Operation.order(id: :asc)
-    FILTERS.each do |filter|
-      scope = scope.where(filter => params[filter]) if params[filter].present?
-    end
-    scope = scope.where("date>= ?", params[:date_start]) if params[:date_start].present?
-    scope = scope.where("date<= ?", params[:date_finish]) if params[:date_finish].present?
-
+    service = OperationQuery.new(params)
+    scope = service.call
     @pagy, @operations = pagy(scope, items: params[:page_size])
-    
+
     @totals_operations = Operation
                          .order(direction: :asc)
                          .group(:currency, :direction)
