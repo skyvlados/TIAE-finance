@@ -8,7 +8,7 @@ class OperationQuery
     @params = params
   end
 
-  def call
+  def call # rubocop:disable Metrics/AbcSize
     scope = Operation.order(date: :desc)
     FILTERS.each do |filter|
       scope = scope.where(filter => params[filter]) if params[filter].present?

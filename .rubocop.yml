@@ -8,3 +8,6 @@ Style/Documentation:
 
 Style/HashSyntax:
   EnforcedShorthandSyntax: never
+
+Layout/LineLength:
+  Max: 200
