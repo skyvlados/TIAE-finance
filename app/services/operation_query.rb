@@ -9,25 +9,28 @@ class OperationQuery
 
   def call
     Operation
-      .then{|scope| filter_by_currency scope}
-      .then{|scope| filter_by_direction scope}
-      .then{|scope| filter_by_category scope}
-      .then{|scope| filter_by_dates scope}
+      .then { |scope| filter_by_currency scope }
+      .then { |scope| filter_by_direction scope }
+      .then { |scope| filter_by_category scope }
+      .then { |scope| filter_by_dates scope }
   end
 
   def filter_by_currency(scope)
     return scope if params[:currency].blank?
-    scope = scope.where(currency: params[:currency])
+
+    scope.where(currency: params[:currency])
   end
 
   def filter_by_direction(scope)
     return scope if params[:direction].blank?
-    scope = scope.where(direction: params[:direction])
+
+    scope.where(direction: params[:direction])
   end
 
   def filter_by_category(scope)
     return scope if params[:category].blank?
-    scope = scope.where(category: params[:category])
+
+    scope.where(category: params[:category])
   end
 
   def filter_by_dates(scope)
