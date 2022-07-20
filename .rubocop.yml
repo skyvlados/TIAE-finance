@@ -8,3 +8,12 @@ Style/Documentation:
 
 Style/HashSyntax:
   EnforcedShorthandSyntax: never
+
+Layout/LineLength:
+  Max: 120
+
+Metrics/MethodLength:
+  Enabled: false
+
+Metrics/AbcSize:
+  Enabled: false
