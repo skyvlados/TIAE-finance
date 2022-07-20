@@ -4,9 +4,9 @@ class OperationsController < ApplicationController
   def index
     service = OperationQuery.new(params)
     scope = service.call
-    @pagy, @operations = pagy(scope, items: params[:page_size])
+    @pagy, @operations = pagy(scope.order(date: :desc), items: params[:page_size])
 
-    @totals_operations = Operation
+    @totals_operations = scope
                          .order(direction: :asc)
                          .group(:currency, :direction)
                          .pluck('sum(amount)', 'currency', 'direction')
