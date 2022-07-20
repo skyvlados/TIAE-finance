@@ -1,7 +1,6 @@
 # frozen_string_literal: true
 
 class OperationQuery
-  FILTERS = %i[currency category direction].freeze
   attr_reader :params
 
   def initialize(params)
@@ -9,10 +8,31 @@ class OperationQuery
   end
 
   def call
-    scope = Operation
-    FILTERS.each do |filter|
-      scope = scope.where(filter => params[filter]) if params[filter].present?
-    end
+    Operation
+      .then{|scope| filter_by_currency scope}
+      .then{|scope| filter_by_direction scope}
+      .then{|scope| filter_by_category scope}
+      .then{|scope| filter_by_dates scope}
+  end
+
+  def filter_by_currency(scope)
+    return scope if params[:currency].blank?
+    scope = scope.where(currency: params[:currency])
+  end
+
+  def filter_by_direction(scope)
+    return scope if params[:direction].blank?
+    scope = scope.where(direction: params[:direction])
+  end
+
+  def filter_by_category(scope)
+    return scope if params[:category].blank?
+    scope = scope.where(category: params[:category])
+  end
+
+  def filter_by_dates(scope)
+    scope = scope.where('date>= ?', params[:date_start]) if params[:date_start].present?
+    scope = scope.where('date<= ?', params[:date_finish]) if params[:date_finish].present?
     scope
   end
 end

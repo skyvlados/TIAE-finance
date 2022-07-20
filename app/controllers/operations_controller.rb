@@ -4,8 +4,6 @@ class OperationsController < ApplicationController
   def index
     service = OperationQuery.new(params)
     scope = service.call
-    date_scope = OperationQueryDate.new(params[:date_start], params[:date_finish], scope)
-    scope = date_scope.call
     @pagy, @operations = pagy(scope.order(date: :desc), items: params[:page_size])
 
     @totals_operations = scope

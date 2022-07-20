@@ -10,7 +10,7 @@ Style/HashSyntax:
   EnforcedShorthandSyntax: never
 
 Layout/LineLength:
-  Max: 200
+  Max: 120
 
 Metrics/MethodLength:
   Enabled: false
