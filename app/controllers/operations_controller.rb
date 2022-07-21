@@ -12,6 +12,16 @@ class OperationsController < ApplicationController
                          .pluck('sum(amount)', 'currency', 'direction')
   end
 
+  def download
+    @operations = Operation.all.order(id: :desc) #пока не получается передать сюда уже отсортированный список
+    respond_to do |format|
+      format.xlsx do
+        render xlsx: 'operations', template: 'operations/download'
+      end
+      # format.html { render :index }
+    end
+  end
+
   def show
     @operation = Operation.find(params[:id])
   end
