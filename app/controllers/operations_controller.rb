@@ -13,7 +13,7 @@ class OperationsController < ApplicationController
   end
 
   def download
-    @operations = Operation.all.order(id: :desc) #пока не получается передать сюда уже отсортированный список
+    @operations = Operation.all.order(id: :desc) # пока не получается передать сюда уже отсортированный список
     respond_to do |format|
       format.xlsx do
         render xlsx: 'operations', template: 'operations/download'
