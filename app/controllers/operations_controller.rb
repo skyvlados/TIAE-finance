@@ -10,15 +10,19 @@ class OperationsController < ApplicationController
                          .order(direction: :asc)
                          .group(:currency, :direction)
                          .pluck('sum(amount)', 'currency', 'direction')
-  end
-
-  def download
-    @operations = Operation.all.order(id: :desc) # пока не получается передать сюда уже отсортированный список
+    @params = index_params
+    @totals_operations.each do |total_operation|
+      p [total_operation[0], total_operation[1], total_operation[2]]
+    end                    
     respond_to do |format|
-      format.xlsx do
-        render xlsx: 'operations', template: 'operations/download'
-      end
-      # format.html { render :index }
+      format.xlsx
+      format.html
+      # format.xlsx do
+      #   render xlsx: 'operations', template: 'operations/download'
+      # end
+      # format.html do
+      #   render :index
+      # end
     end
   end
 
@@ -68,6 +72,6 @@ class OperationsController < ApplicationController
   end
 
   def index_params
-    params.permit(:currency, :direction, :category_id)
+    params.permit(:currency, :direction, :category, :date_start, :date_finish)
   end
 end
