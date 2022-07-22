@@ -17,12 +17,6 @@ class OperationsController < ApplicationController
     respond_to do |format|
       format.xlsx
       format.html
-      # format.xlsx do
-      #   render xlsx: 'operations', template: 'operations/download'
-      # end
-      # format.html do
-      #   render :index
-      # end
     end
   end
 
