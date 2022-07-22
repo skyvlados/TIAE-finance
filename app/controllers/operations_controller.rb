@@ -13,7 +13,7 @@ class OperationsController < ApplicationController
     @params = index_params
     @totals_operations.each do |total_operation|
       p [total_operation[0], total_operation[1], total_operation[2]]
-    end                    
+    end
     respond_to do |format|
       format.xlsx
       format.html
