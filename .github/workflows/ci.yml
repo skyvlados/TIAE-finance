@@ -3,6 +3,11 @@ on: [push, pull_request]
 jobs:
   test:
     runs-on: macos-latest
+
+    env:
+      POSTGRES_USER: postgres
+      POSTGRES_PASSWORD: postgres
+      POSTGRES_DB: postgres
     
     steps:
       - uses: actions/checkout@v1
@@ -13,10 +18,12 @@ jobs:
       - name: Install dependencies
         run: bundle install
       - name: Setup test database
+        image: postgres:latest
+        ports:
+        - 5432:5432
         env:
-          RAILS_ENV: test
-          PGHOST: localhost
-          PGUSER: vladislav
+          POSTGRES_USER: ${{ env.POSTGRES_USER }}
+          POSTGRES_PASSWORD: ${{ env.POSTGRES_PASSWORD }}
         run: |
           bundle exec rails db:create db:schema:load --trace
       - name: Run tests
