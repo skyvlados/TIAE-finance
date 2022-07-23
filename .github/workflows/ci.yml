@@ -5,12 +5,12 @@ jobs:
     runs-on: ubuntu-latest
 
     steps:
-    - uses: actions/checkout@v1
-    - name: Setup Ruby
-		uses: ruby/setup-ruby@359bebbc29cbe6c87da6bc9ea3bc930432750108
-			with:
-	  		ruby-versions: '3.1.2'
-		- name: Install dependencies
-			run: bundle install
-		- name: Run unit tests
-			run: bundle exec rale test/units
+      - uses: actions/checkout@v1
+      - name: Set up Ruby
+        uses: ruby/setup-ruby@359bebbc29cbe6c87da6bc9ea3bc930432750108
+        with:
+          ruby-version: '3.1.2'
+      - name: Install dependencies
+        run: bundle install
+      - name: Run tests
+        run: bundle exec rake
