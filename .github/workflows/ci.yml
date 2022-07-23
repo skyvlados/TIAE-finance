@@ -7,7 +7,7 @@ jobs:
     env:
       POSTGRES_USER: postgres
       POSTGRES_PASSWORD: postgres
-      POSTGRES_DB: postgres
+      POSTGRES_DB: tableIncomAndExpeditureWithERB_test
     
     steps:
       - uses: actions/checkout@v1
