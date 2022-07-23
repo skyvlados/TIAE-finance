@@ -1,6 +1,19 @@
 name: Ruby CI
 on: [push, pull_request]
 jobs:
+  linter:
+    runs-on: macos-latest
+    steps:
+      - uses: actions/checkout@v1
+      - name: Set up Ruby
+        uses: ruby/setup-ruby@v1
+        with:
+          ruby-version: '3.1.2'
+      - name: Install dependencies
+        run: bundle install
+      - name: Run linter
+        run: rubocop
+    
   test:
     runs-on: macos-latest
 
