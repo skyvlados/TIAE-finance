@@ -2,7 +2,7 @@ name: Ruby CI
 on: [push, pull_request]
 jobs:
   test:
-    runs-on: ubuntu-latest
+  	runs-on: ubuntu-latest
 
     steps:
       - uses: actions/checkout@v1
@@ -14,6 +14,7 @@ jobs:
         run: bundle install
       - name: Run tests
         run: bundle exec test test/units
+				
 	linters:
 		runs-on: ubuntu-latest
 
