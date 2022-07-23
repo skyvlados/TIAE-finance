@@ -6,7 +6,7 @@ jobs:
 
     env:
       global:
-       PGPORT=5433
+       PGPORT=5432
       POSTGRES_USER: postgres
       POSTGRES_PASSWORD: postgres
       POSTGRES_DB: postgres
