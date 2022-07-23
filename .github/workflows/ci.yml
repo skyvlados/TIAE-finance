@@ -2,7 +2,7 @@ name: Ruby CI
 on: [push, pull_request]
 jobs:
 	test:
-  		runs-on: macos-latest
+  		runs-on: ubunty-latest
 	steps:
 		uses: actions/checkout@v1
 		uses: ruby/setup-ruby@v1
