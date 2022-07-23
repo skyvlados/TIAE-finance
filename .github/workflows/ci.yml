@@ -22,6 +22,6 @@ jobs:
           POSTGRES_USER: ${{ env.POSTGRES_USER }}
           POSTGRES_PASSWORD: ${{ env.POSTGRES_PASSWORD }}
         run: |
-          bundle exec rails db:create db:schema:load --trace RAILS_ENV=test
+          bundle exec rails db:reset db:setup db:migrate RAILS_ENV=test
       - name: Run tests
         run: rails test test/units
