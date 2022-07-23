@@ -1,30 +1,27 @@
 name: Ruby CI
 on: [push, pull_request]
 jobs:
-  test:
-  	runs-on: macos-latest
-
-    steps:
-      - uses: actions/checkout@v1
-      - name: Set up Ruby
-        uses: ruby/setup-ruby@v1
-        with:
-          ruby-version: '3.1.2'
-      - name: Install dependencies
-        run: bundle install
-      - name: Run tests
-        run: bundle exec test test/units
-
+	test:
+  		runs-on: macos-latest
+	steps:
+		uses: actions/checkout@v1
+		uses2: ruby/setup-ruby@v1
+			with:
+				ruby-version: '3.1.2'
+		name2: Install dependencies
+		run2: bundle install
+		name3: Run tests
+		run3: bundle exec test test/units
+		
 	linters:
 		runs-on: macos-latest
 
-		steps:
-			- uses: actions/checkout@v1
-      - name: Set up Ruby
-        uses: ruby/setup-ruby@v1
-        with:
-          ruby-version: '3.1.2'
-      - name: Install dependencies
-        run: bundle install
-      - name: Run linter
-        run: rubocop
+	steps2:
+		uses3: actions/checkout@v1
+		uses4: ruby/setup-ruby@v1
+			with2:
+          			ruby-version: '3.1.2'
+		name4: Install dependencies
+		run4: bundle install
+		name5: Run tests
+		run5: bundle exec test test/units
