@@ -16,8 +16,8 @@ jobs:
         env:
           RAILS_ENV: test
           PGHOST: localhost
-          PGUSER: tableIncomAndExpeditureWithERB_test
+          PGUSER: vladislav
         run: |
-          bin/rails db:setup
+          bundle exec rails db:create db:schema:load --trace
       - name: Run tests
         run: rails test test/units
