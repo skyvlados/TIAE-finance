@@ -2,25 +2,12 @@ name: Ruby CI
 on: [push, pull_request]
 jobs:
 	test:
-  		runs-on: ubunty-latest
+  		runs-on: masoc-latest
 	steps:
 		uses: actions/checkout@v1
 		uses: ruby/setup-ruby@v1
 			with:
 				ruby-version: '3.1.2'
-		name: Install dependencies
-		run: bundle install
-		name: Run tests
-		run: bundle exec test test/units
-		
-	linters:
-		runs-on: macos-latest
-
-	steps2:
-		uses: actions/checkout@v1
-		uses: ruby/setup-ruby@v1
-			with2:
-          			ruby-version: '3.1.2'
 		name: Install dependencies
 		run: bundle install
 		name: Run tests
