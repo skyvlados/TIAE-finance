@@ -12,7 +12,7 @@ class OperationsControllerTest < ActionDispatch::IntegrationTest
     Category.create(name: 'Test name')
     test_category_id = Category.find_by(name: 'Test name').id
     Operation.create(category_id: test_category_id, direction: 'income', date: '2020-01-01', amount: 100,
-      currency: 'RUB')
+                     currency: 'RUB')
     test_operation_id = Operation.find_by(amount: 100).id
     get operation_path(test_operation_id)
     assert_response :success
@@ -26,8 +26,8 @@ class OperationsControllerTest < ActionDispatch::IntegrationTest
   test 'should get create' do
     Category.create(name: 'Test name')
     test_category_id = Category.find_by(name: 'Test name').id
-    post operations_path, params: {operation: { category_id: test_category_id, direction: 'income', date: '2020-01-01', amount: 100,
-      currency: 'RUB' }}
+    post operations_path, params: { operation: { category_id: test_category_id, direction: 'income', date: '2020-01-01',
+                                                 amount: 100, currency: 'RUB' } }
     assert_response :found
   end
 
@@ -35,7 +35,7 @@ class OperationsControllerTest < ActionDispatch::IntegrationTest
     Category.create(name: 'Test name')
     test_category_id = Category.find_by(name: 'Test name').id
     Operation.create(category_id: test_category_id, direction: 'income', date: '2020-01-01', amount: 100,
-      currency: 'RUB')
+                     currency: 'RUB')
     test_operation_id = Operation.find_by(amount: 100).id
     get edit_operation_path(test_operation_id)
     assert_response :success
@@ -45,10 +45,10 @@ class OperationsControllerTest < ActionDispatch::IntegrationTest
     Category.create(name: 'Test name')
     test_category_id = Category.find_by(name: 'Test name').id
     Operation.create(category_id: test_category_id, direction: 'income', date: '2020-01-01', amount: 100,
-      currency: 'RUB')
+                     currency: 'RUB')
     test_operation_id = Operation.find_by(amount: 100).id
-    patch operation_path(test_operation_id), params: { operation: { category_id: test_category_id, direction: 'income', date: '2020-01-01', amount: 200,
-      currency: 'USD' } }
+    patch operation_path(test_operation_id), params: { operation: { category_id: test_category_id, direction: 'income',
+                                                                    date: '2020-01-01', amount: 200, currency: 'USD' } }
     assert_response :found
   end
 
@@ -56,7 +56,7 @@ class OperationsControllerTest < ActionDispatch::IntegrationTest
     Category.create(name: 'Test name')
     test_category_id = Category.find_by(name: 'Test name').id
     Operation.create(category_id: test_category_id, direction: 'income', date: '2020-01-01', amount: 100,
-      currency: 'RUB')
+                     currency: 'RUB')
     test_operation_id = Operation.find_by(amount: 100).id
     delete operation_path(test_operation_id)
     assert_response :see_other
