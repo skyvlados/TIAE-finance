@@ -19,8 +19,9 @@ jobs:
         ports:
           - 5432:5432
         env:
-          POSTGRES_DB: tableIncomAndExpeditureWithERB_test
+          POSTGRES_USER: runner
           POSTGRES_HOST_AUTH_METHOD: trust
+          POSTGRES_DB: tableIncomAndExpeditureWithERB_test
     env:
       RAILS_ENV: test
     steps:
