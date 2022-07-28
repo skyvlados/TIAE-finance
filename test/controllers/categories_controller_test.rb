@@ -9,8 +9,7 @@ class CategoriesControllerTest < ActionDispatch::IntegrationTest
   end
 
   test 'should get show' do
-    Category.create(name: 'Test name')
-    test_id = Category.find_by(name: 'Test name').id
+    test_id = categories(:food).id
     get category_path(test_id)
     assert_response :success
   end
@@ -26,22 +25,19 @@ class CategoriesControllerTest < ActionDispatch::IntegrationTest
   end
 
   test 'should get edit' do
-    Category.create(name: 'Test name')
-    test_id = Category.find_by(name: 'Test name').id
+    test_id = categories(:salary).id
     get edit_category_path(test_id)
     assert_response :success
   end
 
   test 'should get update' do
-    Category.create(name: 'Test name')
-    test_id = Category.find_by(name: 'Test name').id
-    patch category_path(test_id), params: { category: { name: 'test' } }
+    test_id = categories(:goods).id
+    patch category_path(test_id), params: { category: { name: 'relax2' } }
     assert_response :found
   end
 
   test 'should get destroy' do
-    Category.create(name: 'Test name')
-    test_id = Category.find_by(name: 'Test name').id
+    test_id = categories(:relax).id
     delete category_path(test_id)
     assert_response :see_other
   end
