@@ -14,6 +14,12 @@ class CategoriesControllerTest < ActionDispatch::IntegrationTest
     assert_response :success
   end
 
+  test 'shouldnt show, bad id' do
+    assert_raises(ActiveRecord::RecordNotFound) do
+      get category_path(999)
+    end
+  end
+
   test 'should get new' do
     get new_category_path
     assert_response :success
@@ -22,6 +28,12 @@ class CategoriesControllerTest < ActionDispatch::IntegrationTest
   test 'should get create' do
     post categories_path, params: { category: { name: 'test' } }
     assert_response :found
+  end
+
+  test 'shouldnt get create, empty params' do
+    assert_raises(ActionController::ParameterMissing) do
+      post categories_path, params: {}
+    end
   end
 
   test 'should get edit' do

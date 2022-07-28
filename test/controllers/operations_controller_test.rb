@@ -14,6 +14,12 @@ class OperationsControllerTest < ActionDispatch::IntegrationTest
     assert_response :success
   end
 
+  test 'shouldnt show, bad id' do
+    assert_raises(ActiveRecord::RecordNotFound) do
+      get operation_path(999)
+    end
+  end
+
   test 'should get new' do
     get new_operation_path
     assert_response :success
@@ -24,6 +30,19 @@ class OperationsControllerTest < ActionDispatch::IntegrationTest
     post operations_path, params: { operation: { category_id: test_category_id, direction: 'income', date: '2020-01-01',
                                                  amount: 100, currency: 'RUB' } }
     assert_response :found
+  end
+
+  test 'shouldnt get create, empty params' do
+    assert_raises(ActionController::ParameterMissing) do
+      post operations_path, params: {}
+    end
+  end
+
+  test 'shouldnt get create, bad params' do
+    assert_raises(ArgumentError) do
+      post operations_path, params: { operation: { category_id: 'test', direction: 'bad', date: 'not_date',
+                                                   amount: 'must be number', currency: 'CURRENCY' } }
+    end
   end
 
   test 'should get edit' do
