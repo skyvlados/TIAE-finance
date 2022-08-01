@@ -1,7 +1,8 @@
 AllCops:
   NewCops: enable
   Exclude:
-    - 'bin/*'
+    - bin/*
+    - vendor/bundle/**/*
 
 Style/Documentation:
   Enabled: false
