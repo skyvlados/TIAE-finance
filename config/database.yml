@@ -85,4 +85,4 @@ test:
 #
 production:
   <<: *default
-  url: <%= ENV.fetch('DATABASE_URL') %>
+  url: <%= ENV.fetch('DATABASE_URL', 'tableIncomAndExpeditureWithERB_production') %>
