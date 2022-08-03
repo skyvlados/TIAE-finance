@@ -85,6 +85,4 @@ test:
 #
 production:
   <<: *default
-  database: tableIncomAndExpeditureWithERB_production
-  username: tableIncomAndExpeditureWithERB
-  password: <%= ENV["TABLEINCOMANDEXPEDITUREWITHERB_DATABASE_PASSWORD"] %>
+  url: <%= ENV.fetch('DATABASE_URL', nil) %>
