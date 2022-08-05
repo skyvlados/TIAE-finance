@@ -32,8 +32,9 @@ class UsersController < ApplicationController
   def update
     user_params[:email].downcase!
     @user = User.find(params[:id])
+    old_name = @user.name
     if @user.update(user_params)
-      flash[:notice] = "User '#{@user.name}' successfully edited!"
+      flash[:notice] = "User '#{old_name}' successfully updated to '#{@user.name}'!"
       redirect_to root_path
     else
       render :new, status: :unprocessable_entity
@@ -43,7 +44,7 @@ class UsersController < ApplicationController
   def destroy
     @user = User.find(params[:id])
     @user.destroy
-    flash[:notice] = "Operation '#{@user.name}' successfully deleted!"
+    flash[:notice] = "User '#{@user.name}' successfully deleted!"
     redirect_to users_path, status: 303
   end
 
