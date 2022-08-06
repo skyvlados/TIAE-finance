@@ -2,8 +2,9 @@
 
 class UsersController < ApplicationController
   def index
-    users = User.all
-    @pagy, @users = pagy(users.order(id: :desc), items: params[:page_size])
+    service = UserQuery.new(params)
+    scope = service.call
+    @pagy, @users = pagy(scope.order(id: :desc), items: params[:page_size])
   end
 
   def show

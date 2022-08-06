@@ -1,6 +1,10 @@
 <h1>Users list</h1>
 <%= form_with url: users_path, method: "get"  do |form| %>
-    <%= form.label "Page size:" %>
+    <%= form.label "Name:" %>
+    <%= form.text_field :name, value: params.dig(:name) %>
+    <%= form.label "Email:" %>
+    <%= form.text_field :email, value: params.dig(:email) %>
+    <br><%= form.label "Page size:" %>
     <% page_size=%i[5 10 25 50]%>
     <%= form.select :page_size, page_size.each { |key| [key, key] }, selected: params[:page_size], prompt: 'Select page size'%>
     <%= form.submit("Filter") %>
