@@ -4,7 +4,7 @@ class UsersController < ApplicationController
   def index
     service = UserQuery.new(params)
     scope = service.call
-    @pagy, @users = pagy(scope.order(id: :desc), items: params[:page_size])
+    @pagy, @users = pagy(scope.order(id: :desc).where(is_deleted: false), items: params[:page_size])
   end
 
   def show
@@ -35,7 +35,11 @@ class UsersController < ApplicationController
     @user = User.find(params[:id])
     old_name = @user.name
     if @user.update(user_params)
-      flash[:notice] = "User '#{old_name}' successfully updated to '#{@user.name}'!"
+      flash[:notice] = if old_name == @user.name
+                         "User '#{@user.name}' successfully updated!"
+                       else
+                         "User '#{old_name}' successfully updated to '#{@user.name}'!"
+                       end
       redirect_to root_path
     else
       render :new, status: :unprocessable_entity
@@ -44,7 +48,7 @@ class UsersController < ApplicationController
 
   def destroy
     @user = User.find(params[:id])
-    @user.destroy
+    @user.update(is_deleted: true)
     flash[:notice] = "User '#{@user.name}' successfully deleted!"
     redirect_to users_path, status: 303
   end

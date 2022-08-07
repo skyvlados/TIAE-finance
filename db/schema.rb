@@ -40,6 +40,7 @@ ActiveRecord::Schema[7.0].define(version: 20_220_804_080_913) do
     t.string 'name', null: false
     t.string 'email', null: false
     t.string 'password', null: false
+    t.boolean 'is_deleted', default: false
     t.datetime 'created_at', null: false
     t.datetime 'updated_at', null: false
   end

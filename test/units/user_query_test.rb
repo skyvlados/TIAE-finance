@@ -7,10 +7,10 @@ class UserQueryTest < ActiveSupport::TestCase
   end
 
   test 'by email' do
-    assert_equal UserQuery.new(email: '1@ex').call.to_a, [users(:test1)]
+    assert_equal UserQuery.new(email: '1@EX').call.to_a, [users(:test1)]
   end
 
   test 'by name and email' do
-    assert_equal UserQuery.new(name: 'user', email: '1@ex').call.to_a, [users(:test1)]
+    assert_equal UserQuery.new(name: 'user', email: '1@Ex').call.to_a, [users(:test1)]
   end
 end

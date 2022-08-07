@@ -22,6 +22,6 @@ class UserQuery
   def filter_by_email(scope)
     return scope if params[:email].blank?
 
-    scope.where('email LIKE ?', "%#{params[:email]}%")
+    scope.where('email ILIKE ?', "%#{params[:email]}%")
   end
 end
