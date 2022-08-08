@@ -34,11 +34,13 @@ class UsersController < ApplicationController
     user_params[:email].downcase!
     @user = User.find(params[:id])
     old_name = @user.name
+    old_email = @user.email
     if @user.update(user_params)
-      flash[:notice] = if old_name == @user.name
-                         "User '#{@user.name}' successfully updated!"
-                       else
+      p params
+      flash[:notice] = if old_name != @user.name && old_email == @user.email
                          "User '#{old_name}' successfully updated to '#{@user.name}'!"
+                       else
+                         "User '#{@user.name}' successfully updated!"
                        end
       redirect_to root_path
     else

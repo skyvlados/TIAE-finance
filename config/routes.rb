@@ -2,10 +2,6 @@
 
 Rails.application.routes.draw do
   root 'welcome#index'
-  # get '/users', to: 'users#index'
-  # get '/users/:id', to: 'users#show'
-  # get '/users/new', to: 'users#new'
-  # post '/users', to: 'users#create'
   resources :users
   resources :operations
   resources :categories
