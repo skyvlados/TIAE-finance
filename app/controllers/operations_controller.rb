@@ -1,6 +1,7 @@
 # frozen_string_literal: true
 
 class OperationsController < ApplicationController
+  skip_before_action :find_user
   def index
     service = OperationQuery.new(params)
     scope = service.call

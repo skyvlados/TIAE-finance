@@ -1,15 +1,14 @@
 # frozen_string_literal: true
 
 class UsersController < ApplicationController
+  skip_before_action :find_user, only: %i[index new create]
   def index
     service = UserQuery.new(params)
     scope = service.call
     @pagy, @users = pagy(scope.order(id: :desc).where(is_deleted: false), items: params[:page_size])
   end
 
-  def show
-    @user = User.find(params[:id])
-  end
+  def show; end
 
   def new
     @user = User.new
@@ -32,7 +31,6 @@ class UsersController < ApplicationController
 
   def update
     user_params[:email].downcase!
-    @user = User.find(params[:id])
     old_name = @user.name
     old_email = @user.email
     if @user.update(user_params)
@@ -42,14 +40,13 @@ class UsersController < ApplicationController
                        else
                          "User '#{@user.name}' successfully updated!"
                        end
-      redirect_to root_path
+      redirect_to users_path
     else
       render :new, status: :unprocessable_entity
     end
   end
 
   def destroy
-    @user = User.find(params[:id])
     @user.update(is_deleted: true)
     flash[:notice] = "User '#{@user.name}' successfully deleted!"
     redirect_to users_path, status: 303

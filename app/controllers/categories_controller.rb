@@ -1,6 +1,7 @@
 # frozen_string_literal: true
 
 class CategoriesController < ApplicationController
+  skip_before_action :find_user
   def index
     @pagy, @categories = Category.all.order(id: :asc)
                                  .then { |scope| pagy(scope, items: params[:items]) }
