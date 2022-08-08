@@ -1,6 +1,8 @@
 # frozen_string_literal: true
 
 class UsersController < ApplicationController
+  before_action :find_user
+
   skip_before_action :find_user, only: %i[index new create]
   def index
     service = UserQuery.new(params)
@@ -56,5 +58,9 @@ class UsersController < ApplicationController
 
   def user_params
     params.require(:user).permit(:name, :email, :password)
+  end
+
+  def find_user
+    @user = User.find(params[:id])
   end
 end
