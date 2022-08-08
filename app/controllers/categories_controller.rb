@@ -1,14 +1,15 @@
 # frozen_string_literal: true
 
 class CategoriesController < ApplicationController
+  before_action :find_category
+
+  skip_before_action :find_category, only: %i[index new create]
   def index
     @pagy, @categories = Category.all.order(id: :asc)
                                  .then { |scope| pagy(scope, items: params[:items]) }
   end
 
-  def show
-    @category = Category.find(params[:id])
-  end
+  def show; end
 
   def new
     @category = Category.new
@@ -24,12 +25,9 @@ class CategoriesController < ApplicationController
     end
   end
 
-  def edit
-    @category = Category.find(params[:id])
-  end
+  def edit; end
 
   def update
-    @category = Category.find(params[:id])
     old_name = @category.name
 
     if @category.update(category_params)
@@ -41,7 +39,6 @@ class CategoriesController < ApplicationController
   end
 
   def destroy
-    @category = Category.find(params[:id])
     @category.destroy
     flash[:notice] = "Category '#{@category.name}' successfully deleted!"
     redirect_to categories_path, status: 303
@@ -50,7 +47,13 @@ class CategoriesController < ApplicationController
     redirect_to categories_path, status: 303
   end
 
+  private
+
   def category_params
     params.require(:category).permit(:name)
+  end
+
+  def find_category
+    @category = Category.find(params[:id])
   end
 end
