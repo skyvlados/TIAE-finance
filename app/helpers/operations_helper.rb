@@ -10,8 +10,4 @@ module OperationsHelper
   def human_amount(amount, currency)
     "#{amount} #{CURRENCIES.fetch(currency.downcase.to_sym, currency.upcase)}"
   end
-
-  def button
-    button_text
-  end
 end
