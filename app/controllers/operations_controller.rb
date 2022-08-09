@@ -1,6 +1,7 @@
 # frozen_string_literal: true
 
 class OperationsController < ApplicationController
+  before_action :find_operation, only: %i[show edit update destroy]
   def index
     service = OperationQuery.new(params)
     scope = service.call
@@ -17,9 +18,7 @@ class OperationsController < ApplicationController
     end
   end
 
-  def show
-    @operation = Operation.find(params[:id])
-  end
+  def show; end
 
   def new
     @operation = Operation.new
@@ -35,12 +34,9 @@ class OperationsController < ApplicationController
     end
   end
 
-  def edit
-    @operation = Operation.find(params[:id])
-  end
+  def edit; end
 
   def update
-    @operation = Operation.find(params[:id])
     if @operation.update(operation_params)
       flash[:notice] = 'Operation successfully updated!'
       redirect_to action: 'index'
@@ -50,9 +46,8 @@ class OperationsController < ApplicationController
   end
 
   def destroy
-    operation = Operation.find(params[:id])
-    operation.destroy
-    flash[:notice] = "Operation '#{operation.id}' successfully deleted!"
+    @operation.destroy
+    flash[:notice] = "Operation '#{@operation.id}' successfully deleted!"
     redirect_to operations_path, status: 303
   end
 
@@ -64,5 +59,9 @@ class OperationsController < ApplicationController
 
   def index_params
     params.permit(:currency, :direction, :category, :date_start, :date_finish)
+  end
+
+  def find_operation
+    @operation = Operation.find(params[:id])
   end
 end

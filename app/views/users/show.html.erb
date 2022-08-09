@@ -1,0 +1,7 @@
+<h1>Show form</h1>
+<label for="name">Name:</label>
+<input disabled name="name" value="<%= @user.name %>">
+<br><label for="email">Email:</label>
+<input disabled name="name" value="<%= @user.email %>">
+<br><%= link_to 'Edit', edit_user_path(@user) %>
+<%= link_to '<button>Back to list</button>'.html_safe, users_path %>
