@@ -1,9 +1,7 @@
 # frozen_string_literal: true
 
 class OperationsController < ApplicationController
-  before_action :find_operation
-
-  skip_before_action :find_operation, only: %i[index new create]
+  before_action :find_operation, only: %i[show edit update destroy]
   def index
     service = OperationQuery.new(params)
     scope = service.call

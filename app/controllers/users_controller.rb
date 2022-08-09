@@ -1,9 +1,7 @@
 # frozen_string_literal: true
 
 class UsersController < ApplicationController
-  before_action :find_user
-
-  skip_before_action :find_user, only: %i[index new create]
+  before_action :find_user, only: %i[show edit update destroy]
   def index
     service = UserQuery.new(params)
     scope = service.call

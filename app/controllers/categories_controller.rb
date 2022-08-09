@@ -1,9 +1,7 @@
 # frozen_string_literal: true
 
 class CategoriesController < ApplicationController
-  before_action :find_category
-
-  skip_before_action :find_category, only: %i[index new create]
+  before_action :find_category, only: %i[show edit update destroy]
   def index
     @pagy, @categories = Category.all.order(id: :asc)
                                  .then { |scope| pagy(scope, items: params[:items]) }
