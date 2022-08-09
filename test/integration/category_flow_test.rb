@@ -37,12 +37,12 @@ class CategoryFlowTest < ActionDispatch::IntegrationTest
   end
 
   test 'can delete an caregory' do
-    category = Category.create(name: 'test')
+    category = categories(:transport)
 
     delete "/categories/#{category.id}"
 
     assert_response :see_other
     follow_redirect!
-    assert_select 'span', "Category 'test' successfully deleted!"
+    assert_select 'span', "Category 'transport' successfully deleted!"
   end
 end

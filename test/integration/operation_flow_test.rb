@@ -39,10 +39,8 @@ class OperationFlowTest < ActionDispatch::IntegrationTest
     assert_select 'span', 'Operation successfully updated!'
   end
 
-  test 'can delete an caregory' do
-    category = Category.create(name: 'test')
-    operation = Operation.create(category: category, direction: 'income', date: '2020-01-01', amount: 200,
-                                 currency: 'RUB')
+  test 'can delete an operation' do
+    operation = operations(:food)
 
     delete "/operations/#{operation.id}"
 

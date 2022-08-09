@@ -1,0 +1,37 @@
+<h1>Users list</h1>
+<%= form_with url: users_path, method: "get"  do |form| %>
+    <%= form.label "Name:" %>
+    <%= form.text_field :name, value: params.dig(:name) %>
+    <%= form.label "Email:" %>
+    <%= form.text_field :email, value: params.dig(:email) %>
+    <br><%= form.label "Page size:" %>
+    <% page_size=%i[5 10 25 50]%>
+    <%= form.select :page_size, page_size.each { |key| [key, key] }, selected: params[:page_size], prompt: 'Select page size'%>
+    <%= form.submit("Filter") %>
+    
+<% end %>
+<table border>
+      <tr>
+        <th>id</th>
+        <th>name</th>
+        <th>email</th>
+        <th>actions</th>
+      </tr>
+<% @users.each do |user|  %>
+      <tr>
+        <td><%= user.id %></td>
+        <td><%= user.name %></td>
+        <td><%= user.email %></td>
+        <td>
+            <%= link_to 'Show', user %>
+            <%= link_to 'Edit', [:edit, user] %>
+            <%= link_to "Destroy", user, data: {
+                              turbo_method: :delete,
+                              turbo_confirm: "Are you sure?"
+                            } %>
+        </td>
+      </tr>
+<% end %>
+</table>
+<%= render partial: "shared/pagination" %>
+<%= link_to 'Back to Home Page', root_path %>

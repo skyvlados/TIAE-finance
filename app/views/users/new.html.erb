@@ -1,0 +1,28 @@
+<h1>Registration form</h1>
+<%= form_with model: @user do |form| %>
+<div>
+    <%= form.label :name %><br>
+    <%= form.text_field :name %>
+    <% @user.errors.full_messages_for(:name).each do |message| %>
+        <div><%= message %></div>
+    <% end %>
+</div>
+<div>
+    <%= form.label :email %><br>
+    <%= form.text_field :email %>
+    <% @user.errors.full_messages_for(:email).each do |message| %>
+        <div><%= message %></div>
+    <% end %>
+</div>
+ <div>
+    <%= form.label :password %><br>
+    <%= form.text_field :password %>
+    <% @user.errors.full_messages_for(:password).each do |message| %>
+        <div><%= message %></div>
+    <% end %>
+  </div>
+  <div>
+    <%= form.submit button_text %>
+    <%= link_to '<button>Back to list</button>'.html_safe, root_path %>
+  </div>
+<% end %>

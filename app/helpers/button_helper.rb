@@ -1,6 +1,6 @@
 # frozen_string_literal: true
 
-module CategoriesHelper
+module ButtonHelper
   def button_text
     case controller.action_name
     when 'new' then 'Save'
