@@ -76,6 +76,7 @@ GEM
     axlsx_rails (0.6.1)
       actionpack (>= 3.1)
       caxlsx (>= 3.0)
+    bcrypt (3.1.7)
     bindex (0.8.1)
     bootsnap (1.12.0)
       msgpack (~> 1.2)
@@ -255,6 +256,7 @@ PLATFORMS
 DEPENDENCIES
   axlsx
   axlsx_rails
+  bcrypt (= 3.1.7)
   bootsnap
   capybara
   debug

@@ -18,7 +18,8 @@ class UsersController < ApplicationController
     user_params[:email].downcase!
     @user = User.new(user_params)
     if @user.save
-      flash[:notice] = "User '#{@user.name}' successfully saved!"
+      log_in @user
+      flash[:notice] = "Welcome to the TIAE finance App!"
       redirect_to root_path
     else
       render :new, status: :unprocessable_entity

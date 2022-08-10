@@ -5,6 +5,6 @@ class User < ApplicationRecord
   validates :name, presence: true
   validates :email, presence: true, uniqueness: true,
                     length: { minimum: 4, maximum: 254 }
-
+  has_secure_password
   validates :password, presence: true
 end
