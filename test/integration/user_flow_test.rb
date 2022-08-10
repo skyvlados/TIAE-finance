@@ -16,7 +16,7 @@ class UserFlowTest < ActionDispatch::IntegrationTest
     assert_response :redirect
     follow_redirect!
     assert_response :success
-    assert_select 'span', "Welcome to the TIAE finance App!"
+    assert_select 'span', 'Welcome to the TIAE finance App!'
   end
 
   test 'can edit an user' do
