@@ -14,8 +14,8 @@ gem 'pagy', '~> 5.10'
 
 gem 'axlsx'
 gem 'axlsx_rails'
-gem 'rubyzip', '>= 1.2.1'
 gem 'bcrypt', '3.1.7'
+gem 'rubyzip', '>= 1.2.1'
 
 # The original asset pipeline for Rails [https://github.com/rails/sprockets-rails]
 gem 'sprockets-rails'

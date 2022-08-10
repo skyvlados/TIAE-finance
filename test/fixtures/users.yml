@@ -3,9 +3,9 @@
 test1:
   name: user1
   email: user1@example.com
-  password: 1234
+  password_digest: 1234
 
 test2:
   name: user2
   email: user2@example.com
-  password: 5678
+  password_digest: 5678

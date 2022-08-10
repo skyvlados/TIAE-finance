@@ -19,7 +19,7 @@ class UsersController < ApplicationController
     @user = User.new(user_params)
     if @user.save
       log_in @user
-      flash[:notice] = "Welcome to the TIAE finance App!"
+      flash[:notice] = 'Welcome to the TIAE finance App!'
       redirect_to root_path
     else
       render :new, status: :unprocessable_entity

@@ -11,19 +11,19 @@ class UserFlowTest < ActionDispatch::IntegrationTest
 
   test 'can create an user' do
     post '/users',
-         params: { user: { name: 'test user', email: 'test3@example.com', password: '12345678' } }
+         params: { user: { name: 'test user', email: 'test3@example.com', password_digest: '12345678' } }
 
     assert_response :redirect
     follow_redirect!
     assert_response :success
-    assert_select 'span', "User 'test user' successfully saved!"
+    assert_select 'span', "Welcome to the TIAE finance App!"
   end
 
   test 'can edit an user' do
     user = users(:test1)
 
     put "/users/#{user.id}",
-        params: { user: { name: 'test user', email: 'user1@example.com', password: '1234' } }
+        params: { user: { name: 'test user', email: 'user1@example.com', password_digest: '1234' } }
 
     follow_redirect!
     assert_response :success
