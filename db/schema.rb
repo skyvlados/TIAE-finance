@@ -20,7 +20,6 @@ ActiveRecord::Schema[7.0].define(version: 20_220_811_191_947) do
     t.text 'name', null: false
     t.datetime 'created_at', null: false
     t.datetime 'updated_at', null: false
-    t.bigint 'user_id'
     t.index ['name'], name: 'index_categories_on_name', unique: true
   end
 
