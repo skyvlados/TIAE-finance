@@ -33,7 +33,6 @@ class UsersController < ApplicationController
     old_name = @user.name
     old_email = @user.email
     if @user.update(user_params)
-      p params
       flash[:notice] = if old_name != @user.name && old_email == @user.email
                          "User '#{old_name}' successfully updated to '#{@user.name}'!"
                        else
@@ -54,7 +53,7 @@ class UsersController < ApplicationController
   private
 
   def user_params
-    params.require(:user).permit(:name, :email, :password)
+    params.require(:user).permit(:name, :email, :password_digest)
   end
 
   def find_user

@@ -26,7 +26,7 @@ class UsersControllerTest < ActionDispatch::IntegrationTest
   end
 
   test 'should get create' do
-    post users_path, params: { user: { name: 'user test', email: 'user_test@example.com', password: '1234' } }
+    post users_path, params: { user: { name: 'user test', email: 'user_test@example.com', password_digest: '1234' } }
     assert_response :found
   end
 
@@ -45,7 +45,7 @@ class UsersControllerTest < ActionDispatch::IntegrationTest
   test 'should get update' do
     test_id = users(:test1).id
     patch user_path(test_id),
-          params: { user: { name: 'user test2', email: 'user_tes2t@example.com', password: '12345' } }
+          params: { user: { name: 'user test2', email: 'user_tes2t@example.com', password_digest: '12345' } }
     assert_response :found
   end
 
