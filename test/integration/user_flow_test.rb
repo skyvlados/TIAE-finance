@@ -11,7 +11,7 @@ class UserFlowTest < ActionDispatch::IntegrationTest
 
   test 'can create an user' do
     post '/users',
-         params: { user: { name: 'test user', email: 'test3@example.com', password_digest: '12345678' } }
+         params: { user: { name: 'test user', email: 'test3@example.com', password: '12345678' } }
 
     assert_response :redirect
     follow_redirect!
@@ -23,7 +23,7 @@ class UserFlowTest < ActionDispatch::IntegrationTest
     user = users(:test1)
 
     put "/users/#{user.id}",
-        params: { user: { name: 'test user', email: 'user1@example.com', password_digest: '1234' } }
+        params: { user: { name: 'test user', email: 'user1@example.com', password: '1234' } }
 
     follow_redirect!
     assert_response :success
