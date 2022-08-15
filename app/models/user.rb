@@ -2,6 +2,7 @@
 
 class User < ApplicationRecord
   has_many :operations
+  has_many :categories
   default_scope { where(is_deleted: false) }
   validates :name, presence: true
   validates :email, presence: true, uniqueness: true,

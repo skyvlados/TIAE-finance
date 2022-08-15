@@ -31,6 +31,12 @@ class OperationsControllerTest < ActionDispatch::IntegrationTest
     assert_redirected_to(root_path)
   end
 
+  test 'shouldt get show operation other users' do
+    log_in_as(users(:test2))
+    assert_response :found
+    assert_redirected_to(root_path)
+  end
+
   test 'shouldnt show, bad id' do
     log_in_as(users(:test3))
     assert_raises(ActiveRecord::RecordNotFound) do

@@ -2,15 +2,20 @@
 
 food:
   name: food
+  user: test3
 
 salary:
   name: salary
+  user: test3
 
 goods:
   name: goods
+  user: test3
 
 relax:
   name: relax
+  user: test3
 
 transport:
   name: transport
+  user: test3

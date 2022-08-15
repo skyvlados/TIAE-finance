@@ -8,7 +8,7 @@ test1:
 test2:
   name: user2
   email: user2@example.com
-  password_digest: 5678
+  password_digest: <%= User.digest('password') %>
 
 test3:
   name: user3
