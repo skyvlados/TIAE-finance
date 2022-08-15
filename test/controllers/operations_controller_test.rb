@@ -13,11 +13,22 @@ class OperationsControllerTest < ActionDispatch::IntegrationTest
     assert_response :success
   end
 
+  test 'shouldnt get index' do
+    get operations_path
+    assert_response :found
+    assert_redirected_to(root_path)
+  end
+
   test 'should get show' do
     log_in_as(users(:test3))
-    test_operation_id = operations(:salary).id
-    get operation_path(test_operation_id)
+    get operation_path(operations(:salary).id)
     assert_response :success
+  end
+
+  test 'shouldnt get show' do
+    get operation_path(operations(:salary).id)
+    assert_response :found
+    assert_redirected_to(root_path)
   end
 
   test 'shouldnt show, bad id' do
@@ -33,15 +44,28 @@ class OperationsControllerTest < ActionDispatch::IntegrationTest
     assert_response :success
   end
 
+  test 'shouldnt get new' do
+    get new_operation_path
+    assert_response :found
+    assert_redirected_to(root_path)
+  end
+
   test 'should get create' do
     log_in_as(users(:test3))
-    test_category_id = categories(:salary).id
-    post operations_path, params: { operation: { category_id: test_category_id, direction: 'income', date: '2020-01-01',
-                                                 amount: 100, currency: 'RUB' } }
+    post operations_path, params: { operation: { category_id: categories(:salary).id, direction: 'income',
+                                                 date: '2020-01-01', amount: 100, currency: 'RUB' } }
     assert_response :found
   end
 
+  test 'shouldnt get create' do
+    post operations_path, params: { operation: { category_id: categories(:salary).id, direction: 'income',
+                                                 date: '2020-01-01', amount: 100, currency: 'RUB' } }
+    assert_response :found
+    assert_redirected_to(root_path)
+  end
+
   test 'shouldnt get create, empty params' do
+    log_in_as(users(:test3))
     assert_raises(ActionController::ParameterMissing) do
       post operations_path, params: {}
     end
@@ -57,24 +81,43 @@ class OperationsControllerTest < ActionDispatch::IntegrationTest
 
   test 'should get edit' do
     log_in_as(users(:test3))
-    test_operation_id = operations(:goods).id
-    get edit_operation_path(test_operation_id)
+    get edit_operation_path(operations(:goods).id)
     assert_response :success
+  end
+
+  test 'shouldnt get edit' do
+    get edit_operation_path(operations(:goods).id)
+    assert_response :found
+    assert_redirected_to(root_path)
   end
 
   test 'should get update' do
     log_in_as(users(:test3))
-    test_category_id = categories(:goods).id
-    test_operation_id = operations(:goods).id
-    patch operation_path(test_operation_id), params: { operation: { category_id: test_category_id, direction: 'income',
-                                                                    date: '2020-01-01', amount: 200, currency: 'USD',
-                                                                    user_id: users(:test3).id } }
+    patch operation_path(operations(:goods).id), params: { operation: { category_id: categories(:goods).id,
+                                                                        direction: 'income', date: '2020-01-01',
+                                                                        amount: 200, currency: 'USD',
+                                                                        user_id: users(:test3).id } }
     assert_response :found
   end
 
+  test 'shouldnt get update' do
+    patch operation_path(operations(:goods).id), params: { operation: { category_id: categories(:goods).id,
+                                                                        direction: 'income', date: '2020-01-01',
+                                                                        amount: 200, currency: 'USD',
+                                                                        user_id: users(:test3).id } }
+    assert_response :found
+    assert_redirected_to(root_path)
+  end
+
   test 'should get destroy' do
-    test_operation_id = operations(:relax).id
-    delete operation_path(test_operation_id)
+    log_in_as(users(:test3))
+    delete operation_path(operations(:relax).id)
     assert_response :see_other
+  end
+
+  test 'shouldnt get destroy' do
+    delete operation_path(operations(:relax).id)
+    assert_response :found
+    assert_redirected_to(root_path)
   end
 end
