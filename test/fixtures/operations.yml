@@ -6,6 +6,7 @@ salary:
   amount: 200_000
   currency: RUB
   date: '2020-01-01'
+  user_id: users(:test3)
 
 goods:
   category: goods
@@ -13,6 +14,7 @@ goods:
   amount: 10_000
   currency: RUB
   date: '2020-01-05'
+  user_id: users(:test3) 
 
 each_goods:
   category: goods
@@ -20,6 +22,7 @@ each_goods:
   amount: 1_000
   currency: RUB
   date: '2020-01-08'
+  user_id: users(:test3)
 
 relax:
   category: relax
@@ -27,6 +30,7 @@ relax:
   amount: 300
   currency: USD
   date: '2020-01-10'
+  user: test3
 
 food:
   category: food
@@ -34,3 +38,4 @@ food:
   amount: 200
   currency: EUR
   date: '2020-01-20'
+  user: test3

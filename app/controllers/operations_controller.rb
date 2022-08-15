@@ -5,7 +5,8 @@ class OperationsController < ApplicationController
   def index
     service = OperationQuery.new(params)
     scope = service.call
-    @pagy, @operations = pagy(scope.order(date: :desc), items: params[:page_size])
+    user_id = current_user.id
+    @pagy, @operations = pagy(scope.order(date: :desc).where(user_id: user_id), items: params[:page_size])
 
     @totals_operations = scope
                          .order(direction: :asc)
@@ -18,14 +19,24 @@ class OperationsController < ApplicationController
     end
   end
 
-  def show; end
+  def show
+    if current_user.present?
+      render :show
+    else
+      redirect_to root_path
+    end
+  end
 
   def new
-    @operation = Operation.new
+    if current_user.present?
+      @operation = Operation.new
+    else
+      redirect_to root_path
+    end
   end
 
   def create
-    @operation = Operation.new(operation_params)
+    @operation = Operation.new(operation_params.merge(user_id: current_user.id))
     if @operation.save
       flash[:notice] = "Operation '#{@operation.id}' successfully saved!"
       redirect_to action: 'index'
@@ -34,10 +45,16 @@ class OperationsController < ApplicationController
     end
   end
 
-  def edit; end
+  def edit
+    if current_user.present?
+      render :edit
+    else
+      redirect_to root_path
+    end
+  end
 
   def update
-    if @operation.update(operation_params)
+    if @operation.update(operation_params.merge(user_id: current_user.id))
       flash[:notice] = 'Operation successfully updated!'
       redirect_to action: 'index'
     else
