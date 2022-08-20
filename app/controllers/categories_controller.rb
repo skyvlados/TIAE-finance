@@ -3,7 +3,7 @@
 class CategoriesController < ApplicationController
   before_action :find_category, only: %i[show edit update destroy]
   def index
-    @pagy, @categories = Category.all.order(id: :asc).where(user: current_user)
+    @pagy, @categories = Category.order(id: :asc).where(user: current_user)
                                  .then { |scope| pagy(scope, items: params[:items]) }
   end
 

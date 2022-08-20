@@ -6,6 +6,9 @@ class ApplicationController < ActionController::Base
   include SessionsHelper
 
   def check_session
-    redirect_to root_path if current_user.blank?
+    if current_user.blank?
+      flash[:notice] = 'First of all you must authorization!'
+      redirect_to root_path
+    end
   end
 end

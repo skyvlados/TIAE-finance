@@ -12,28 +12,27 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[7.0].define(version: 20_220_815_144_955) do
+ActiveRecord::Schema[7.0].define(version: 20_220_820_130_453) do
   # These are extensions that must be enabled in order to support this database
   enable_extension 'plpgsql'
 
   create_table 'categories', force: :cascade do |t|
-    t.text 'name', null: false
+    t.text 'name'
+    t.bigint 'user_id', null: false
     t.datetime 'created_at', null: false
     t.datetime 'updated_at', null: false
-    t.bigint 'user_id'
-    t.index ['name'], name: 'index_categories_on_name', unique: true
     t.index ['user_id'], name: 'index_categories_on_user_id'
   end
 
   create_table 'operations', force: :cascade do |t|
     t.integer 'direction', null: false
-    t.bigint 'category_id', null: false
     t.datetime 'date', precision: nil, null: false
     t.decimal 'amount', null: false
     t.integer 'currency', null: false
+    t.bigint 'user_id', null: false
+    t.bigint 'category_id', null: false
     t.datetime 'created_at', null: false
     t.datetime 'updated_at', null: false
-    t.bigint 'user_id'
     t.index ['category_id'], name: 'index_operations_on_category_id'
     t.index ['user_id'], name: 'index_operations_on_user_id'
   end
@@ -42,7 +41,7 @@ ActiveRecord::Schema[7.0].define(version: 20_220_815_144_955) do
     t.string 'name', null: false
     t.string 'email', null: false
     t.string 'password_digest', null: false
-    t.boolean 'is_deleted', default: false
+    t.boolean 'is_deleted', default: false, null: false
     t.datetime 'created_at', null: false
     t.datetime 'updated_at', null: false
   end

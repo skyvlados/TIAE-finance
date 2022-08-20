@@ -24,3 +24,6 @@ Metrics/BlockLength:
 
 Metrics/ClassLength:
   Max: 105
+
+Style/GuardClause:
+  Enabled: false
