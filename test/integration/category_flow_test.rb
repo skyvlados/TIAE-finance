@@ -24,6 +24,19 @@ class CategoryFlowTest < ActionDispatch::IntegrationTest
     assert_redirected_to(root_path)
   end
 
+  test 'can show an category' do
+    log_in_as(users(:test3))
+    get "/categories/#{categories(:food).id}"
+    assert_response :success
+  end
+
+  test 'cant show an other users category' do
+    log_in_as(users(:test3))
+    get "/categories/#{categories(:others).id}"
+    assert flash[:notice], 'This category is dinied for you!'
+    assert_redirected_to(root_path)
+  end
+
   test 'can create an caregory' do
     log_in_as(users(:test3))
     post '/categories',
@@ -57,6 +70,15 @@ class CategoryFlowTest < ActionDispatch::IntegrationTest
     assert_redirected_to(root_path)
   end
 
+  test 'cant edit an other users caregory' do
+    log_in_as(users(:test3))
+    put "/categories/#{categories(:others).id}",
+        params: { category: { name: 'test2' } }
+    assert_response :found
+    assert flash[:notice], 'This category is dinied for you!'
+    assert_redirected_to(root_path)
+  end
+
   test 'can delete an caregory' do
     log_in_as(users(:test3))
     delete "/categories/#{categories(:transport).id}"
@@ -68,6 +90,14 @@ class CategoryFlowTest < ActionDispatch::IntegrationTest
   test 'cant delete an caregory' do
     delete "/categories/#{categories(:transport).id}"
     assert_response :found
+    assert_redirected_to(root_path)
+  end
+
+  test 'cant delete an other users caregory' do
+    log_in_as(users(:test3))
+    delete "/categories/#{categories(:others).id}"
+    assert_response :found
+    assert flash[:notice], 'This category is dinied for you!'
     assert_redirected_to(root_path)
   end
 end

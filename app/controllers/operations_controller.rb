@@ -19,12 +19,7 @@ class OperationsController < ApplicationController
   end
 
   def show
-    if @operation.user == current_user
-      render :show
-    else
-      flash[:notice] = 'This operation is dinied for you!'
-      redirect_to root_path
-    end
+    render :show
   end
 
   def new
@@ -69,6 +64,12 @@ class OperationsController < ApplicationController
   end
 
   def find_operation
-    @operation = Operation.find(params[:id])
+    operation = Operation.find(params[:id])
+    if operation.user == current_user
+      @operation = operation
+    else
+      flash[:notice] = 'This operation is dinied for you!'
+      redirect_to root_path
+    end
   end
 end

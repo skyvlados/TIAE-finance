@@ -19,6 +19,19 @@ class OperationFlowTest < ActionDispatch::IntegrationTest
     assert_redirected_to(root_path)
   end
 
+  test 'can show an operation' do
+    log_in_as(users(:test3))
+    get "/operations/#{operations(:relax).id}"
+    assert_response :success
+  end
+
+  test 'cant show an other users operation' do
+    log_in_as(users(:test3))
+    get "/operations/#{operations(:others).id}"
+    assert flash[:notice], 'This operation is dinied for you!'
+    assert_redirected_to(root_path)
+  end
+
   test 'can create an operation' do
     log_in_as(users(:test3))
     post '/operations',
@@ -57,6 +70,15 @@ class OperationFlowTest < ActionDispatch::IntegrationTest
     assert_redirected_to(root_path)
   end
 
+  test 'cant edit an other users operation' do
+    log_in_as(users(:test3))
+    put "/operations/#{operations(:others).id}",
+        params: { operation: { category: categories(:food), direction: 'expenditure', date: '2022-02-02', amount: 300,
+                               currency: 'USD' } }
+    assert flash[:notice], 'This operation is dinied for you!'
+    assert_redirected_to(root_path)
+  end
+
   test 'can delete an operation' do
     log_in_as(users(:test3))
     delete "/operations/#{operations(:food).id}"
@@ -68,6 +90,13 @@ class OperationFlowTest < ActionDispatch::IntegrationTest
   test 'cant delete an operation' do
     delete "/operations/#{operations(:food).id}"
     assert_response :found
+    assert_redirected_to(root_path)
+  end
+
+  test 'cant delete an other users operation' do
+    log_in_as(users(:test3))
+    delete "/operations/#{operations(:others).id}"
+    assert flash[:notice], 'This operation is dinied for you!'
     assert_redirected_to(root_path)
   end
 end

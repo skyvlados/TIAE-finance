@@ -8,12 +8,7 @@ class CategoriesController < ApplicationController
   end
 
   def show
-    if @category.user == current_user
-      render :show
-    else
-      flash[:notice] = 'This category is dinied for you!'
-      redirect_to root_path
-    end
+    render :show
   end
 
   def new
@@ -59,6 +54,12 @@ class CategoriesController < ApplicationController
   end
 
   def find_category
-    @category = Category.find(params[:id])
+    category = Category.find(params[:id])
+    if category.user == current_user
+      @category = category
+    else
+      flash[:notice] = 'This category is dinied for you!'
+      redirect_to root_path
+    end
   end
 end

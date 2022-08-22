@@ -39,3 +39,11 @@ food:
   currency: EUR
   date: '2020-01-20'
   user: test3
+
+others:
+  category: others
+  direction: expenditure
+  amount: 300
+  currency: RUB
+  date: '2020-01-22'
+  user: test1

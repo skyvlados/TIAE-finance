@@ -26,7 +26,7 @@ class UserTest < ActiveSupport::TestCase
   end
 
   test 'should delete user' do
-    user = users(:test1)
+    user = users(:test2)
     assert user.destroy
   end
 end
