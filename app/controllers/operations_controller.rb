@@ -8,6 +8,7 @@ class OperationsController < ApplicationController
     @pagy, @operations = pagy(scope.order(date: :desc).where(user: current_user), items: params[:page_size])
 
     @totals_operations = scope
+                         .where(user: current_user)
                          .order(direction: :asc)
                          .group(:currency, :direction)
                          .pluck('sum(amount)', 'currency', 'direction')
