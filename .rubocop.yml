@@ -3,6 +3,7 @@ AllCops:
   Exclude:
     - bin/*
     - vendor/bundle/**/*
+    - db/schema.rb
 
 Style/Documentation:
   Enabled: false
@@ -10,20 +11,14 @@ Style/Documentation:
 Style/HashSyntax:
   EnforcedShorthandSyntax: never
 
-Layout/LineLength:
-  Max: 120
-
 Metrics/MethodLength:
   Enabled: false
 
 Metrics/AbcSize:
   Enabled: false
 
-Metrics/BlockLength:
-  Max: 32
-
 Metrics/ClassLength:
-  Max: 105
+  Enabled: false
 
 Style/GuardClause:
   Enabled: false

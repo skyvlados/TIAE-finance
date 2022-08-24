@@ -4,11 +4,10 @@ class OperationsController < ApplicationController
   before_action :find_operation, only: %i[show edit update destroy]
   def index
     service = OperationQuery.new(params)
-    scope = service.call
-    @pagy, @operations = pagy(scope.order(date: :desc).where(user: current_user), items: params[:page_size])
+    scope = service.call.where(user: current_user)
+    @pagy, @operations = pagy(scope.order(date: :desc), items: params[:page_size])
 
     @totals_operations = scope
-                         .where(user: current_user)
                          .order(direction: :asc)
                          .group(:currency, :direction)
                          .pluck('sum(amount)', 'currency', 'direction')
@@ -28,7 +27,7 @@ class OperationsController < ApplicationController
   end
 
   def create
-    @operation = Operation.new(operation_params.merge(user: current_user))
+    @operation = Operation.new(operation_params)
     if @operation.save
       flash[:notice] = "Operation '#{@operation.id}' successfully saved!"
       redirect_to action: 'index'
@@ -40,7 +39,7 @@ class OperationsController < ApplicationController
   def edit; end
 
   def update
-    if @operation.update(operation_params.merge(user_id: current_user.id))
+    if @operation.update(operation_params)
       flash[:notice] = 'Operation successfully updated!'
       redirect_to action: 'index'
     else
@@ -57,7 +56,7 @@ class OperationsController < ApplicationController
   private
 
   def operation_params
-    params.require(:operation).permit(:direction, :category_id, :date, :amount, :currency)
+    params.require(:operation).permit(:direction, :category_id, :date, :amount, :currency).merge(user: current_user)
   end
 
   def index_params

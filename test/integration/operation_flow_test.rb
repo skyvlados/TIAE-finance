@@ -9,12 +9,12 @@ class OperationFlowTest < ActionDispatch::IntegrationTest
 
   test 'can see an operations list' do
     log_in_as(users(:test3))
-    get '/operations'
+    get operations_path
     assert_response :success
   end
 
   test 'cant see an operations list' do
-    get '/operations'
+    get operations_path
     assert_response :found
     assert_redirected_to(root_path)
   end
@@ -27,16 +27,15 @@ class OperationFlowTest < ActionDispatch::IntegrationTest
 
   test 'cant show an other users operation' do
     log_in_as(users(:test3))
-    get "/operations/#{operations(:others).id}"
+    get operation_path(operations(:others))
     assert flash[:notice], 'This operation is dinied for you!'
     assert_redirected_to(root_path)
   end
 
   test 'can create an operation' do
     log_in_as(users(:test3))
-    post '/operations',
-         params: { operation: { category_id: categories(:transport).id, direction: 'income', date: '2020-01-01',
-                                amount: 100, currency: 'RUB' } }
+    post operations_path, params: { operation: { category_id: categories(:transport).id, direction: 'income',
+                                                 date: '2020-01-01', amount: 100, currency: 'RUB' } }
     assert_response :redirect
     follow_redirect!
     assert_response :success
@@ -45,57 +44,56 @@ class OperationFlowTest < ActionDispatch::IntegrationTest
   end
 
   test 'cant create an operation' do
-    post '/operations',
-         params: { operation: { category_id: categories(:transport).id, direction: 'income', date: '2020-01-01',
-                                amount: 100, currency: 'RUB' } }
+    post operations_path, params: { operation: { category_id: categories(:transport).id, direction: 'income',
+                                                 date: '2020-01-01', amount: 100, currency: 'RUB' } }
     assert_response :found
     assert_redirected_to(root_path)
   end
 
   test 'can edit an operation' do
     log_in_as(users(:test3))
-    put "/operations/#{operations(:relax).id}",
-        params: { operation: { category: categories(:food), direction: 'expenditure', date: '2022-02-02', amount: 300,
-                               currency: 'USD' } }
+    put operation_path(operations(:relax)), params: { operation: { category: categories(:food),
+                                                                   direction: 'expenditure', date: '2022-02-02',
+                                                                   amount: 300, currency: 'USD' } }
     follow_redirect!
     assert_response :success
     assert_select 'span', 'Operation successfully updated!'
   end
 
   test 'cant edit an operation' do
-    put "/operations/#{operations(:relax).id}",
-        params: { operation: { category: categories(:food), direction: 'expenditure', date: '2022-02-02', amount: 300,
-                               currency: 'USD' } }
+    put operation_path(operations(:relax)), params: { operation: { category: categories(:food),
+                                                                   direction: 'expenditure', date: '2022-02-02',
+                                                                   amount: 300, currency: 'USD' } }
     assert_response :found
     assert_redirected_to(root_path)
   end
 
   test 'cant edit an other users operation' do
     log_in_as(users(:test3))
-    put "/operations/#{operations(:others).id}",
-        params: { operation: { category: categories(:food), direction: 'expenditure', date: '2022-02-02', amount: 300,
-                               currency: 'USD' } }
+    put operation_path(operations(:others)), params: { operation: { category: categories(:food),
+                                                                    direction: 'expenditure', date: '2022-02-02',
+                                                                    amount: 300, currency: 'USD' } }
     assert flash[:notice], 'This operation is dinied for you!'
     assert_redirected_to(root_path)
   end
 
   test 'can delete an operation' do
     log_in_as(users(:test3))
-    delete "/operations/#{operations(:food).id}"
+    delete operation_path(operations(:food))
     assert_response :see_other
     follow_redirect!
     assert_select 'span', "Operation '#{operations(:food).id}' successfully deleted!"
   end
 
   test 'cant delete an operation' do
-    delete "/operations/#{operations(:food).id}"
+    delete operation_path(operations(:food))
     assert_response :found
     assert_redirected_to(root_path)
   end
 
   test 'cant delete an other users operation' do
     log_in_as(users(:test3))
-    delete "/operations/#{operations(:others).id}"
+    delete operation_path(operations(:others))
     assert flash[:notice], 'This operation is dinied for you!'
     assert_redirected_to(root_path)
   end

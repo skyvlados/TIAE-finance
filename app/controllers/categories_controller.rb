@@ -16,7 +16,7 @@ class CategoriesController < ApplicationController
   end
 
   def create
-    @category = Category.new(category_params.merge(user: current_user))
+    @category = Category.new(category_params)
     if @category.save
       flash[:notice] = "Category '#{@category.name}' successfully saved!"
       redirect_to action: 'index'
@@ -30,7 +30,7 @@ class CategoriesController < ApplicationController
   def update
     old_name = @category.name
 
-    if @category.update(category_params.merge(user: current_user))
+    if @category.update(category_params)
       flash[:notice] = "Category '#{old_name}' successfully updated to '#{@category.name}'!"
       redirect_to action: 'index'
     else
@@ -50,7 +50,7 @@ class CategoriesController < ApplicationController
   private
 
   def category_params
-    params.require(:category).permit(:name)
+    params.require(:category).permit(:name).merge(user: current_user)
   end
 
   def find_category

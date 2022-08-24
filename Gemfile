@@ -13,7 +13,7 @@ gem 'rails', '~> 7.0.3'
 gem 'pagy', '~> 5.10'
 
 gem 'axlsx'
-gem 'axlsx_rails'
+gem 'caxlsx_rails'
 gem 'bcrypt', '3.1.12'
 gem 'rubyzip', '>= 1.2.1'
 

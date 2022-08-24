@@ -15,8 +15,8 @@ class CreateUsers < ActiveRecord::Migration[7.0]
     reversible do |dir|
       dir.up do
         execute <<-SQL
-          INSERT INTO users (name, email, password_digest, is_admin, is_deleted, created_at, updated_at)
-          VALUES ('admin', 'onimuska@mail.ru', '$2a$10$Tf2Kpd1VWPbc2XOwhjaqp.iSiR81KAiUIiCqqq/aA8/BX.5af4Wiu', true, false, '2022-08-22', '2022-08-22')
+          INSERT INTO users (name, email, password_digest, is_admin, created_at, updated_at)
+          VALUES ('admin', 'onimuska@mail.ru', '$2a$10$Tf2Kpd1VWPbc2XOwhjaqp.iSiR81KAiUIiCqqq/aA8/BX.5af4Wiu', true, '2022-08-22', '2022-08-22')
         SQL
       end
       dir.down do
