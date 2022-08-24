@@ -13,8 +13,8 @@ gem 'rails', '~> 7.0.3'
 gem 'pagy', '~> 5.10'
 
 gem 'axlsx'
-gem 'caxlsx_rails'
 gem 'bcrypt', '3.1.12'
+gem 'caxlsx_rails'
 gem 'rubyzip', '>= 1.2.1'
 
 # The original asset pipeline for Rails [https://github.com/rails/sprockets-rails]
