@@ -4,7 +4,7 @@ class OperationsController < ApplicationController
   before_action :find_operation, only: %i[show edit update destroy]
   def index
     service = OperationQuery.new(params)
-    scope = service.call
+    scope = service.call.where(user: current_user)
     @pagy, @operations = pagy(scope.order(date: :desc), items: params[:page_size])
 
     @totals_operations = scope
@@ -18,7 +18,9 @@ class OperationsController < ApplicationController
     end
   end
 
-  def show; end
+  def show
+    render :show
+  end
 
   def new
     @operation = Operation.new
@@ -54,7 +56,7 @@ class OperationsController < ApplicationController
   private
 
   def operation_params
-    params.require(:operation).permit(:direction, :category_id, :date, :amount, :currency)
+    params.require(:operation).permit(:direction, :category_id, :date, :amount, :currency).merge(user: current_user)
   end
 
   def index_params
@@ -62,6 +64,12 @@ class OperationsController < ApplicationController
   end
 
   def find_operation
-    @operation = Operation.find(params[:id])
+    operation = Operation.find(params[:id])
+    if operation.user == current_user
+      @operation = operation
+    else
+      flash[:notice] = 'This operation is dinied for you!'
+      redirect_to root_path
+    end
   end
 end

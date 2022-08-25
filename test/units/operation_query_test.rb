@@ -16,7 +16,7 @@ class OperationQueryTest < ActiveSupport::TestCase
 
   test 'by date start' do
     assert_equal OperationQuery.new(date_start: '2020-01-05').call.order(date: :desc).to_a,
-                 operations(:food, :relax, :each_goods, :goods)
+                 operations(:others, :food, :relax, :each_goods, :goods)
   end
 
   test 'by date finish' do

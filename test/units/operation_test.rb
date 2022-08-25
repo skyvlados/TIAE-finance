@@ -53,8 +53,8 @@ class OperationTest < ActiveSupport::TestCase
   end
 
   test 'should save operation' do
-    category = Category.create(name: 'Test')
-    operation = Operation.new(direction: 2, category: category, date: '2020-01-01', amount: 100, currency: 1)
+    operation = Operation.new(direction: 2, category: categories(:salary), date: '2020-01-01', amount: 100,
+                              currency: 1, user: users(:test3))
     assert operation.save
   end
 
@@ -89,10 +89,9 @@ class OperationTest < ActiveSupport::TestCase
   end
 
   test 'should edit operation' do
-    category = Category.create(name: 'Test')
-    category2 = Category.create(name: 'Test2')
-    operation = Operation.create(direction: 2, category: category, date: '2020-01-01', amount: 100, currency: 1)
-    assert operation.update(direction: 1, category: category2, date: '2020-01-02', amount: 200, currency: 2)
+    operation = operations(:food)
+    assert operation.update(direction: 1, category: categories(:salary), date: '2020-01-02', amount: 5000, currency: 2,
+                            user: users(:test3))
   end
 
   test 'should delete operation' do
