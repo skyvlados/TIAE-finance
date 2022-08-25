@@ -3,11 +3,13 @@
 class CategoriesController < ApplicationController
   before_action :find_category, only: %i[show edit update destroy]
   def index
-    @pagy, @categories = Category.all.order(id: :asc)
+    @pagy, @categories = Category.order(id: :asc).where(user: current_user)
                                  .then { |scope| pagy(scope, items: params[:items]) }
   end
 
-  def show; end
+  def show
+    render :show
+  end
 
   def new
     @category = Category.new
@@ -48,10 +50,16 @@ class CategoriesController < ApplicationController
   private
 
   def category_params
-    params.require(:category).permit(:name)
+    params.require(:category).permit(:name).merge(user: current_user)
   end
 
   def find_category
-    @category = Category.find(params[:id])
+    category = Category.find(params[:id])
+    if category.user == current_user
+      @category = category
+    else
+      flash[:notice] = 'This category is dinied for you!'
+      redirect_to root_path
+    end
   end
 end

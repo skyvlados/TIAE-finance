@@ -2,6 +2,7 @@
 
 class UsersController < ApplicationController
   before_action :find_user, only: %i[show edit update destroy]
+  skip_before_action :check_session, only: %i[new create]
   def index
     service = UserQuery.new(params)
     scope = service.call
@@ -18,7 +19,8 @@ class UsersController < ApplicationController
     user_params[:email].downcase!
     @user = User.new(user_params)
     if @user.save
-      flash[:notice] = "User '#{@user.name}' successfully saved!"
+      log_in @user
+      flash[:notice] = 'Welcome to the TIAE finance App!'
       redirect_to root_path
     else
       render :new, status: :unprocessable_entity
@@ -32,7 +34,6 @@ class UsersController < ApplicationController
     old_name = @user.name
     old_email = @user.email
     if @user.update(user_params)
-      p params
       flash[:notice] = if old_name != @user.name && old_email == @user.email
                          "User '#{old_name}' successfully updated to '#{@user.name}'!"
                        else

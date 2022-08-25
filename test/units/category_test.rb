@@ -9,7 +9,7 @@ class CategoryTest < ActiveSupport::TestCase
   end
 
   test 'should save category' do
-    category = Category.new(name: 'Test name')
+    category = Category.new(name: 'Test name', user: users(:test3))
     assert category.save
   end
 
@@ -19,18 +19,19 @@ class CategoryTest < ActiveSupport::TestCase
   end
 
   test 'should edit category' do
-    category = Category.create(name: 'Test name')
-    assert category.update(name: 'Test name2')
+    category = Category.create(name: 'Test name', user: users(:test3))
+    assert category.update(name: 'Test name2', user: users(:test2))
   end
 
   test 'should not delete category' do
-    category = Category.create(name: 'Test name')
-    Operation.create(direction: 1, category: category, date: '2021-01-01', amount: 100, currency: 1)
+    category = Category.create(name: 'Test name', user: users(:test3))
+    Operation.create(direction: 1, category: category, date: '2021-01-01', amount: 100, currency: 1,
+                     user: users(:test3))
     assert_raises(ActiveRecord::InvalidForeignKey) { category.destroy }
   end
 
   test 'should delete category' do
-    category = Category.create(name: 'Test name')
+    category = Category.create(name: 'Test name', user: users(:test3))
     assert category.destroy
   end
 end

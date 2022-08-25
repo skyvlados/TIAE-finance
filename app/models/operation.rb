@@ -1,6 +1,7 @@
 # frozen_string_literal: true
 
 class Operation < ApplicationRecord
+  belongs_to :user
   belongs_to :category
 
   enum direction: { income: 1, expenditure: 2 }
