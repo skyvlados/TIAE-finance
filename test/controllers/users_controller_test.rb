@@ -8,7 +8,7 @@ class UsersControllerTest < ActionDispatch::IntegrationTest
   end
 
   test 'should get index' do
-    log_in_as(users(:test3))
+    log_in_as(users(:admin))
     get users_path
     assert_response :success
   end
@@ -21,7 +21,7 @@ class UsersControllerTest < ActionDispatch::IntegrationTest
   end
 
   test 'should get show' do
-    log_in_as(users(:test3))
+    log_in_as(users(:admin))
     test_id = users(:test1).id
     get user_path(test_id)
     assert_response :success
@@ -36,7 +36,7 @@ class UsersControllerTest < ActionDispatch::IntegrationTest
   end
 
   test 'shouldnt show, bad id' do
-    log_in_as(users(:test3))
+    log_in_as(users(:admin))
     assert_raises(ActiveRecord::RecordNotFound) do
       get user_path('999')
     end
@@ -59,7 +59,7 @@ class UsersControllerTest < ActionDispatch::IntegrationTest
   end
 
   test 'should get edit' do
-    log_in_as(users(:test3))
+    log_in_as(users(:admin))
     test_id = users(:test1).id
     get edit_user_path(test_id)
     assert_response :success
@@ -90,7 +90,7 @@ class UsersControllerTest < ActionDispatch::IntegrationTest
   end
 
   test 'should get destroy' do
-    log_in_as(users(:test3))
+    log_in_as(users(:admin))
     test_id = users(:test1).id
     delete user_path(test_id)
     assert_response :see_other

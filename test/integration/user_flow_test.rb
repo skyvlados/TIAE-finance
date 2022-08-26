@@ -8,7 +8,7 @@ class UserFlowTest < ActionDispatch::IntegrationTest
   end
 
   test 'can see an users list' do
-    log_in_as(users(:test3))
+    log_in_as(users(:admin))
     get users_path
     assert_response :success
   end
@@ -27,7 +27,7 @@ class UserFlowTest < ActionDispatch::IntegrationTest
   end
 
   test 'can create the user' do
-    log_in_as(users(:test3))
+    log_in_as(users(:admin))
     post users_path, params: { user: { name: 'test user', email: 'test3@example.com', password: '12345678' } }
     assert_response :redirect
     follow_redirect!
@@ -42,7 +42,7 @@ class UserFlowTest < ActionDispatch::IntegrationTest
   end
 
   test 'can edit the user' do
-    log_in_as(users(:test3))
+    log_in_as(users(:admin))
     put user_path(users(:test1)), params: { user: { name: 'test user', email: 'user1@example.com', password: '1234' } }
     follow_redirect!
     assert_response :success
@@ -63,7 +63,7 @@ class UserFlowTest < ActionDispatch::IntegrationTest
   end
 
   test 'can delete the user' do
-    log_in_as(users(:test3))
+    log_in_as(users(:admin))
     delete user_path(users(:test1))
     assert_response :see_other
     follow_redirect!

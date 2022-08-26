@@ -10,8 +10,8 @@ test2:
   email: user2@example.com
   password_digest: <%= User.digest('password') %>
 
-test3:
-  name: user3
-  email: user3@example.com
+admin:
+  name: admin
+  email: admin@example.com
   password_digest: <%= User.digest('password') %>
   is_admin: true
