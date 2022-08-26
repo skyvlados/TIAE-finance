@@ -13,11 +13,26 @@ class UsersControllerTest < ActionDispatch::IntegrationTest
     assert_response :success
   end
 
+  test 'shouldnt get index user isnt admin' do
+    log_in_as(users(:test2))
+    get users_path
+    assert_equal flash[:notice], 'You aren\'t an admin!'
+    assert_redirected_to(root_path)
+  end
+
   test 'should get show' do
     log_in_as(users(:test3))
     test_id = users(:test1).id
     get user_path(test_id)
     assert_response :success
+  end
+
+  test 'shouldnt get show user isnt admin' do
+    log_in_as(users(:test2))
+    test_id = users(:test1).id
+    get user_path(test_id)
+    assert_equal flash[:notice], 'You aren\'t an admin!'
+    assert_redirected_to(root_path)
   end
 
   test 'shouldnt show, bad id' do
@@ -50,11 +65,28 @@ class UsersControllerTest < ActionDispatch::IntegrationTest
     assert_response :success
   end
 
+  test 'shouldnt get edit user isnt admin' do
+    log_in_as(users(:test2))
+    test_id = users(:test1).id
+    get edit_user_path(test_id)
+    assert_equal flash[:notice], 'You aren\'t an admin!'
+    assert_redirected_to(root_path)
+  end
+
   test 'should get update' do
     test_id = users(:test1).id
     patch user_path(test_id),
           params: { user: { name: 'user test2', email: 'user_test2@example.com', password: '12345' } }
     assert_response :found
+  end
+
+  test 'shouldnt get update user isnt admin' do
+    log_in_as(users(:test2))
+    test_id = users(:test1).id
+    patch user_path(test_id),
+          params: { user: { name: 'user test2', email: 'user_test2@example.com', password: '12345' } }
+    assert_equal flash[:notice], 'You aren\'t an admin!'
+    assert_redirected_to(root_path)
   end
 
   test 'should get destroy' do

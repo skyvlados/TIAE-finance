@@ -4,12 +4,24 @@ class UsersController < ApplicationController
   before_action :find_user, only: %i[show edit update destroy]
   skip_before_action :check_session, only: %i[new create]
   def index
-    service = UserQuery.new(params)
-    scope = service.call
-    @pagy, @users = pagy(scope.order(id: :desc).where(is_deleted: false), items: params[:page_size])
+    if current_user.is_admin
+      service = UserQuery.new(params)
+      scope = service.call
+      @pagy, @users = pagy(scope.order(id: :desc).where(is_deleted: false), items: params[:page_size])
+    else
+      flash[:notice] = 'You aren\'t an admin!'
+      redirect_to root_path
+    end
   end
 
-  def show; end
+  def show
+    if current_user.is_admin
+      render :show
+    else
+      flash[:notice] = 'You aren\'t an admin!'
+      redirect_to root_path
+    end
+  end
 
   def new
     @user = User.new
@@ -27,28 +39,45 @@ class UsersController < ApplicationController
     end
   end
 
-  def edit; end
+  def edit
+    if current_user.is_admin
+      render :edit
+    else
+      flash[:notice] = 'You aren\'t an admin!'
+      redirect_to root_path
+    end
+  end
 
   def update
-    user_params[:email].downcase!
-    old_name = @user.name
-    old_email = @user.email
-    if @user.update(user_params)
-      flash[:notice] = if old_name != @user.name && old_email == @user.email
-                         "User '#{old_name}' successfully updated to '#{@user.name}'!"
-                       else
-                         "User '#{@user.name}' successfully updated!"
-                       end
-      redirect_to users_path
+    if current_user.is_admin
+      user_params[:email].downcase!
+      old_name = @user.name
+      old_email = @user.email
+      if @user.update(user_params)
+        flash[:notice] = if old_name != @user.name && old_email == @user.email
+                           "User '#{old_name}' successfully updated to '#{@user.name}'!"
+                         else
+                           "User '#{@user.name}' successfully updated!"
+                         end
+        redirect_to users_path
+      else
+        render :new, status: :unprocessable_entity
+      end
     else
-      render :new, status: :unprocessable_entity
+      flash[:notice] = 'You aren\'t an admin!'
+      redirect_to root_path
     end
   end
 
   def destroy
-    @user.update(is_deleted: true)
-    flash[:notice] = "User '#{@user.name}' successfully deleted!"
-    redirect_to users_path, status: 303
+    if current_user.is_admin
+      @user.update(is_deleted: true)
+      flash[:notice] = "User '#{@user.name}' successfully deleted!"
+      redirect_to users_path, status: 303
+    else
+      flash[:notice] = 'You aren\'t an admin!'
+      redirect_to root_path
+    end
   end
 
   private
