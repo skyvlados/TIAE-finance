@@ -2,6 +2,7 @@
 
 class UsersController < ApplicationController
   before_action :user_is_admin, only: %i[index show edit update destroy]
+  before_action :find_user, only: %i[show edit update destroy]
   skip_before_action :check_session, only: %i[new create]
   def index
     service = UserQuery.new(params)
@@ -10,7 +11,6 @@ class UsersController < ApplicationController
   end
 
   def show
-    @user = User.find(params[:id])
     render :show
   end
 
@@ -31,12 +31,10 @@ class UsersController < ApplicationController
   end
 
   def edit
-    @user = User.find(params[:id])
     render :edit
   end
 
   def update
-    @user = User.find(params[:id])
     user_params[:email].downcase!
     old_name = @user.name
     old_email = @user.email
@@ -53,7 +51,6 @@ class UsersController < ApplicationController
   end
 
   def destroy
-    @user = User.find(params[:id])
     @user.update(is_deleted: true)
     flash[:notice] = "User '#{@user.name}' successfully deleted!"
     redirect_to users_path, status: 303
@@ -63,6 +60,10 @@ class UsersController < ApplicationController
 
   def user_params
     params.require(:user).permit(:name, :email, :password)
+  end
+
+  def find_user
+    @user = User.find(params[:id])
   end
 
   def user_is_admin
