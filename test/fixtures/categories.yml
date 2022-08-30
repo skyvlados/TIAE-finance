@@ -2,23 +2,23 @@
 
 food:
   name: food
-  user: test3
+  user: admin
 
 salary:
   name: salary
-  user: test3
+  user: admin
 
 goods:
   name: goods
-  user: test3
+  user: admin
 
 relax:
   name: relax
-  user: test3
+  user: admin
 
 transport:
   name: transport
-  user: test3
+  user: admin
 
 others:
   name: others

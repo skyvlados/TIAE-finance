@@ -1,15 +1,18 @@
 # frozen_string_literal: true
 
 class UsersController < ApplicationController
+  before_action :user_is_admin, only: %i[index show edit update destroy]
   before_action :find_user, only: %i[show edit update destroy]
   skip_before_action :check_session, only: %i[new create]
   def index
     service = UserQuery.new(params)
     scope = service.call
-    @pagy, @users = pagy(scope.order(id: :desc).where(is_deleted: false), items: params[:page_size])
+    @pagy, @users = pagy(scope, items: params[:page_size])
   end
 
-  def show; end
+  def show
+    render :show
+  end
 
   def new
     @user = User.new
@@ -27,7 +30,9 @@ class UsersController < ApplicationController
     end
   end
 
-  def edit; end
+  def edit
+    render :edit
+  end
 
   def update
     user_params[:email].downcase!
@@ -59,5 +64,12 @@ class UsersController < ApplicationController
 
   def find_user
     @user = User.find(params[:id])
+  end
+
+  def user_is_admin
+    unless User.find(current_user.id).is_admin
+      flash[:notice] = 'You aren\'t an admin!'
+      redirect_to root_path
+    end
   end
 end
