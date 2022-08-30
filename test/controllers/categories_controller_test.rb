@@ -8,7 +8,7 @@ class CategoriesControllerTest < ActionDispatch::IntegrationTest
   end
 
   test 'should get index' do
-    log_in_as(users(:test3))
+    log_in_as(users(:admin))
     get categories_path
     assert_response :success
   end
@@ -20,7 +20,7 @@ class CategoriesControllerTest < ActionDispatch::IntegrationTest
   end
 
   test 'should get show' do
-    log_in_as(users(:test3))
+    log_in_as(users(:admin))
     get category_path(categories(:food).id)
     assert_response :success
   end
@@ -38,14 +38,14 @@ class CategoriesControllerTest < ActionDispatch::IntegrationTest
   end
 
   test 'shouldnt show, bad id' do
-    log_in_as(users(:test3))
+    log_in_as(users(:admin))
     assert_raises(ActiveRecord::RecordNotFound) do
       get category_path(999)
     end
   end
 
   test 'should get new' do
-    log_in_as(users(:test3))
+    log_in_as(users(:admin))
     get new_category_path
     assert_response :success
   end
@@ -57,7 +57,7 @@ class CategoriesControllerTest < ActionDispatch::IntegrationTest
   end
 
   test 'should get create' do
-    log_in_as(users(:test3))
+    log_in_as(users(:admin))
     post categories_path, params: { category: { name: 'test' } }
     assert_response :found
   end
@@ -69,14 +69,14 @@ class CategoriesControllerTest < ActionDispatch::IntegrationTest
   end
 
   test 'shouldnt get create, empty params' do
-    log_in_as(users(:test3))
+    log_in_as(users(:admin))
     assert_raises(ActionController::ParameterMissing) do
       post categories_path, params: {}
     end
   end
 
   test 'should get edit' do
-    log_in_as(users(:test3))
+    log_in_as(users(:admin))
     get edit_category_path(categories(:salary).id)
     assert_response :success
   end
@@ -88,7 +88,7 @@ class CategoriesControllerTest < ActionDispatch::IntegrationTest
   end
 
   test 'should get update' do
-    log_in_as(users(:test3))
+    log_in_as(users(:admin))
     patch category_path(categories(:goods).id), params: { category: { name: 'relax2' } }
     assert_response :found
   end
@@ -100,7 +100,7 @@ class CategoriesControllerTest < ActionDispatch::IntegrationTest
   end
 
   test 'should get destroy' do
-    log_in_as(users(:test3))
+    log_in_as(users(:admin))
     delete category_path(categories(:relax).id)
     assert_response :see_other
   end

@@ -54,7 +54,7 @@ class OperationTest < ActiveSupport::TestCase
 
   test 'should save operation' do
     operation = Operation.new(direction: 2, category: categories(:salary), date: '2020-01-01', amount: 100,
-                              currency: 1, user: users(:test3))
+                              currency: 1, user: users(:admin))
     assert operation.save
   end
 
@@ -91,7 +91,7 @@ class OperationTest < ActiveSupport::TestCase
   test 'should edit operation' do
     operation = operations(:food)
     assert operation.update(direction: 1, category: categories(:salary), date: '2020-01-02', amount: 5000, currency: 2,
-                            user: users(:test3))
+                            user: users(:admin))
   end
 
   test 'should delete operation' do
