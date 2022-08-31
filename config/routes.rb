@@ -3,11 +3,7 @@
 Rails.application.routes.draw do
   # root 'welcome#index'
   root 'welcome#index'
-  resources :users do
-    member do
-      get :confirm_email
-    end
-  end
+  resources :users
   resources :operations
   resources :categories
   get 'login' => 'sessions#new'
