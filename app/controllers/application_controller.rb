@@ -1,7 +1,7 @@
 # frozen_string_literal: true
 
 class ApplicationController < ActionController::Base
-  before_action :check_session
+  before_action :check_session, except: [:confirm_email]
   include Pagy::Backend
   include SessionsHelper
 
