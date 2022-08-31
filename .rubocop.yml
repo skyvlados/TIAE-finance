@@ -22,6 +22,3 @@ Metrics/ClassLength:
 
 Style/GuardClause:
   Enabled: false
-
-Metrics/BlockLength:
-  Enabled: false
