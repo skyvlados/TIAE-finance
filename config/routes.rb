@@ -3,13 +3,10 @@
 Rails.application.routes.draw do
   # root 'welcome#index'
   root 'welcome#index'
-  resources :users do
-    member do
-      get :confirm_email
-    end
-  end
+  resources :users
   resources :operations
   resources :categories
+  get '/confirm_email/:token', to: 'users#confirm_email', as: 'confirm_email'
   get 'login' => 'sessions#new'
   post 'login' => 'sessions#create'
   delete 'logout' => 'sessions#destroy'
