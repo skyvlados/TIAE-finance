@@ -47,8 +47,8 @@ Rails.application.configure do
     port: 587,
     domain: 'mail.ru',
     authentication: 'plain',
-    user_name: 'tiaefinance@mail.ru',
-    password: 'RA2JzbQvnxXYqVy4iGW9',
+    user_name: ENV.fetch('email', nil),
+    password: ENV.fetch('password', nil),
     enable_starttls_auto: true
   }
 
