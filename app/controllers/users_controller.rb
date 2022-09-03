@@ -22,7 +22,7 @@ class UsersController < ApplicationController
     user_params[:email].downcase!
     @user = User.new(user_params)
     if @user.save
-      service = ConfirmEmailQuery.new(@user)
+      service = ConfirmEmailAndGenerateToken.new(@user)
       service.confirmation_token
       @user = User.find_by_email(user_params[:email])
       UserMailer.registration_confirmation(@user).deliver_now
@@ -62,7 +62,7 @@ class UsersController < ApplicationController
   def confirm_email
     user = User.find_by_confirm_token(params[:token])
     if user
-      service = ConfirmEmailQuery.new(user)
+      service = ConfirmEmailAndGenerateToken.new(user)
       service.email_activate
       flash[:success] = "Welcome to the Sample App! Your email has been confirmed.
       Please sign in to continue."

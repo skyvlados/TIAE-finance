@@ -28,7 +28,7 @@ class SessionsController < ApplicationController
 
   def send_confirm_email
     @user = User.find_by_email(params[:session][:email])
-    user = ConfirmEmailQuery.new(@user)
+    user = ConfirmEmailAndGenerateToken.new(@user)
     user.confirmation_token
     @user = User.find_by_email(params[:session][:email])
     UserMailer.registration_confirmation(@user).deliver_now

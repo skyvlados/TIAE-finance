@@ -1,6 +1,6 @@
 # frozen_string_literal: true
 
-class ConfirmEmailQuery
+class ConfirmEmailAndGenerateToken
   attr_reader :user
 
   def initialize(user)
