@@ -9,6 +9,7 @@ Rails.application.routes.draw do
   get '/confirm_email/:token', to: 'users#confirm_email', as: 'confirm_email'
   get 'login' => 'sessions#new'
   post 'login' => 'sessions#create'
+  post 'send_confirm_email' => 'sessions#send_confirm_email', as: 'send_confirm_email'
   delete 'logout' => 'sessions#destroy'
   # Define your application routes per the DSL in https://guides.rubyonrails.org/routing.html
 
