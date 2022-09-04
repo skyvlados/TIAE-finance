@@ -64,8 +64,7 @@ class UsersController < ApplicationController
     if user
       service = ConfirmEmailAndGenerateToken.new(user)
       service.email_activate
-      flash[:success] = "Welcome to the Sample App! Your email has been confirmed.
-      Please sign in to continue."
+      flash[:success] = 'Welcome to the Sample App! Your email has been confirmed. Please sign in to continue.'
     else
       flash[:error] = 'Sorry. User does not exist'
     end

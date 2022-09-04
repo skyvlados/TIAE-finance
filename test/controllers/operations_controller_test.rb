@@ -32,7 +32,7 @@ class OperationsControllerTest < ActionDispatch::IntegrationTest
   end
 
   test 'shouldt get show operation other users' do
-    log_in_as(users(:test2))
+    log_in_as(users(:confirm_user))
     assert_response :found
     assert_redirected_to(root_path)
   end

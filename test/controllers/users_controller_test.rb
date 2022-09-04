@@ -14,7 +14,7 @@ class UsersControllerTest < ActionDispatch::IntegrationTest
   end
 
   test 'shouldnt get index user isnt admin' do
-    log_in_as(users(:test2))
+    log_in_as(users(:confirm_user))
     get users_path
     assert_equal flash[:notice], 'You aren\'t an admin!'
     assert_redirected_to(root_path)
@@ -22,14 +22,14 @@ class UsersControllerTest < ActionDispatch::IntegrationTest
 
   test 'should get show' do
     log_in_as(users(:admin))
-    test_id = users(:test1).id
+    test_id = users(:not_confirm_user).id
     get user_path(test_id)
     assert_response :success
   end
 
   test 'shouldnt get show user isnt admin' do
-    log_in_as(users(:test2))
-    test_id = users(:test1).id
+    log_in_as(users(:confirm_user))
+    test_id = users(:not_confirm_user).id
     get user_path(test_id)
     assert_equal flash[:notice], 'You aren\'t an admin!'
     assert_redirected_to(root_path)
@@ -60,29 +60,29 @@ class UsersControllerTest < ActionDispatch::IntegrationTest
 
   test 'should get edit' do
     log_in_as(users(:admin))
-    test_id = users(:test1).id
+    test_id = users(:not_confirm_user).id
     get edit_user_path(test_id)
     assert_response :success
   end
 
   test 'shouldnt get edit user isnt admin' do
-    log_in_as(users(:test2))
-    test_id = users(:test1).id
+    log_in_as(users(:confirm_user))
+    test_id = users(:not_confirm_user).id
     get edit_user_path(test_id)
     assert_equal flash[:notice], 'You aren\'t an admin!'
     assert_redirected_to(root_path)
   end
 
   test 'should get update' do
-    test_id = users(:test1).id
+    test_id = users(:not_confirm_user).id
     patch user_path(test_id),
           params: { user: { name: 'user test2', email: 'user_test2@example.com', password: '12345' } }
     assert_response :found
   end
 
   test 'shouldnt get update user isnt admin' do
-    log_in_as(users(:test2))
-    test_id = users(:test1).id
+    log_in_as(users(:confirm_user))
+    test_id = users(:not_confirm_user).id
     patch user_path(test_id),
           params: { user: { name: 'user test2', email: 'user_test2@example.com', password: '12345' } }
     assert_equal flash[:notice], 'You aren\'t an admin!'
@@ -91,8 +91,19 @@ class UsersControllerTest < ActionDispatch::IntegrationTest
 
   test 'should get destroy' do
     log_in_as(users(:admin))
-    test_id = users(:test1).id
+    test_id = users(:not_confirm_user).id
     delete user_path(test_id)
     assert_response :see_other
+  end
+
+  test 'can confirm email' do
+    get confirm_email_path(12_345_678)
+    assert_equal flash[:success],
+                 'Welcome to the Sample App! Your email has been confirmed. Please sign in to continue.'
+  end
+
+  test 'cant confirm email' do
+    get confirm_email_path(1_234_567_891_011)
+    assert_equal flash[:error], 'Sorry. User does not exist'
   end
 end

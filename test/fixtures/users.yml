@@ -1,17 +1,25 @@
 # Read about fixtures at https://api.rubyonrails.org/classes/ActiveRecord/FixtureSet.html
 
-test1:
-  name: user1
+not_confirm_user:
+  name: not_confirm_user
   email: user1@example.com
   password_digest: <%= User.digest('password') %>
 
-test2:
-  name: user2
+confirm_user:
+  name: confirm_user
   email: user2@example.com
   password_digest: <%= User.digest('password') %>
+  email_confirmed: true
+
+not_confirm_with_token_user:
+  name: not_confirm_with_token_user
+  email: not_confirm_with_token_user@example.com
+  password_digest: <%= User.digest('password') %>
+  confirm_token: 12345678
 
 admin:
   name: admin
   email: admin@example.com
   password_digest: <%= User.digest('password') %>
   is_admin: true
+  email_confirmed: true

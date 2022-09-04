@@ -20,66 +20,74 @@ class UserFlowTest < ActionDispatch::IntegrationTest
   end
 
   test 'cant see an users list user isnt admin' do
-    log_in_as(users(:test2))
+    log_in_as(users(:confirm_user))
     get users_path
     assert_equal flash[:notice], 'You aren\'t an admin!'
-    assert_response :redirect
+    assert_redirected_to(root_path)
   end
 
   test 'can create the user' do
-    log_in_as(users(:admin))
     post users_path, params: { user: { name: 'test user', email: 'test3@example.com', password: '12345678' } }
     assert_response :redirect
     follow_redirect!
     assert_response :success
-    assert_select 'span', 'Welcome to the TIAE finance App!'
-  end
-
-  test 'cant create the users' do
-    post users_path, params: { user: { name: 'test user', email: 'test3@example.com', password: '12345678' } }
-    assert_response :found
-    assert_redirected_to(root_path)
+    assert_select 'span', 'You are registered. To continue you need confirm email, check your email'
   end
 
   test 'can edit the user' do
     log_in_as(users(:admin))
-    put user_path(users(:test1)), params: { user: { name: 'test user', email: 'user1@example.com', password: '1234' } }
+    put user_path(users(:not_confirm_user)),
+        params: { user: { name: 'test user', email: 'user1@example.com', password: '1234' } }
     follow_redirect!
     assert_response :success
-    assert_select 'span', "User 'user1' successfully updated to 'test user'!"
+    assert_select 'span', "User 'not_confirm_user' successfully updated to 'test user'!"
   end
 
   test 'cant edit the users' do
-    put user_path(users(:test1)), params: { user: { name: 'test user', email: 'user1@example.com', password: '1234' } }
+    put user_path(users(:not_confirm_user)),
+        params: { user: { name: 'test user', email: 'user1@example.com', password: '1234' } }
     assert_response :found
+    assert_equal flash[:notice], 'First of all you must authorization!'
     assert_redirected_to(root_path)
   end
 
   test 'cant edit an users list user isnt admin' do
-    log_in_as(users(:test2))
-    put user_path(users(:test1)), params: { user: { name: 'test user', email: 'user1@example.com', password: '1234' } }
+    log_in_as(users(:confirm_user))
+    put user_path(users(:not_confirm_user)),
+        params: { user: { name: 'test user', email: 'user1@example.com', password: '1234' } }
     assert_equal flash[:notice], 'You aren\'t an admin!'
-    assert_response :redirect
+    assert_redirected_to(root_path)
   end
 
   test 'can delete the user' do
     log_in_as(users(:admin))
-    delete user_path(users(:test1))
+    delete user_path(users(:not_confirm_user))
     assert_response :see_other
-    follow_redirect!
-    assert_select 'span', "User 'user1' successfully deleted!"
+    assert_equal flash[:notice], "User 'not_confirm_user' successfully deleted!"
+    assert_redirected_to(users_path)
   end
 
   test 'cant delete the users' do
-    delete user_path(users(:test1))
+    delete user_path(users(:not_confirm_user))
     assert_response :found
     assert_redirected_to(root_path)
   end
 
   test 'cant delete an users list user isnt admin' do
-    log_in_as(users(:test2))
-    delete user_path(users(:test1))
+    log_in_as(users(:confirm_user))
+    delete user_path(users(:not_confirm_user))
     assert_equal flash[:notice], 'You aren\'t an admin!'
-    assert_response :redirect
+    assert_redirected_to(root_path)
+  end
+
+  test 'can confirm email' do
+    get confirm_email_path(12_345_678)
+    assert_equal flash[:success],
+                 'Welcome to the Sample App! Your email has been confirmed. Please sign in to continue.'
+  end
+
+  test 'cant confirm email' do
+    get confirm_email_path(1_234_567_891_011)
+    assert_equal flash[:error], 'Sorry. User does not exist'
   end
 end
