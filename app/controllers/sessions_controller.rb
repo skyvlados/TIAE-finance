@@ -18,7 +18,6 @@ class SessionsController < ApplicationController
            in the account confirmation email you received to proceed.'
         cookies[:user_email] = params[:session][:email]
         @button_repeat_send = true
-        @email = user.email
         render :new, status: :unprocessable_entity
       end
     else
@@ -30,8 +29,8 @@ class SessionsController < ApplicationController
   def send_confirm_email
     @user = User.find_by_email(cookies[:user_email])
     user = ConfirmEmailAndGenerateToken.new(@user)
-    user.confirmation_token
-    @user = User.find_by_email(cookies[:user_email])
+    user.generate_token
+    @user.reload
     UserMailer.registration_confirmation(@user).deliver_now
     flash.now[:notice] =
       'Email sucess sent!'

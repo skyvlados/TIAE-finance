@@ -13,7 +13,7 @@ class ConfirmEmailAndGenerateToken
     user.save
   end
 
-  def confirmation_token
+  def generate_token
     user.confirm_token = SecureRandom.urlsafe_base64.to_s if user.confirm_token.blank?
     user.save
   end
