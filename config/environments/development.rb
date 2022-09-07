@@ -48,7 +48,7 @@ Rails.application.configure do
     domain: 'mail.ru',
     authentication: 'plain',
     user_name: ENV.fetch('email', nil),
-    password: ENV.fetch('password', nil),
+    password: ENV.fetch('email_password', nil),
     enable_starttls_auto: true
   }
 
