@@ -16,7 +16,7 @@ class SessionsController < ApplicationController
           'Please activate your account.
            For it click "Send confirm email" and following the instructions
            in the account confirmation email you received to proceed.'
-        cookies[:user_email] = params[:session][:email]
+        @email = params[:session][:email]
         @button_repeat_send = true
         render :new, status: :unprocessable_entity
       end
@@ -27,7 +27,7 @@ class SessionsController < ApplicationController
   end
 
   def send_confirm_email
-    @user = User.find_by_email(cookies[:user_email])
+    @user = User.find_by_email(params[:session][:email])
     user = ConfirmEmailAndGenerateToken.new(@user)
     user.generate_token
     @user.reload

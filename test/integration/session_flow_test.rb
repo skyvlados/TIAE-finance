@@ -3,6 +3,8 @@
 require 'test_helper'
 
 class SessionFlowTest < ActionDispatch::IntegrationTest
+  include Loginable
+
   test 'can see autorization page' do
     get login_path
     assert_response :success
@@ -28,10 +30,15 @@ class SessionFlowTest < ActionDispatch::IntegrationTest
     assert_response :unprocessable_entity
   end
 
-  #   test 'can send confirm email' do
-  #     p users(:not_confirm_user).email
-  #     post send_confirm_email_path, params: { session: { email: users(:not_confirm_user).email } }
-  #     assert_equal flash[:notice], 'Email sucess sent!'
-  #     assert_response :unprocessable_entity
-  #   end
+  test 'can send confirm email' do
+    post send_confirm_email_path, params: { session: { email: users(:not_confirm_user).email } }
+    assert_equal flash[:notice], 'Email sucess sent!'
+    assert_response :unprocessable_entity
+  end
+
+  test 'can log out user' do
+    login_as(users(:admin))
+    delete logout_path(users(:admin))
+    assert_redirected_to(root_path)
+  end
 end

@@ -3,12 +3,10 @@
 require 'test_helper'
 
 class UserFlowTest < ActionDispatch::IntegrationTest
-  def log_in_as(user, password: 'password')
-    post login_path, params: { session: { email: user.email, password: password } }
-  end
+  include Loginable
 
   test 'can see an users list' do
-    log_in_as(users(:admin))
+    login_as(users(:admin))
     get users_path
     assert_response :success
   end
@@ -20,7 +18,7 @@ class UserFlowTest < ActionDispatch::IntegrationTest
   end
 
   test 'cant see an users list user isnt admin' do
-    log_in_as(users(:confirm_user))
+    login_as(users(:confirm_user))
     get users_path
     assert_equal flash[:notice], 'You aren\'t an admin!'
     assert_redirected_to(root_path)
@@ -35,7 +33,7 @@ class UserFlowTest < ActionDispatch::IntegrationTest
   end
 
   test 'can edit the user' do
-    log_in_as(users(:admin))
+    login_as(users(:admin))
     put user_path(users(:not_confirm_user)),
         params: { user: { name: 'test user', email: 'user1@example.com', password: '1234' } }
     follow_redirect!
@@ -52,7 +50,7 @@ class UserFlowTest < ActionDispatch::IntegrationTest
   end
 
   test 'cant edit an users list user isnt admin' do
-    log_in_as(users(:confirm_user))
+    login_as(users(:confirm_user))
     put user_path(users(:not_confirm_user)),
         params: { user: { name: 'test user', email: 'user1@example.com', password: '1234' } }
     assert_equal flash[:notice], 'You aren\'t an admin!'
@@ -60,7 +58,7 @@ class UserFlowTest < ActionDispatch::IntegrationTest
   end
 
   test 'can delete the user' do
-    log_in_as(users(:admin))
+    login_as(users(:admin))
     delete user_path(users(:not_confirm_user))
     assert_response :see_other
     assert_equal flash[:notice], "User 'not_confirm_user' successfully deleted!"
@@ -74,7 +72,7 @@ class UserFlowTest < ActionDispatch::IntegrationTest
   end
 
   test 'cant delete an users list user isnt admin' do
-    log_in_as(users(:confirm_user))
+    login_as(users(:confirm_user))
     delete user_path(users(:not_confirm_user))
     assert_equal flash[:notice], 'You aren\'t an admin!'
     assert_redirected_to(root_path)

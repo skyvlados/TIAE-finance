@@ -17,6 +17,9 @@
 <% else %>
 <%= form_for(:session, url: send_confirm_email_path) do |form| %>
 <div>
+  <%= form.hidden_field :email, value: @email %>
+</div>
+<div>
   <%= form.submit 'Send confirm email'%>
   <%= link_to 'Sign up', new_user_path %>
 </div>
