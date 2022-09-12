@@ -18,4 +18,8 @@ class User < ApplicationRecord
            end
     BCrypt::Password.create(string, cost: cost)
   end
+
+  def gen_token
+    ConfirmEmailAndGenerateToken.new(self).generate_token
+  end
 end

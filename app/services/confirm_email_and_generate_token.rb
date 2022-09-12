@@ -4,7 +4,7 @@ class ConfirmEmailAndGenerateToken
   attr_reader :user
 
   def initialize(user)
-    @user = User.find_by_email(user.email)
+    @user = user
   end
 
   def email_activate
