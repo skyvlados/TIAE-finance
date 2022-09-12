@@ -25,7 +25,7 @@ class UsersController < ApplicationController
       service = ConfirmEmailAndGenerateToken.new(@user)
       service.generate_token
       @user.reload
-      UserMailer.registration_confirmation(@user).deliver_now
+      UserMailer.with(user: @user).registration_confirmation.deliver_now
       flash[:notice] = 'You are registered. To continue you need confirm email, check your email'
       redirect_to root_path
     else

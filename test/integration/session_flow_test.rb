@@ -32,7 +32,7 @@ class SessionFlowTest < ActionDispatch::IntegrationTest
 
   test 'can send confirm email' do
     post send_confirm_email_path, params: { session: { email: users(:not_confirm_user).email } }
-    assert_equal flash[:notice], 'Email sucess sent!'
+    assert_equal flash[:notice], 'Email success sent!'
     assert_response :unprocessable_entity
   end
 

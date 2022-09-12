@@ -31,9 +31,9 @@ class SessionsController < ApplicationController
     user = ConfirmEmailAndGenerateToken.new(@user)
     user.generate_token
     @user.reload
-    UserMailer.registration_confirmation(@user).deliver_now
+    UserMailer.with(user: @user).registration_confirmation.deliver_now
     flash.now[:notice] =
-      'Email sucess sent!'
+      'Email success sent!'
     render :new, status: :unprocessable_entity
   end
 
