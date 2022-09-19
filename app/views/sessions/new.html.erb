@@ -1,6 +1,6 @@
 <h1>Log in</h1>
+<% if !@button_repeat_send %>
 <%= form_for(:session, url: login_path) do |form| %>
-
 <div>
   <%= form.label :email %><br>
   <%= form.email_field :email %>
@@ -8,7 +8,20 @@
 <div>
   <%= form.label :password %><br>
   <%= form.password_field :password %>
+</div>
 <div>
   <%= form.submit 'Log in'%>
   <%= link_to 'Sign up', new_user_path %>
+</div>
+<% end %>
+<% else %>
+<%= form_for(:session, url: send_confirm_email_path) do |form| %>
+<div>
+  <%= form.hidden_field :email, value: @email %>
+</div>
+<div>
+  <%= form.submit 'Send confirm email'%>
+  <%= link_to 'Sign up', new_user_path %>
+</div>
+<% end %>
 <% end %>

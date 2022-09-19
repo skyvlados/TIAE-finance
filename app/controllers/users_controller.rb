@@ -22,8 +22,9 @@ class UsersController < ApplicationController
     user_params[:email].downcase!
     @user = User.new(user_params)
     if @user.save
-      log_in @user
-      flash[:notice] = 'Welcome to the TIAE finance App!'
+      @user.gen_token
+      UserMailer.with(user: @user).registration_confirmation.deliver_now
+      flash[:notice] = 'You are registered. To continue you need confirm email, check your email'
       redirect_to root_path
     else
       render :new, status: :unprocessable_entity
@@ -54,6 +55,18 @@ class UsersController < ApplicationController
     @user.update(is_deleted: true)
     flash[:notice] = "User '#{@user.name}' successfully deleted!"
     redirect_to users_path, status: 303
+  end
+
+  def confirm_email
+    user = User.find_by_confirm_token(params[:token])
+    if user
+      service = ConfirmEmailAndGenerateToken.new(user)
+      service.email_activate
+      flash[:success] = 'Welcome to the Sample App! Your email has been confirmed. Please sign in to continue.'
+    else
+      flash[:error] = 'Sorry. User does not exist'
+    end
+    redirect_to root_url
   end
 
   private
