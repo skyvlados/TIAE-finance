@@ -3,9 +3,7 @@
 require 'test_helper'
 
 class CategoryFlowTest < ActionDispatch::IntegrationTest
-  def log_in_as(user, password: 'password')
-    post login_path, params: { session: { email: user.email, password: password } }
-  end
+  include Loginable
 
   test 'can see an welcome page' do
     get '/'
@@ -13,7 +11,7 @@ class CategoryFlowTest < ActionDispatch::IntegrationTest
   end
 
   test 'can see an categories list' do
-    log_in_as(users(:admin))
+    login_as(users(:admin))
     get categories_path
     assert_response :success
   end
@@ -25,20 +23,20 @@ class CategoryFlowTest < ActionDispatch::IntegrationTest
   end
 
   test 'can show an category' do
-    log_in_as(users(:admin))
+    login_as(users(:admin))
     get category_path(categories(:food))
     assert_response :success
   end
 
   test 'cant show an other users category' do
-    log_in_as(users(:admin))
+    login_as(users(:admin))
     get category_path(categories(:others))
     assert flash[:notice], 'This category is dinied for you!'
     assert_redirected_to(root_path)
   end
 
   test 'can create an caregory' do
-    log_in_as(users(:admin))
+    login_as(users(:admin))
     post categories_path, params: { category: { name: 'test' } }
     assert_response :redirect
     follow_redirect!
@@ -53,7 +51,7 @@ class CategoryFlowTest < ActionDispatch::IntegrationTest
   end
 
   test 'can edit an caregory' do
-    log_in_as(users(:admin))
+    login_as(users(:admin))
     put category_path(categories(:goods)), params: { category: { name: 'test2' } }
     follow_redirect!
     assert_response :success
@@ -67,7 +65,7 @@ class CategoryFlowTest < ActionDispatch::IntegrationTest
   end
 
   test 'cant edit an other users caregory' do
-    log_in_as(users(:admin))
+    login_as(users(:admin))
     put category_path(categories(:others)), params: { category: { name: 'test2' } }
     assert_response :found
     assert flash[:notice], 'This category is dinied for you!'
@@ -75,7 +73,7 @@ class CategoryFlowTest < ActionDispatch::IntegrationTest
   end
 
   test 'can delete an caregory' do
-    log_in_as(users(:admin))
+    login_as(users(:admin))
     delete category_path(categories(:transport))
     assert_response :see_other
     follow_redirect!
@@ -89,7 +87,7 @@ class CategoryFlowTest < ActionDispatch::IntegrationTest
   end
 
   test 'cant delete an other users caregory' do
-    log_in_as(users(:admin))
+    login_as(users(:admin))
     delete category_path(categories(:others))
     assert_response :found
     assert flash[:notice], 'This category is dinied for you!'
