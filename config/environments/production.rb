@@ -64,6 +64,20 @@ Rails.application.configure do
   # config.active_job.queue_adapter     = :resque
   # config.active_job.queue_name_prefix = "tableIncomAndExpeditureWithERB_production"
 
+  # Don't care if the mailer can't send.
+  config.action_mailer.raise_delivery_errors = true
+  config.action_mailer.default_url_options = { host: 'https://tiaefinance.herokuapp.com/' }
+  config.action_mailer.delivery_method = :smtp
+  config.action_mailer.smtp_settings = {
+    address: 'smtp.mail.ru',
+    port: 587,
+    domain: 'mail.ru',
+    authentication: 'plain',
+    user_name: ENV.fetch('email'),
+    password: ENV.fetch('email_password'),
+    enable_starttls_auto: true
+  }
+
   config.action_mailer.perform_caching = false
 
   # Ignore bad email addresses and do not raise email delivery errors.
