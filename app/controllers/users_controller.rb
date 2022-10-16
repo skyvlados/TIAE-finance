@@ -57,6 +57,51 @@ class UsersController < ApplicationController
     redirect_to users_path, status: 303
   end
 
+  def forgot_password
+    render :forgot_password
+  end
+
+  def password_recovery
+    @email = user_params[:email]
+    if User.find_by(email: @email.downcase)
+      @user = User.find_by_email(@email)
+      user = ConfirmRecoveryPasswordToken.new(@user)
+      user.generate_token_for_recovery_password
+      @user.reload
+      UserMailer.with(user: @user).password_recovery.deliver_now
+      flash[:success] = "Letter with instruction send to your email adress #{@email}."
+      redirect_to root_url
+    else
+      flash[:error] = 'This email hasn\'t been registered yet'
+      redirect_to forgot_password_url
+    end
+  end
+
+  def set_new_password_form
+    @@password_recovery_token = request.fullpath.split('/')[2]
+    render :set_new_password_form
+  end
+
+  def set_new_password
+    if user_params[:password].blank?
+      flash[:error] = 'Password cannot be empty!'
+      redirect_to set_new_password_url
+    else
+      @new_password = user_params[:password]
+      user = User.find_by_confirm_recovery_password_token(@@password_recovery_token)
+      if user
+        user.password_digest = User.digest(@new_password)
+        user.confirm_recovery_password_token = nil
+        user.save
+        flash[:success] = 'Your new password success saved! Enter your new password to login.'
+
+      else
+        flash[:error] = 'Sorry. User does not exist or password has already been recovered'
+      end
+      redirect_to root_url
+    end
+  end
+
   def confirm_email
     user = User.find_by_confirm_token(params[:token])
     if user
