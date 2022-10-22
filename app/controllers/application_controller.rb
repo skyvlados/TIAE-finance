@@ -1,8 +1,7 @@
 # frozen_string_literal: true
 
 class ApplicationController < ActionController::Base
-  before_action :check_session,
-                except: %i[confirm_email forgot_password password_recovery set_new_password_form set_new_password]
+  before_action :check_session
   include Pagy::Backend
   include SessionsHelper
 
