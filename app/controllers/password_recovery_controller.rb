@@ -1,9 +1,7 @@
 # frozen_string_literal: true
 
 class PasswordRecoveryController < ApplicationController
-  def forgot_password
-    render :forgot_password
-  end
+  def forgot_password; end
 
   def password_recovery
     @email = password_recovery_params[:email]
@@ -23,7 +21,6 @@ class PasswordRecoveryController < ApplicationController
 
   def set_new_password_form
     @token = params[:token]
-    render :set_new_password_form
   end
 
   def set_new_password
