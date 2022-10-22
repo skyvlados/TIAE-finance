@@ -27,12 +27,17 @@ class OperationsController < ApplicationController
   end
 
   def create
-    @operation = Operation.new(operation_params)
-    if @operation.save
-      flash[:notice] = "Operation '#{@operation.id}' successfully saved!"
-      redirect_to action: 'index'
+    if Category.where(id: operation_params[:category_id], user_id: current_user.id).empty?
+      flash[:error] = 'This category is dinied for you!'
+      redirect_to root_path
     else
-      render :new, status: :unprocessable_entity
+      @operation = Operation.new(operation_params)
+      if @operation.save
+        flash[:notice] = "Operation '#{@operation.id}' successfully saved!"
+        redirect_to action: 'index'
+      else
+        render :new, status: :unprocessable_entity
+      end
     end
   end
 

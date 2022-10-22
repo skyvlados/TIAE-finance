@@ -48,6 +48,15 @@ class OperationFlowTest < ActionDispatch::IntegrationTest
     assert_redirected_to(root_path)
   end
 
+  test 'cant create an operation, category another user' do
+    login_as(users(:admin))
+    post operations_path, params: { operation: { category_id: categories(:others).id, direction: 'income',
+                                                 date: '2020-01-01', amount: 100, currency: 'RUB' } }
+    assert_response :found
+    assert flash[:error], 'This operation is dinied for you!'
+    assert_redirected_to(root_path)
+  end
+
   test 'can edit an operation' do
     login_as(users(:admin))
     put operation_path(operations(:relax)), params: { operation: { category: categories(:food),
