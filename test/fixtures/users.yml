@@ -23,3 +23,9 @@ admin:
   password_digest: <%= User.digest('password') %>
   is_admin: true
   email_confirmed: true
+
+recovery_password_user:
+  name: recover_password
+  email: recover_password@example.com
+  password_digest: <%= User.digest('password') %>
+  confirm_recovery_password_token: confirm_recovery_password_token

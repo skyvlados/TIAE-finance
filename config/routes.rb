@@ -8,9 +8,15 @@ Rails.application.routes.draw do
   resources :categories
   get '/confirm_email/:token', to: 'users#confirm_email', as: 'confirm_email'
   get 'login' => 'sessions#new'
-  post 'login' => 'sessions#create'
-  post 'send_confirm_email' => 'sessions#send_confirm_email', as: 'send_confirm_email'
+  post '/login' => 'sessions#create'
+  post '/send_confirm_email' => 'sessions#send_confirm_email', as: 'send_confirm_email'
   delete 'logout' => 'sessions#destroy'
+  scope '/password' do
+    get '/forgot', to: 'password_recovery#forgot_password', as: 'forgot_password'
+    post '/recovery', to: 'password_recovery#password_recovery', as: 'password_recovery'
+    get '/confirm_recovery/:token', to: 'password_recovery#set_new_password_form', as: 'set_new_password_form'
+    post '/new', to: 'password_recovery#set_new_password', as: 'set_new_password'
+  end
   # Define your application routes per the DSL in https://guides.rubyonrails.org/routing.html
 
   # Defines the root path route ("/")

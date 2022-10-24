@@ -7,9 +7,7 @@ class CategoriesController < ApplicationController
                                  .then { |scope| pagy(scope, items: params[:items]) }
   end
 
-  def show
-    render :show
-  end
+  def show; end
 
   def new
     @category = Category.new

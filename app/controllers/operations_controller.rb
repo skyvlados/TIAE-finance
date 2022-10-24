@@ -18,9 +18,7 @@ class OperationsController < ApplicationController
     end
   end
 
-  def show
-    render :show
-  end
+  def show; end
 
   def new
     @operation = Operation.new

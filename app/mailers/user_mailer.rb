@@ -7,4 +7,9 @@ class UserMailer < ActionMailer::Base
     @user = params[:user]
     mail(to: @user.email, subject: 'Registration Confirmation')
   end
+
+  def password_recovery
+    @user = params[:user]
+    mail(to: @user.email, subject: 'Password recovery')
+  end
 end
