@@ -1,7 +1,7 @@
 # frozen_string_literal: true
 
 class PasswordRecoveryController < ApplicationController
-  skip_before_action :check_session, only: %i[forgot_password password_recovery set_new_password_form set_new_password]
+  skip_before_action :check_session
   def forgot_password; end
 
   def password_recovery
