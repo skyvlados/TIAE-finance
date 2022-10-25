@@ -26,6 +26,13 @@ class OperationsController < ApplicationController
 
   def create
     @operation = Operation.new(operation_params)
+    category = available_categories_for_user(operation_params[:category_id])
+
+    if category.blank?
+      render :new, status: :forbidden
+      return
+    end
+
     if @operation.save
       flash[:notice] = "Operation '#{@operation.id}' successfully saved!"
       redirect_to action: 'index'
@@ -37,6 +44,13 @@ class OperationsController < ApplicationController
   def edit; end
 
   def update
+    category = available_categories_for_user(operation_params[:category_id])
+
+    if category.blank?
+      render :new, status: :forbidden
+      return
+    end
+
     if @operation.update(operation_params)
       flash[:notice] = 'Operation successfully updated!'
       redirect_to action: 'index'
@@ -69,5 +83,9 @@ class OperationsController < ApplicationController
       flash[:notice] = 'This operation is dinied for you!'
       redirect_to root_path
     end
+  end
+
+  def available_categories_for_user(id)
+    current_user.categories.where(id: id)
   end
 end
