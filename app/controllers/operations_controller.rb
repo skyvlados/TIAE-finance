@@ -27,23 +27,32 @@ class OperationsController < ApplicationController
   end
 
   def create
-    if Category.where(id: operation_params[:category_id], user_id: current_user.id).empty?
-      flash[:error] = 'This category is dinied for you!'
-      redirect_to root_path
+    @operation = Operation.new(operation_params)
+    category = available_categories_for_user(operation_params[:category_id])
+
+    if category.blank?
+      render :new, status: :forbidden
+      return
+    end
+
+    if @operation.save
+      flash[:notice] = "Operation '#{@operation.id}' successfully saved!"
+      redirect_to action: 'index'
     else
-      @operation = Operation.new(operation_params)
-      if @operation.save
-        flash[:notice] = "Operation '#{@operation.id}' successfully saved!"
-        redirect_to action: 'index'
-      else
-        render :new, status: :unprocessable_entity
-      end
+      render :new, status: :unprocessable_entity
     end
   end
 
   def edit; end
 
   def update
+    category = available_categories_for_user(operation_params[:category_id])
+
+    if category.blank?
+      render :new, status: :forbidden
+      return
+    end
+
     if @operation.update(operation_params)
       flash[:notice] = 'Operation successfully updated!'
       redirect_to action: 'index'
@@ -76,5 +85,9 @@ class OperationsController < ApplicationController
       flash[:notice] = 'This operation is dinied for you!'
       redirect_to root_path
     end
+  end
+
+  def available_categories_for_user(id)
+    current_user.categories.where(id: id)
   end
 end

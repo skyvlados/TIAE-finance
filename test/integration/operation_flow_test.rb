@@ -52,14 +52,12 @@ class OperationFlowTest < ActionDispatch::IntegrationTest
     login_as(users(:admin))
     post operations_path, params: { operation: { category_id: categories(:others).id, direction: 'income',
                                                  date: '2020-01-01', amount: 100, currency: 'RUB' } }
-    assert_response :found
-    assert flash[:error], 'This operation is dinied for you!'
-    assert_redirected_to(root_path)
+    assert_response :forbidden
   end
 
   test 'can edit an operation' do
     login_as(users(:admin))
-    put operation_path(operations(:relax)), params: { operation: { category: categories(:food),
+    put operation_path(operations(:relax)), params: { operation: { category_id: categories(:food).id,
                                                                    direction: 'expenditure', date: '2022-02-02',
                                                                    amount: 300, currency: 'USD' } }
     follow_redirect!
@@ -68,11 +66,19 @@ class OperationFlowTest < ActionDispatch::IntegrationTest
   end
 
   test 'cant edit an operation' do
-    put operation_path(operations(:relax)), params: { operation: { category: categories(:food),
+    put operation_path(operations(:relax)), params: { operation: { category_id: categories(:food).id,
                                                                    direction: 'expenditure', date: '2022-02-02',
                                                                    amount: 300, currency: 'USD' } }
     assert_response :found
     assert_redirected_to(root_path)
+  end
+
+  test 'cant edit an operation, category another user' do
+    login_as(users(:admin))
+    put operation_path(operations(:relax)), params: { operation: { category_id: categories(:others).id,
+                                                                   direction: 'income', date: '2020-01-01',
+                                                                   amount: 100, currency: 'RUB' } }
+    assert_response :forbidden
   end
 
   test 'cant edit an other users operation' do
