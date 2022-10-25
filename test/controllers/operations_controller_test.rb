@@ -78,9 +78,16 @@ class OperationsControllerTest < ActionDispatch::IntegrationTest
   test 'shouldnt get create, bad params' do
     login_as(users(:admin))
     assert_raises(ArgumentError) do
-      post operations_path, params: { operation: { category_id: 'test', direction: 'bad', date: 'not_date',
-                                                   amount: 'must be number', currency: 'CURRENCY' } }
+      post operations_path, params: { operation: { category_id: categories(:salary).id, direction: 'bad',
+                                                   date: 'not_date', amount: 'must be number', currency: 'CURRENCY' } }
     end
+  end
+
+  test 'shouldnt get create, category other users' do
+    login_as(users(:admin))
+    post operations_path, params: { operation: { category_id: categories(:others).id, direction: 'income',
+                                                 date: '2020-01-01', amount: '100', currency: 'USD' } }
+    assert_response :forbidden
   end
 
   test 'should get edit' do
@@ -93,6 +100,13 @@ class OperationsControllerTest < ActionDispatch::IntegrationTest
     get edit_operation_path(operations(:goods).id)
     assert_response :found
     assert_redirected_to(root_path)
+  end
+
+  test 'shouldnt get update, category other users' do
+    login_as(users(:admin))
+    post operations_path, params: { operation: { category_id: categories(:others).id, direction: 'income',
+                                                 date: '2020-01-01', amount: '100', currency: 'USD' } }
+    assert_response :forbidden
   end
 
   test 'should get update' do
