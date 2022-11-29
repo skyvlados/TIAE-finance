@@ -17,6 +17,7 @@ gem 'bcrypt', '3.1.12'
 gem 'caxlsx_rails'
 gem 'figaro'
 gem 'rubyzip', '>= 1.2.1'
+gem 'spreadsheet'
 
 # The original asset pipeline for Rails [https://github.com/rails/sprockets-rails]
 gem 'sprockets-rails'

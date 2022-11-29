@@ -17,6 +17,7 @@ Rails.application.routes.draw do
     get '/confirm_recovery/:token', to: 'password_recovery#set_new_password_form', as: 'set_new_password_form'
     post '/new', to: 'password_recovery#set_new_password', as: 'set_new_password'
   end
+  get '/import_excel' => 'import_excel#create', as: 'create_operation_from_excel'
   # Define your application routes per the DSL in https://guides.rubyonrails.org/routing.html
 
   # Defines the root path route ("/")
