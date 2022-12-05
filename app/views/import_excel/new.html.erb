@@ -1,0 +1,17 @@
+<h1>Import Operations From Excel</h1>
+
+<h3>Requirements</h3>
+<ul>
+  <li>You can import your operations if they are in an excel file format .xls.</li>
+  <li>You can dowload yout operations from Tinkoff bank.</li>
+  <li>You can also import transactions from another bank, but the excel file must contain 4 columns with specific names and these columns must be filled.</li>
+  <li>1 column - 'Дата операции', 5 column - 'Сумма операции', 6 - 'Валюта операции', 10 - 'Категория' </li>
+</ul>
+
+<h5>Select File</h5>
+<%= form_with url: create_opertaions_from_excel_path, multipart: true do %>
+  <%= file_field_tag :operations %>
+  <%= submit_tag "Upload"%>
+<% end %>
+
+<%= link_to '<button>Back to list</button>'.html_safe, operations_path %>
