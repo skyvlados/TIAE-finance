@@ -1,6 +1,23 @@
-<h1>Categories list</h1>
-<%= link_to 'Create', new_category_path %>
-<table border>
+<h1 class="title">Categories list</h1>
+
+<div class="field is-grouped">
+  <p class="control">
+    <%= link_to 'Create', new_category_path, class: "button is-link" %>
+  </p>
+</div>
+
+<%= form_with url: categories_path, method: "get"  do |form| %>
+  <div class="control">
+    <div class="select">
+      <% page_size=%i[5 10 25 50]%>
+      <%= form.select :page_size, page_size.each { |key| [key, key] }, selected: params[:page_size], prompt: 'Select page size'%>
+    </div>
+    <%= form.submit "Filter", class: "button is-link" %>
+  </div>
+    
+<% end %>
+
+<table class="table">
       <tr>
         <th>id</th>
         <th>name</th>
@@ -21,5 +38,16 @@
       </tr>
 <% end %>
 </table>
-<%= render partial: "shared/pagination" %>
-<%= link_to 'Back to Home Page', root_path %>
+
+<div class="field is-grouped">
+  <nav class="pagination" role="navigation" aria-label="pagination">
+    <ul class="pagination-list">
+      <%== render partial: 'shared/pagination', locals: {pagy: @pagy} %>
+  </nav>
+</div>
+
+<div class="field is-grouped">
+  <p class="control">
+    <%= link_to 'Back to Home page'.html_safe, root_path, class: "button is-light" %>
+  </p>
+</div>

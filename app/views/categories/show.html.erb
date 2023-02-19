@@ -1,4 +1,12 @@
-<h1>Show form</h1>
-<label for="name">Name:</label>
-<input disabled name="name" value="<%= @category.name %>">
-<br><%= link_to '<button>Back to list</button>'.html_safe, categories_path %>
+<h1 class="title">Show form</h1>
+
+<div class="field">
+    <label class="label">Name</label>
+    <input class="input" type="text" placeholder=<%= @category.name %> disabled>
+</div>
+
+<div class="field is-grouped">
+    <p class="control">
+        <%= link_to 'Back to list'.html_safe, categories_path, class: "button is-light" %>
+    </p>
+</div>

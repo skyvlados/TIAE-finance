@@ -1,23 +1,36 @@
-<h1>Operations list</h1>
-<%= link_to 'Create', new_operation_path %>
+<h1 class="title">Operations list</h1>
+
+<div class="field is-grouped">
+  <p class="control">
+    <%= link_to 'Create', new_operation_path, class: "button is-link" %>
+  </p>
+</div>
+
 <%= form_with url: operations_path, method: "get"  do |form| %>
-    <%= form.label "Currencies:" %>
-    <%= form.select :currency, Operation.currencies.keys.map { |key| [key, key] }, selected: params[:currency], include_blank: "All currencies" %>
-    <%= form.label "Directions:" %>
-    <%= form.select :direction, Operation.directions.keys.map { |key| [key, key] }, selected: params[:direction], include_blank: "All directions" %>
-    <%= form.label "Categories:" %>
-    <%= form.select :category, Category.all.map { |object| [object.name, object.id] }, selected: params[:category], include_blank: "All categories" %>
+  <div class="control">
+    <div class="select">
+      <%= form.select :currency, Operation.currencies.keys.map { |key| [key, key] }, selected: params[:currency], include_blank: "All currencies" %>
+    </div>
+    <div class="select">
+      <%= form.select :direction, Operation.directions.keys.map { |key| [key, key] }, selected: params[:direction], include_blank: "All directions" %>
+    </div>
+    <div class="select">
+      <%= form.select :category, Category.all.map { |object| [object.name, object.id] }, selected: params[:category], include_blank: "All categories" %>
+    </div>
     <br><%= form.label "Date start:" %>
     <%= form.date_field :date_start, :value => params[:date_start] %>
     <%= form.label "Date finish:" %>
     <%= form.date_field :date_finish, :value => params[:date_finish] %>
-    <%= form.label "Page size:" %>
-    <% page_size=%i[5 10 25 50]%>
-    <%= form.select :page_size, page_size.each { |key| [key, key] }, selected: params[:page_size], prompt: 'Select page size'%>
-    <%= form.submit("Filter") %>
+    <div class="select">
+      <% page_size=%i[5 10 25 50]%>
+      <%= form.select :page_size, page_size.each { |key| [key, key] }, selected: params[:page_size], prompt: 'Select page size'%>
+    </div>
+    <%= form.submit "Filter", class: "button is-link" %>
+  </div>
     
 <% end %>
-<table border>
+
+<table class="table">
       <tr>
         <th>id</th>
         <th>category</th>
@@ -46,9 +59,16 @@
       </tr>
 <% end %>
 </table>
-<%= render partial: "shared/pagination" %>
-<h2>Totals</h2>
-<table border>
+
+<div class="field is-grouped">
+  <nav class="pagination" role="navigation" aria-label="pagination">
+    <ul class="pagination-list">
+      <%== render partial: 'shared/pagination', locals: {pagy: @pagy} %>
+  </nav>
+</div>
+
+<h2 class="subtitle">Totals</h2>
+<table class="table">
       <tr>
         <th>amount</th>
         <th>currency</th>
@@ -62,6 +82,15 @@
   </tr>
 <% end %>
 </table>
-<%= link_to 'Download as Excel', operations_path(**@params, format: :xlsx) %>
-<%= link_to 'Import from excel', new_import_path %>
-<br><%= link_to 'Back to Home Page', root_path %>
+
+<div class="field is-grouped">
+  <p class="control">
+    <%= link_to 'Download as Excel', operations_path(**@params, format: :xlsx), class: "button is-link" %>
+  </p>
+  <p class="control">
+    <%= link_to 'Import from excel', new_import_path, class: "button is-success" %>
+  </p>
+  <p class="control">
+    <%= link_to 'Back to home page'.html_safe, root_path, class: "button is-light" %>
+  </p>
+</div>

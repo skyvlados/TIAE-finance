@@ -1,9 +1,17 @@
-<header>
-    <h1>TIAE finance</h1>
-    <%= button_to "Home", root_path, method: "get" %>
-    <% if logged_in? %>
-            <%= button_to "Log out", logout_path, method: "delete" %>
-    <% else %>
-        <%= button_to "Log in", login_path, method: "get" %>
-    <% end %>
-</header>
+<nav class="navbar" role="navigation" aria-label="main navigation">
+    <div class="navbar-brand">
+        <a class="navbar-item" href=<%= root_path %>>
+            <h1 class="title">TIAE finance</h1>
+        </a>
+    </div>
+
+    <div class="navbar-start">
+        <% if logged_in? %>
+            <%= form_with url: logout_path, method: :delete do |form| %>
+                <%= form.submit "Log out", class:'button is-danger' %>
+            <% end %>
+        <% else %>
+            <%= link_to "Log in", login_path, class: 'button is-primary' %>
+        <% end %>
+    </div>
+</nav>

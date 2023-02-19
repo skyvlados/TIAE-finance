@@ -1,28 +1,61 @@
-<h1>Registration form</h1>
+<div class="content is-large">
+    <h1>Registration form</h1>
+</div>
+
 <%= form_with model: @user do |form| %>
-<div>
-    <%= form.label :name %><br>
-    <%= form.text_field :name %>
-    <% @user.errors.full_messages_for(:name).each do |message| %>
-        <div><%= message %></div>
-    <% end %>
-</div>
-<div>
-    <%= form.label :email %><br>
-    <%= form.text_field :email %>
-    <% @user.errors.full_messages_for(:email).each do |message| %>
-        <div><%= message %></div>
-    <% end %>
-</div>
- <div>
-    <%= form.label :password %><br>
-    <%= form.password_field :password %>
-    <% @user.errors.full_messages_for(:password).each do |message| %>
-        <div><%= message %></div>
-    <% end %>
-  </div>
-  <div>
-    <%= form.submit button_text %>
-    <%= link_to '<button>Back to home page</button>'.html_safe, root_path %>
-  </div>
+
+    <div class="field">
+        <label class="label">Name</label>
+        <div class="control has-icons-left">
+            <%= form.text_field :name, class: "input", placeholder: "Username" %>
+            <span class="icon is-small is-left">
+                <i class="fas fa-user"></i>
+            </span>
+        </div>
+        <% @user.errors.full_messages_for(:name).each do |message| %>
+            <p class="help is-danger">
+                <%= message %>
+            </p>
+        <% end %>
+    </div>
+
+    <div class="field">
+        <label class="label">Email</label>
+        <div class="control has-icons-left">
+            <%= form.text_field :email, class: "input", placeholder: "email@example.com" %>
+            <span class="icon is-small is-left">
+                <i class="fas fa-envelope"></i>
+            </span>
+        </div>
+        <% @user.errors.full_messages_for(:email).each do |message| %>
+            <p class="help is-danger">
+                <%= message %>
+            </p>
+        <% end %>
+    </div>
+
+    <div class="field">
+        <label class="label">Password</label>
+        <div class="control has-icons-left">
+            <%= form.password_field :password, class: "input", placeholder: "1234" %>
+            <span class="icon is-small is-left">
+                <i class="fas fa-lock"></i>
+            </span>
+        </div>
+        <% @user.errors.full_messages_for(:password).each do |message| %>
+            <p class="help is-danger">
+                <%= message %>
+            </p>
+        <% end %>
+    </div>
+
+    <div class="field is-grouped">
+        <p class="control">
+            <%= form.submit button_text, class: "button is-link" %>
+        </p>
+        <p class="control">
+            <%= link_to 'Back to home page'.html_safe, root_path, class: "button is-light" %>
+        </p>
+    </div>
+
 <% end %>
