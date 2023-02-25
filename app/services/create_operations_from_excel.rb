@@ -24,22 +24,25 @@ class CreateOperationsFromExcel
 
   def create_operations
     worksheet = @worksheets.first
+    begin
+      worksheet.rows.each_with_index do |row, index|
+        next if index.zero? || row[OPERATION_DATE].nil?
 
-    worksheet.rows.each_with_index do |row, index|
-      next if index.zero? || row[OPERATION_DATE].nil?
+        if Category.find_by_name(row[CATEGORY].to_s).blank?
+          Category.create(name: row[CATEGORY].to_s, user_id: current_user.id)
+        end
 
-      if Category.find_by_name(row[CATEGORY].to_s).blank?
-        Category.create(name: row[CATEGORY].to_s, user_id: current_user.id)
+        Operation.create(
+          direction: row[OPERATION_SUM].positive? ? 'income' : 'expenditure',
+          date: row[OPERATION_DATE],
+          amount: row[OPERATION_SUM].abs,
+          user: current_user,
+          category: Category.find_by_name(row[CATEGORY].to_s),
+          currency: row[CURRENCY]
+        )
       end
-
-      Operation.create(
-        direction: row[OPERATION_SUM].positive? ? 'income' : 'expenditure',
-        date: row[OPERATION_DATE],
-        amount: row[OPERATION_SUM].abs,
-        user: current_user,
-        category: Category.find_by_name(row[CATEGORY].to_s),
-        currency: row[CURRENCY]
-      )
+    rescue StandardError
+      render status: :unprocessable_entity
     end
   end
 end
