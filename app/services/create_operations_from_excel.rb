@@ -17,7 +17,6 @@ class CreateOperationsFromExcel
 
   def call
     # NOTE: spreadsheet only supports .xls files (not .xlsx)
-    # workbook = Spreadsheet.open '/Users/vladislav/My_documents/operation.xls'
     workbook = Spreadsheet.open path_excel_file
     @worksheets = workbook.worksheets
     create_operations
