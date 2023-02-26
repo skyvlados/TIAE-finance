@@ -8,24 +8,28 @@
 
 <%= form_with url: operations_path, method: "get"  do |form| %>
   <div class="control">
-    <div class="select">
-      <%= form.select :currency, Operation.currencies.keys.map { |key| [key, key] }, selected: params[:currency], include_blank: "All currencies" %>
+    <div class="field">
+      <div class="select">
+        <%= form.select :currency, Operation.currencies.keys.map { |key| [key, key] }, selected: params[:currency], include_blank: "All currencies" %>
+      </div>
+      <div class="select">
+        <%= form.select :direction, Operation.directions.keys.map { |key| [key, key] }, selected: params[:direction], include_blank: "All directions" %>
+      </div>
+      <div class="select">
+        <%= form.select :category, Category.all.map { |object| [object.name, object.id] }, selected: params[:category], include_blank: "All categories" %>
+      </div>
     </div>
-    <div class="select">
-      <%= form.select :direction, Operation.directions.keys.map { |key| [key, key] }, selected: params[:direction], include_blank: "All directions" %>
+    <div class="field is-grouped">
+      <%= form.date_field :date_start, type: "date", class: "input", :value => params[:date_start] %>
+      <%= form.date_field :date_finish, type: "date", class: "input", :value => params[:date_finish] %>
     </div>
-    <div class="select">
-      <%= form.select :category, Category.all.map { |object| [object.name, object.id] }, selected: params[:category], include_blank: "All categories" %>
+    <div class="field">
+      <div class="select">
+        <% page_size=%i[5 10 25 50]%>
+        <%= form.select :page_size, page_size.each { |key| [key, key] }, selected: params[:page_size], prompt: 'Select page size'%>
+      </div>
+      <%= form.submit "Filter", class: "button is-link" %>
     </div>
-    <br><%= form.label "Date start:" %>
-    <%= form.date_field :date_start, :value => params[:date_start] %>
-    <%= form.label "Date finish:" %>
-    <%= form.date_field :date_finish, :value => params[:date_finish] %>
-    <div class="select">
-      <% page_size=%i[5 10 25 50]%>
-      <%= form.select :page_size, page_size.each { |key| [key, key] }, selected: params[:page_size], prompt: 'Select page size'%>
-    </div>
-    <%= form.submit "Filter", class: "button is-link" %>
   </div>
     
 <% end %>
