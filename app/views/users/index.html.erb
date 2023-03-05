@@ -1,69 +1,74 @@
-<h1 class="title">Users list</h1>
+<section class="column is-half">
+  <h1 class="title">Users list</h1>
 
-<%= form_with url: users_path, method: "get"  do |form| %>
+  <div class="field is-grouped">
+    <%= form_with url: users_path, method: "get"  do |form| %>
 
-  <div class="field">
-        <label class="label">Name</label>
-        <div class="control has-icons-left">
-            <%= form.text_field :name, value: params.dig(:name), class: "input", placeholder: "Name" %>
-            <span class="icon is-small is-left">
-                <i class="fas fa-user"></i>
-            </span>
+      <div class="field">
+            <label class="label">Name</label>
+            <div class="control has-icons-left">
+                <%= form.text_field :name, value: params.dig(:name), class: "input", placeholder: "Name" %>
+                <span class="icon is-small is-left">
+                    <i class="fas fa-user"></i>
+                </span>
+            </div>
+      </div>
+
+      <div class="field">
+            <label class="label">Email</label>
+            <div class="control has-icons-left">
+                <%= form.text_field :email, value: params.dig(:email), class: "input", placeholder: "Email" %>
+                <span class="icon is-small is-left">
+                    <i class="fas fa-envelope"></i>
+                </span>
+            </div>
+      </div>
+
+      <div class="control">
+        <div class="select">
+          <% page_size=%i[5 10 25 50]%>
+          <%= form.select :page_size, page_size.each { |key| [key, key] }, selected: params[:page_size], prompt: 'Select page size'%>
         </div>
+        <%= form.submit "Filter", class: "button is-link" %>
+      </div>
+        
+    <% end %>
   </div>
 
-  <div class="field">
-        <label class="label">Email</label>
-        <div class="control has-icons-left">
-            <%= form.text_field :email, value: params.dig(:email), class: "input", placeholder: "Email" %>
-            <span class="icon is-small is-left">
-                <i class="fas fa-user"></i>
-            </span>
-        </div>
+  <table class="table">
+        <tr>
+          <th>id</th>
+          <th>name</th>
+          <th>email</th>
+          <th>actions</th>
+        </tr>
+  <% @users.each do |user|  %>
+        <tr>
+          <td><%= user.id %></td>
+          <td><%= user.name %></td>
+          <td><%= user.email %></td>
+          <td>
+              <%= link_to 'Show', user %>
+              <%= link_to 'Edit', [:edit, user] %>
+              <%= link_to "Destroy", user, data: {
+                                turbo_method: :delete,
+                                turbo_confirm: "Are you sure?"
+                              } %>
+          </td>
+        </tr>
+  <% end %>
+  </table>
+
+  <div class="field is-grouped">
+    <nav class="pagination" role="navigation" aria-label="pagination">
+      <ul class="pagination-list">
+        <%== render partial: 'shared/pagination', locals: {pagy: @pagy} %>
+    </nav>
   </div>
 
-  <div class="control">
-    <div class="select">
-      <% page_size=%i[5 10 25 50]%>
-      <%= form.select :page_size, page_size.each { |key| [key, key] }, selected: params[:page_size], prompt: 'Select page size'%>
-    </div>
-    <%= form.submit "Filter", class: "button is-link" %>
+  <div class="field is-grouped">
+    <p class="control">
+      <%= link_to 'Back to Home page'.html_safe, root_path, class: "button is-light" %>
+    </p>
   </div>
-    
-<% end %>
-<table class="table">
-      <tr>
-        <th>id</th>
-        <th>name</th>
-        <th>email</th>
-        <th>actions</th>
-      </tr>
-<% @users.each do |user|  %>
-      <tr>
-        <td><%= user.id %></td>
-        <td><%= user.name %></td>
-        <td><%= user.email %></td>
-        <td>
-            <%= link_to 'Show', user %>
-            <%= link_to 'Edit', [:edit, user] %>
-            <%= link_to "Destroy", user, data: {
-                              turbo_method: :delete,
-                              turbo_confirm: "Are you sure?"
-                            } %>
-        </td>
-      </tr>
-<% end %>
-</table>
-
-<div class="field is-grouped">
-  <nav class="pagination" role="navigation" aria-label="pagination">
-    <ul class="pagination-list">
-      <%== render partial: 'shared/pagination', locals: {pagy: @pagy} %>
-  </nav>
-</div>
-
-<div class="field is-grouped">
-  <p class="control">
-    <%= link_to 'Back to Home page'.html_safe, root_path, class: "button is-light" %>
-  </p>
-</div>
+</section>

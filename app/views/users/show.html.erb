@@ -1,20 +1,22 @@
-<h1 class="title">Show form</h1>
+<section class="column is-half">
+  <h1 class="title">Show form</h1>
 
-<div class="field">
-    <label class="label">Name</label>
-    <input class="input" type="text" placeholder=<%= @user.name %> disabled>
-</div>
+  <div class="field">
+      <label class="label">Name</label>
+      <input class="input" type="text" placeholder=<%= @user.name %> disabled>
+  </div>
 
-<div class="field">
-    <label class="label">Email</label>
-    <input class="input" type="text" placeholder=<%= @user.email %> disabled>
-</div>
+  <div class="field">
+      <label class="label">Email</label>
+      <input class="input" type="text" placeholder=<%= @user.email %> disabled>
+  </div>
 
-<div class="field is-grouped">
-    <p class="control">
-      <%= link_to 'Edit', edit_user_path(@user),  class: "button is-link"%>
-    </p>
-    <p class="control">
-      <%= link_to 'Back to list'.html_safe, users_path, class: "button is-light" %>
-    </p>
-</div>
+  <div class="field is-grouped">
+      <p class="control">
+        <%= link_to 'Edit', edit_user_path(@user),  class: "button is-link"%>
+      </p>
+      <p class="control">
+        <%= link_to 'Back to list'.html_safe, users_path, class: "button is-light" %>
+      </p>
+  </div>
+</section>

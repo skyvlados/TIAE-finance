@@ -2,9 +2,7 @@
 
   <div class="field">
     <label class="label">Name</label>
-    <div class="control has-icons-left">
-        <%= form.text_field :name, class: "input", placeholder: "Categoryname" %>
-    </div>
+        <%= form.text_field :name, class: "input", placeholder: "category name" %>
     <% @category.errors.full_messages_for(:name).each do |message| %>
       <p class="help is-danger">
         <%= message %>

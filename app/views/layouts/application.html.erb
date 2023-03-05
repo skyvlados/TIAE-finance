@@ -15,12 +15,16 @@
   </head>
 
   <body>
-  <%= render "layouts/header" %>
-  <% flash.each do |type, msg| %>
-  <div>
-    <span><%= msg %></span>
-  </div>
-<% end %>
-    <%= yield %>
+    <%= render "layouts/header"%>
+      <section class="section">
+        <div class="container">
+            <% flash.each do |type, msg| %>
+              <div class="notification is-warning">
+                <span><%= msg %></span>
+              </div>
+            <% end %>
+            <%= yield %>
+        </div>
+      </section>
   </body>
 </html>

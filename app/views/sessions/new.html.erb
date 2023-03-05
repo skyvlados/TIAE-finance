@@ -1,44 +1,52 @@
-<div class="content is-large">
-    <h1>Log in</h1>
+<div class="content is-vcentered has-text-centered">
+  <div class="container">
+    <div class="content is-large">
+      <div class="level-item has-text-centered">
+        <h1>Log in</h1>
+      </div>
+    </div>
+  </div>
 </div>
 
 <% if !@button_repeat_send %>
   <%= form_for(:session, url: login_path) do |form| %>
-
     <div class="field">
-      <label class="label">Email</label>
-      <div class="control has-icons-left">
-        <%= form.email_field :email, class: "input", placeholder: "email@example.com" %>
-        <span class="icon is-small is-left">
-          <i class="fas fa-envelope"></i>
-        </span>
+      <div class="level-item has-text-centered">
+        <div class="control has-icons-left">
+          <%= form.email_field :email, class: "input", placeholder: "email@example.com" %>
+          <span class="icon is-small is-left">
+            <i class="fas fa-envelope"></i>
+          </span>
+        </div>
       </div>
     </div>
 
     <div class="field">
-      <label class="label">Password</label>
-      <div class="control has-icons-left">
-        <%= form.password_field :password, class: "input", placeholder: "1234" %>
-        <span class="icon is-small is-left">
-          <i class="fas fa-lock"></i>
-        </span>
+      <div class="level-item has-text-centered">
+        <div class="control has-icons-left">
+          <%= form.password_field :password, class: "input", placeholder: "password" %>
+          <span class="icon is-small is-left">
+            <i class="fas fa-lock"></i>
+          </span>
+        </div>
       </div>
     </div>
 
-    <div>
-      <div class="field is-grouped">
-        <div class="control">
-          <%= form.submit 'Log in', class: "button is-success" %>
-        </div>
+    <div class="field">
+      <div class="level-item has-text-centered">
+        <div class="field is-grouped">
+          <div class="control">
+            <%= form.submit 'Log in', class: "button is-success" %>
+          </div>
 
-        <div class="control">
-          <%= link_to 'Sign up', new_user_path, class: "button is-link" %>
-        </div>
+          <div class="control">
+            <%= link_to 'Sign up', new_user_path, class: "button is-link" %>
+          </div>
 
-        <div class="control">
-          <%= link_to 'Forgot password', forgot_password_path, class: "button is-warning" %>
+          <div class="control">
+            <%= link_to 'Forgot password', forgot_password_path, class: "button is-warning" %>
+          </div>
         </div>
-
       </div>
     </div>
 

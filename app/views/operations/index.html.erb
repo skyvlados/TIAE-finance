@@ -6,33 +6,38 @@
   </p>
 </div>
 
-<%= form_with url: operations_path, method: "get"  do |form| %>
-  <div class="control">
-    <div class="field">
-      <div class="select">
-        <%= form.select :currency, Operation.currencies.keys.map { |key| [key, key] }, selected: params[:currency], include_blank: "All currencies" %>
+<section class="column is-half">
+  <%= form_with url: operations_path, method: "get"  do |form| %>
+    <div class="control">
+      <div class="field">
+        <div class="select">
+          <%= form.select :currency, Operation.currencies.keys.map { |key| [key, key] }, selected: params[:currency], include_blank: "All currencies" %>
+        </div>
+        <div class="select">
+          <%= form.select :direction, Operation.directions.keys.map { |key| [key, key] }, selected: params[:direction], include_blank: "All directions" %>
+        </div>
+        <div class="select">
+          <%= form.select :category, Category.all.map { |object| [object.name, object.id] }, selected: params[:category], include_blank: "All categories" %>
+        </div>
       </div>
-      <div class="select">
-        <%= form.select :direction, Operation.directions.keys.map { |key| [key, key] }, selected: params[:direction], include_blank: "All directions" %>
+      <div class="field is-grouped">
+        <div class="control">
+          <%= form.date_field :date_start, type: "date", class: "input", :value => params[:date_start] %>
+        </div>
+        <div class="control">
+          <%= form.date_field :date_finish, type: "date", class: "input", :value => params[:date_finish] %>
+        </div>
       </div>
-      <div class="select">
-        <%= form.select :category, Category.all.map { |object| [object.name, object.id] }, selected: params[:category], include_blank: "All categories" %>
-      </div>
+        <div class="field">
+          <div class="select">
+            <% page_size=%i[5 10 25 50]%>
+            <%= form.select :page_size, page_size.each { |key| [key, key] }, selected: params[:page_size], prompt: 'Select page size'%>
+          </div>
+          <%= form.submit "Filter", class: "button is-link" %>
+        </div>
     </div>
-    <div class="field is-grouped">
-      <%= form.date_field :date_start, type: "date", class: "input", :value => params[:date_start] %>
-      <%= form.date_field :date_finish, type: "date", class: "input", :value => params[:date_finish] %>
-    </div>
-    <div class="field">
-      <div class="select">
-        <% page_size=%i[5 10 25 50]%>
-        <%= form.select :page_size, page_size.each { |key| [key, key] }, selected: params[:page_size], prompt: 'Select page size'%>
-      </div>
-      <%= form.submit "Filter", class: "button is-link" %>
-    </div>
-  </div>
-    
-<% end %>
+  <% end %>
+</section>
 
 <table class="table">
       <tr>
@@ -71,7 +76,10 @@
   </nav>
 </div>
 
-<h2 class="subtitle">Totals</h2>
+<div class="field is-grouped">
+  <h2 class="subtitle">Totals</h2>
+</div>
+
 <table class="table">
       <tr>
         <th>amount</th>
