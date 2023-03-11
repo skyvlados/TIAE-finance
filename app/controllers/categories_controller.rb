@@ -56,7 +56,7 @@ class CategoriesController < ApplicationController
     if category.user == current_user
       @category = category
     else
-      flash[:notice] = 'This category is dinied for you!'
+      flash[:info] = 'This category is dinied for you!'
       redirect_to root_path
     end
   end

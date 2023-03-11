@@ -12,7 +12,7 @@ class PasswordRecoveryController < ApplicationController
       user.generate_token_for_recovery_password
       @user.reload
       UserMailer.with(user: @user).password_recovery.deliver_now
-      flash[:success] = "Letter with instruction send to your email adress #{@email}."
+      flash[:notice] = "Letter with instruction send to your email adress #{@email}."
       redirect_to root_url
     else
       flash[:error] = 'This email hasn\'t been registered yet'
@@ -36,7 +36,7 @@ class PasswordRecoveryController < ApplicationController
         user.password_digest = User.digest(new_password)
         user.confirm_recovery_password_token = nil
         user.save
-        flash[:success] = 'Your new password success saved! Enter your new password to login.'
+        flash[:notice] = 'Your new password success saved! Enter your new password to login.'
       else
         flash[:error] = 'Sorry. User does not exist or password has already been recovered'
       end

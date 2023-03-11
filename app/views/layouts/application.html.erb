@@ -19,7 +19,7 @@
       <section class="section">
         <div class="container">
             <% flash.each do |type, msg| %>
-              <div class="notification is-warning">
+              <div class="notification <%= notification_text %>">
                 <span><%= msg %></span>
               </div>
             <% end %>
