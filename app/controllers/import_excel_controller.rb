@@ -8,14 +8,9 @@ class ImportExcelController < ApplicationController
       flash[:notice] = 'You have not selected a file or selected another format file. Try again!'
       redirect_to new_import_path
     else
-      uploaded_file = params[:operations]
-      file = Tempfile.new(uploaded_file.original_filename, Rails.root.join,
-                          encoding: 'ascii-8bit')
-      file.write(uploaded_file.read)
-
-      CreateOperationsFromExcel.new(current_user, file.path).call
-      file.close
-      file.unlink
+      service = WriteExcelFile.new(params, current_user)
+      service.call
+      flash[:notice] = "Operations successfully saved!"
       redirect_to operations_path
     end
   end

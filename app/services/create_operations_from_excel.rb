@@ -24,7 +24,7 @@ class CreateOperationsFromExcel
 
   def create_operations
     worksheet = @worksheets.first
-    begin
+    ActiveRecord::Base.transaction do
       worksheet.rows.each_with_index do |row, index|
         next if index.zero? || row[OPERATION_DATE].nil?
 
@@ -41,7 +41,7 @@ class CreateOperationsFromExcel
           currency: row[CURRENCY]
         )
       end
-    rescue StandardError
+    rescue ActiveRecord::RecordInvalid
       render status: :unprocessable_entity
     end
   end
