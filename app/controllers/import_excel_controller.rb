@@ -10,7 +10,7 @@ class ImportExcelController < ApplicationController
     else
       service = WriteExcelFile.new(params, current_user)
       service.call
-      flash[:notice] = "Operations successfully saved!"
+      flash[:notice] = 'Operations successfully saved!'
       redirect_to operations_path
     end
   end
