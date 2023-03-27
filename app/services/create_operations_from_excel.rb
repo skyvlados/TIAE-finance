@@ -23,10 +23,9 @@ class CreateOperationsFromExcel
   end
 
   def find_category(name)
-    Category.with_advisory_lock(name) do
-      if Category.find_by(name: name, user_id: current_user.id).blank?
-        Category.create(name: name, user_id: current_user.id)
-      end
+    Category.with_advisory_lock(name + current_user.id.to_s) do
+      category = Category.find_by(name: name, user: current_user)
+      category || Category.create(name: name, user: current_user)
     end
   end
 
@@ -36,14 +35,12 @@ class CreateOperationsFromExcel
       worksheet.rows.each_with_index do |row, index|
         next if index.zero? || row[OPERATION_DATE].nil?
 
-        category = find_category(row[CATEGORY].to_s)
-
         Operation.create(
           direction: row[OPERATION_SUM].positive? ? 'income' : 'expenditure',
           date: row[OPERATION_DATE],
           amount: row[OPERATION_SUM].abs,
           user: current_user,
-          category: category || Category.find_by(name: row[CATEGORY].to_s, user_id: current_user.id),
+          category: find_category(row[CATEGORY].to_s),
           currency: row[CURRENCY]
         )
       end

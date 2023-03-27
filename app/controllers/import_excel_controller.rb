@@ -1,22 +1,24 @@
 # frozen_string_literal: true
 
 class ImportExcelController < ApplicationController
-  rescue_from ActiveRecord::RecordInvalid, with: :show_errors
-
-  rescue_from 'MyAppError::FailedCreateCategoriesOrOperations' do |_exception|
-    render status: :unprocessable_entity
-  end
-
   def new; end
 
   def create
-    if params[:operations].blank? || !params[:operations].original_filename.include?('.xls')
-      flash[:notice] = 'You have not selected a file or selected another format file. Try again!'
-      redirect_to new_import_path
-    else
-      WriteExcelFile.new(params[:operations], current_user).call
+    if file.present? && file.original_filename.include?('.xls')
+
+      WithFile.new(file).call do |file|
+        CreateOperationsFromExcel.new(current_user, file.path).call
+      end
+
       flash[:notice] = 'Operations successfully saved!'
       redirect_to operations_path
+    else
+      flash[:notice] = 'You have not selected a file or selected another format file. Try again!'
+      redirect_to new_import_path
     end
+  end
+
+  def file
+    params[:file]
   end
 end
