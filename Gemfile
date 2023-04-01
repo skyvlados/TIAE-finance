@@ -16,7 +16,10 @@ gem 'axlsx'
 gem 'bcrypt', '3.1.12'
 gem 'caxlsx_rails'
 gem 'figaro'
+gem 'pry', '~> 0.13.1'
 gem 'rubyzip', '>= 1.2.1'
+gem 'spreadsheet'
+gem 'with_advisory_lock'
 
 # The original asset pipeline for Rails [https://github.com/rails/sprockets-rails]
 gem 'sprockets-rails'
