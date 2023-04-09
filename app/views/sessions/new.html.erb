@@ -39,11 +39,11 @@
             <%= form.submit 'Log in', class: "button is-success" %>
           </div>
 
-          <div class="control">
+          <div data-turbo="false", class="control">
             <%= link_to 'Sign up', new_user_path, class: "button is-link" %>
           </div>
 
-          <div class="control">
+          <div data-turbo="false", class="control">
             <%= link_to 'Forgot password', forgot_password_path, class: "button is-warning" %>
           </div>
         </div>
