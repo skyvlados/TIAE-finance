@@ -6,21 +6,15 @@
 
       <div class="field">
             <label class="label">Name</label>
-            <div class="control has-icons-left">
+            <div class="control">
                 <%= form.text_field :name, value: params.dig(:name), class: "input", placeholder: "Name" %>
-                <span class="icon is-small is-left">
-                    <i class="fas fa-user"></i>
-                </span>
             </div>
       </div>
 
       <div class="field">
             <label class="label">Email</label>
-            <div class="control has-icons-left">
+            <div class="control">
                 <%= form.text_field :email, value: params.dig(:email), class: "input", placeholder: "Email" %>
-                <span class="icon is-small is-left">
-                    <i class="fas fa-envelope"></i>
-                </span>
             </div>
       </div>
 
