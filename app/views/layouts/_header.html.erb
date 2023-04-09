@@ -5,7 +5,7 @@
                 <div class="title">TIAE finance</div>
             </a>
         </div>
-        <div class="level-item has-text-centered">
+        <div data-turbo="false", class="level-item has-text-centered">
             <% if logged_in? %>
                 <%= form_with url: logout_path, method: :delete do |form| %>
                     <%= form.submit "Log out", class:'button is-danger' %>

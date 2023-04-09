@@ -99,7 +99,7 @@
   <p class="control">
     <%= link_to 'Download as Excel', operations_path(**@params, format: :xlsx), class: "button is-success" %>
   </p>
-  <p class="control">
+  <p data-turbo="false", class="control">
     <%= link_to 'Import from excel'.html_safe, new_import_path, class: "button is-link" %>
   </p>
   <p class="control">
