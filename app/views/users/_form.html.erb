@@ -1,20 +1,38 @@
 <%= form_with model: @user do |form| %>
-  <div>
-    <%= form.label :name %><br>
-    <%= form.text_field :name %>
+
+   <div class="field">
+    <label class="label">Name</label>
+    <div class="control has-icons-left">
+      <%= form.text_field :name, class: "input", placeholder: "Username" %>
+      <span class="icon is-small is-left">
+        <i class="fas fa-user"></i>
+      </span>
+    </div>
     <% @user.errors.full_messages_for(:name).each do |message| %>
         <div><%= message %></div>
     <% end %>
   </div>
-  <div>
-    <%= form.label :email %><br>
-    <%= form.text_field :email %>
+
+  <div class="field">
+    <label class="label">Email</label>
+    <div class="control has-icons-left">
+      <%= form.text_field :email, class: "input", placeholder: "email@example.com" %>
+      <span class="icon is-small is-left">
+        <i class="fas fa-envelope"></i>
+      </span>
+    </div>
     <% @user.errors.full_messages_for(:email).each do |message| %>
-        <div><%= message %></div>
+          <div><%= message%></div>
     <% end %>
   </div>
-  <div>
-    <%= form.submit button_text %>
-    <%= link_to '<button>Back to list</button>'.html_safe, users_path %>
+
+  <div class="field is-grouped">
+    <p class="control">
+      <%= form.submit button_text,  class: "button is-link"%>
+    </p>
+    <p class="control">
+      <%= link_to 'Back to list'.html_safe, users_path, class: "button is-light" %>
+    </p>
   </div>
+
 <% end %>

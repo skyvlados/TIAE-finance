@@ -96,7 +96,7 @@ class UsersControllerTest < ActionDispatch::IntegrationTest
 
   test 'can confirm email' do
     get confirm_email_path(12_345_678)
-    assert_equal flash[:success],
+    assert_equal flash[:notice],
                  'Welcome to the Sample App! Your email has been confirmed. Please sign in to continue.'
   end
 

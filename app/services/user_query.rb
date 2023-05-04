@@ -22,7 +22,7 @@ class UserQuery
   def filter_by_name(scope)
     return scope if params[:name].blank?
 
-    scope.where('name LIKE ?', "%#{params[:name]}%")
+    scope.where('name ILIKE ?', "%#{params[:name]}%")
   end
 
   def filter_by_email(scope)

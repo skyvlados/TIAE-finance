@@ -45,7 +45,7 @@ class UserFlowTest < ActionDispatch::IntegrationTest
     put user_path(users(:not_confirm_user)),
         params: { user: { name: 'test user', email: 'user1@example.com', password: '1234' } }
     assert_response :found
-    assert_equal flash[:notice], 'First of all you must authorization!'
+    assert_equal flash[:info], 'First of all you must authorization!'
     assert_redirected_to(root_path)
   end
 
@@ -80,7 +80,7 @@ class UserFlowTest < ActionDispatch::IntegrationTest
 
   test 'can confirm email' do
     get confirm_email_path(12_345_678)
-    assert_equal flash[:success],
+    assert_equal flash[:notice],
                  'Welcome to the Sample App! Your email has been confirmed. Please sign in to continue.'
   end
 

@@ -1,9 +1,37 @@
-<h1>Show form</h1>
+<section class="column is-half">
+    <h1 class="title">Show form</h1>
 
-<div>Direction: <%= @operation.direction %></div>
-<div>Category: <%= @operation.category.name %></div>
-<div>Amount: <%= human_amount(@operation.amount, @operation.currency) %></div>
-<div>Date: <%= @operation.date.strftime("%d-%m-%Y") %></div>
+    <div class="field">
+        <label class="label">Direction</label>
+        <input class="input" type="text" placeholder=<%= @operation.direction %> disabled>
+    </div>
 
-<%= link_to 'Back to list', operations_path %>
-<%= link_to 'Edit', edit_operation_path(@operation) %>
+    <div class="field">
+        <label class="label">Category</label>
+        <input class="input" type="text" placeholder=<%= @operation.category.name %> disabled>
+    </div>
+
+    <div class="field">
+        <label class="label">Date</label>
+        <input class="input" type="text" placeholder=<%= @operation.date.strftime("%d-%m-%Y") %> disabled>
+    </div>
+
+    <div class="field">
+        <label class="label">Amount</label>
+        <input class="input" type="text" placeholder=<%= human_amount(@operation.amount, @operation.currency) %> disabled>
+    </div>
+
+    <div class="field">
+        <label class="label">Currency</label>
+        <input class="input" type="text" placeholder=<%= @operation.currency %> disabled>
+    </div>
+
+    <div class="field is-grouped">
+        <p class="control">
+        <%= link_to 'Edit', edit_operation_path(@operation),  class: "button is-link"%>
+        </p>
+        <p class="control">
+        <%= link_to 'Back to list'.html_safe, operations_path, class: "button is-light" %>
+        </p>
+    </div>
+</section>

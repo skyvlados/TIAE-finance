@@ -10,6 +10,6 @@ class Operation < ApplicationRecord
   validates :category_id, presence: true
   validates :direction, presence: true
   validates :date, presence: true
-  validates :amount, presence: true
+  validates :amount, presence: true, numericality: { only_float: true }
   validates :currency, presence: true
 end

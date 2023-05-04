@@ -4,7 +4,7 @@ class CategoriesController < ApplicationController
   before_action :find_category, only: %i[show edit update destroy]
   def index
     @pagy, @categories = Category.order(id: :asc).where(user: current_user)
-                                 .then { |scope| pagy(scope, items: params[:items]) }
+                                 .then { |scope| pagy(scope, items: params[:page_size]) }
   end
 
   def show; end
@@ -56,7 +56,7 @@ class CategoriesController < ApplicationController
     if category.user == current_user
       @category = category
     else
-      flash[:notice] = 'This category is dinied for you!'
+      flash[:info] = 'This category is dinied for you!'
       redirect_to root_path
     end
   end

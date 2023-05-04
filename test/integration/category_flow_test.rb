@@ -31,7 +31,7 @@ class CategoryFlowTest < ActionDispatch::IntegrationTest
   test 'cant show an other users category' do
     login_as(users(:admin))
     get category_path(categories(:others))
-    assert flash[:notice], 'This category is dinied for you!'
+    assert flash[:info], 'This category is dinied for you!'
     assert_redirected_to(root_path)
   end
 
@@ -68,7 +68,7 @@ class CategoryFlowTest < ActionDispatch::IntegrationTest
     login_as(users(:admin))
     put category_path(categories(:others)), params: { category: { name: 'test2' } }
     assert_response :found
-    assert flash[:notice], 'This category is dinied for you!'
+    assert flash[:info], 'This category is dinied for you!'
     assert_redirected_to(root_path)
   end
 
@@ -90,7 +90,7 @@ class CategoryFlowTest < ActionDispatch::IntegrationTest
     login_as(users(:admin))
     delete category_path(categories(:others))
     assert_response :found
-    assert flash[:notice], 'This category is dinied for you!'
+    assert flash[:info], 'This category is dinied for you!'
     assert_redirected_to(root_path)
   end
 end

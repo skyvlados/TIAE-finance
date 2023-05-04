@@ -1,13 +1,22 @@
 <%= form_with model: @category do |form| %>
-  <div>
-    <%= form.label :name %><br>
-    <%= form.text_field :name %>
+
+  <div class="field">
+    <label class="label">Name</label>
+        <%= form.text_field :name, class: "input", placeholder: "category name" %>
     <% @category.errors.full_messages_for(:name).each do |message| %>
-        <div><%= message %></div>
+      <p class="help is-danger">
+        <%= message %>
+      </p>
     <% end %>
   </div>
-  <div>
-    <%= form.submit button_text %>
-    <%= link_to '<button>Back to list</button>'.html_safe, categories_path %>
+
+  <div class="field is-grouped">
+    <p class="control">
+        <%= form.submit button_text, class: "button is-link" %>
+    </p>
+    <p class="control">
+        <%= link_to 'Back to list'.html_safe, categories_path, class: "button is-light" %>
+    </p>
   </div>
+
 <% end %>

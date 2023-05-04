@@ -1,43 +1,83 @@
   <%= form_with model: @operation do |form| %>
-  <div>
-    <%= form.label :direction %><br>
-    <%= form.select :direction, Operation.directions.keys.map { |key| [key, key] } %>
-    <% @operation.errors.full_messages_for(:direction).each do |message| %>
-        <div><%= message %></div>
-    <% end %>
+
+  <div class="field">
+    <label class="label">
+      <%= form.label :direction %>
+    </label>
+    <div class="control">
+      <div class="select">
+        <%= form.select :direction, Operation.directions.keys.map { |key| [key, key] } %>
+        <% @operation.errors.full_messages_for(:direction).each do |message| %>
+          <p class="help is-danger">
+            <%= message %>
+          </p>
+        <% end %>
+      </div>
+    </div>
   </div>
-  <div>
-      <%= form.label :categories %><br>
-      <%= form.select :category_id, Category.where(user_id: current_user.id).all.collect {|p| [p.name, p.id]}%>
-      <% @operation.errors.full_messages_for(:category_id).each do |message| %>
-          <div><%= message %></div>
-      <% end %>
+
+  <div class="field">
+    <label class="label">
+      <%= form.label :categories %>
+    </label>
+    <div class="control">
+      <div class="select">
+        <%= form.select :category_id, Category.where(user_id: current_user.id).all.collect {|p| [p.name, p.id]}%>
+        <% @operation.errors.full_messages_for(:category_id).each do |message| %>
+          <p class="help is-danger">
+            <%= message %>
+          </p>
+        <% end %>
+      </div>
+    </div>
   </div>
-  <div>
-    <%= form.label :date %><br>
-    <%= form.date_select :date%>
+
+  <div class="field">
+    <label class="label">
+      <%= form.label :date %>
+    </label> 
+    <%= form.date_field :date, type: "date", class: "input", :value => params[:date] %>
     <% @operation.errors.full_messages_for(:date).each do |message| %>
-       <div><%= message %></div>
-       <% end %>
+      <p class="help is-danger">
+        <%= message %>
+      </p>
+    <% end %>
   </div>
-  <div>
-    <%= form.label :amount %><br>
-    <%= form.text_field :amount %>
+
+  <div class="field">
+    <label class="label">
+      <%= form.label :amount %>
+    </label>
+    <%= form.text_field :amount, class: "input", placeholder: "Amount" %>
     <% @operation.errors.full_messages_for(:amount).each do |message| %>
-        <div><%= message %></div>
-    <% end %>
-  </div>
-  <div>
-    <%= form.label :currency %><br>
-    <%= form.select :currency, Operation.currencies.keys.map { |key| [key, key] } %>
-    <% @operation.errors.full_messages_for(:currency).each do |message| %>
-        <div><%= message %></div>
+        <p class="help is-danger">
+          <%= message %>
+        </p>
     <% end %>
   </div>
 
+  <div class="field">
+    <label class="label">
+      <%= form.label :currency %>
+    </label>
+    <div class="control">
+      <div class="select">
+        <%= form.select :currency, Operation.currencies.keys.map { |key| [key, key] } %>
+        <% @operation.errors.full_messages_for(:currency).each do |message| %>
+            <p class="help is-danger">
+              <%= message %>
+            </p>
+        <% end %>
+      </div>
+    </div>
+  </div>
 
-  <div>
-    <%= form.submit button_text %>
-    <%= link_to '<button>Back to list</button>'.html_safe, operations_path %>
+  <div class="field is-grouped">
+    <p class="control">
+      <%= form.submit button_text, class: "button is-link" %>
+    </p>
+    <p class="control">
+      <%= link_to 'Back to list'.html_safe, operations_path, class: "button is-light" %>
+    </p>
   </div>
 <% end %>
