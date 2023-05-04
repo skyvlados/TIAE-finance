@@ -80,7 +80,7 @@ class OperationsController < ApplicationController
     if operation.user == current_user
       @operation = operation
     else
-      flash[:notice] = 'This operation is dinied for you!'
+      flash[:info] = 'This operation is dinied for you!'
       redirect_to root_path
     end
   end

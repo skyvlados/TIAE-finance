@@ -26,7 +26,7 @@ class SessionFlowTest < ActionDispatch::IntegrationTest
 
   test 'cant log in user, invalid email/password combination' do
     post login_path, params: { session: { email: users(:not_confirm_user).email, password: '1234' } }
-    assert_equal flash[:danger], 'Invalid email/password combination'
+    assert_equal flash[:error], 'Invalid email/password combination'
     assert_response :unprocessable_entity
   end
 

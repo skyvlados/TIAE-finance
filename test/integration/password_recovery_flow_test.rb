@@ -23,7 +23,7 @@ class UserFlowTest < ActionDispatch::IntegrationTest
     assert_response :found
     follow_redirect!
     assert_response :success
-    assert_equal flash[:success],
+    assert_equal flash[:notice],
                  "Letter with instruction send to your email adress #{users(:recovery_password_user).email}."
   end
 
@@ -49,7 +49,7 @@ class UserFlowTest < ActionDispatch::IntegrationTest
   test 'can save new password' do
     post set_new_password_path, params: { user: { password: '1234', token: 'confirm_recovery_password_token' } }
     assert_response :found
-    assert_equal flash[:success], 'Your new password success saved! Enter your new password to login.'
+    assert_equal flash[:notice], 'Your new password success saved! Enter your new password to login.'
     assert_redirected_to(root_path)
   end
 end

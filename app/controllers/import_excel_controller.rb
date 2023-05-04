@@ -13,7 +13,7 @@ class ImportExcelController < ApplicationController
       flash[:notice] = 'Operations successfully saved!'
       redirect_to operations_path
     else
-      flash[:notice] = 'You have not selected a file or selected another format file. Try again!'
+      flash[:info] = 'You have not selected a file or selected another format file. Try again!'
       redirect_to new_import_path
     end
   end
