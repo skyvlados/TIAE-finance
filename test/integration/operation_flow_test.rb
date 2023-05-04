@@ -26,7 +26,7 @@ class OperationFlowTest < ActionDispatch::IntegrationTest
   test 'cant show an other users operation' do
     login_as(users(:admin))
     get operation_path(operations(:others))
-    assert flash[:notice], 'This operation is dinied for you!'
+    assert flash[:info], 'This operation is dinied for you!'
     assert_redirected_to(root_path)
   end
 
@@ -86,7 +86,7 @@ class OperationFlowTest < ActionDispatch::IntegrationTest
     put operation_path(operations(:others)), params: { operation: { category: categories(:food),
                                                                     direction: 'expenditure', date: '2022-02-02',
                                                                     amount: 300, currency: 'USD' } }
-    assert flash[:notice], 'This operation is dinied for you!'
+    assert flash[:info], 'This operation is dinied for you!'
     assert_redirected_to(root_path)
   end
 
@@ -107,7 +107,7 @@ class OperationFlowTest < ActionDispatch::IntegrationTest
   test 'cant delete an other users operation' do
     login_as(users(:admin))
     delete operation_path(operations(:others))
-    assert flash[:notice], 'This operation is dinied for you!'
+    assert flash[:info], 'This operation is dinied for you!'
     assert_redirected_to(root_path)
   end
 end
