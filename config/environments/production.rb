@@ -62,7 +62,7 @@ Rails.application.configure do
 
   # Use a real queuing backend for Active Job (and separate queues per environment).
   # config.active_job.queue_adapter     = :resque
-  # config.active_job.queue_name_prefix = "tableIncomAndExpeditureWithERB_production"
+  # config.active_job.queue_name_prefix = "tiae_production"
 
   # Don't care if the mailer can't send.
   config.action_mailer.raise_delivery_errors = true

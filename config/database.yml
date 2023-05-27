@@ -23,13 +23,16 @@ default: &default
 
 development:
   <<: *default
-  database: tableIncomAndExpeditureWithERB_development
+  database: tiae_development
+
+  username: <%= ENV['POSTGRES_USER'] %>
+  host: <%= ENV['POSTGRES_HOST'] %>
 
   # The specified database role being used to connect to postgres.
   # To create additional roles in postgres see `$ createuser --help`.
   # When left blank, postgres will use the default role. This is
   # the same name as the operating system user running Rails.
-  #username: tableIncomAndExpeditureWithERB
+  #username: tiae
 
   # The password associated with the postgres role (username).
   #password:
@@ -57,12 +60,11 @@ development:
 # Do not set this db to the same as development or production.
 test:
   <<: *default
-  database: <%= ENV.fetch('POSTGRES_DB', 'tableIncomAndExpeditureWithERB_test') %> 
-  host:     <%= ENV.fetch('POSTGRES_HOST', 'localhost') %>
+  database: <%= ENV.fetch('POSTGRES_DB', 'tiae_test') %>
+  host: <%= ENV.fetch('POSTGRES_HOST', 'localhost') %>
   username: <%= ENV.fetch('POSTGRES_USER', nil) %>
   password: <%= ENV.fetch('POSTGRES_PASSWORD', nil) %>
-  port:     <%= ENV.fetch('POSTGRES_PORT', 5432) %>
-
+  port: <%= ENV.fetch('POSTGRES_PORT', 5432) %>
 # As with config/credentials.yml, you never want to store sensitive information,
 # like your database password, in your source code. If your source code is
 # ever seen by anyone, they now have access to your database.
@@ -83,6 +85,3 @@ test:
 # Read https://guides.rubyonrails.org/configuring.html#configuring-a-database
 # for a full overview on how database connection configuration can be specified.
 #
-production:
-  <<: *default
-  url: <%= ENV.fetch('DATABASE_URL', nil) %>
