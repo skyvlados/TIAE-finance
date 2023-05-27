@@ -2,10 +2,10 @@ name: "Ruby on Rails CI"
 
 on:
   push:
-    branches: [ "main" ]
+    branches: ["main"]
   pull_request:
-    branches: [ "main" ]
-    
+    branches: ["main"]
+
 jobs:
   test:
     runs-on: ubuntu-latest
@@ -17,7 +17,7 @@ jobs:
         env:
           POSTGRES_USER: runner
           POSTGRES_HOST_AUTH_METHOD: trust
-          POSTGRES_DB: tableIncomAndExpeditureWithERB_test
+          POSTGRES_DB: tiae_test
     env:
       RAILS_ENV: test
     steps:

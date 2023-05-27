@@ -1,0 +1,12 @@
+  version: "3.9"
+  services:
+    app:
+      image: rubyapp
+      build:
+        context: .
+        dockerfile: ./Dockerfile
+      environment:
+        POSTGRES_USER: vladislav
+        POSTGRES_HOST: host.docker.internal
+      ports:
+        - 3000:3000
