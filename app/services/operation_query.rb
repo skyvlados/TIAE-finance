@@ -13,6 +13,11 @@ class OperationQuery
       .then { |scope| filter_by_direction scope }
       .then { |scope| filter_by_category scope }
       .then { |scope| filter_by_dates scope }
+      .then { |scope| order scope }
+  end
+
+  def order(scope)
+    scope.order(date: :desc)
   end
 
   def filter_by_currency(scope)

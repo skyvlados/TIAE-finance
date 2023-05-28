@@ -5,16 +5,25 @@ class OperationsController < ApplicationController
   def index
     service = OperationQuery.new(params)
     scope = service.call.where(user: current_user)
-    @pagy, @operations = pagy(scope.order(date: :desc), items: params[:page_size])
 
     @totals_operations = scope
-                         .order(direction: :asc)
+                         .reorder(direction: :asc)
                          .group(:currency, :direction)
                          .pluck('sum(amount)', 'currency', 'direction')
+
     @params = index_params
+
     respond_to do |format|
-      format.xlsx
-      format.html
+      format.xlsx do
+        @operations = scope
+      end
+
+      format.html do
+        @pagy, @operations = pagy(
+          scope,
+          items: @params[:page_size]
+        )
+      end
     end
   end
 
@@ -72,7 +81,7 @@ class OperationsController < ApplicationController
   end
 
   def index_params
-    params.permit(:currency, :direction, :category, :date_start, :date_finish)
+    params.permit(:currency, :direction, :category, :date_start, :date_finish, :page_size)
   end
 
   def find_operation
