@@ -1,19 +1,20 @@
 FROM ruby:3.1.2-alpine AS builder
-RUN apk add \
-  build-base \
-  postgresql-dev
+ENV RAILS_ENV=production
+WORKDIR /app
+RUN apk add tzdata build-base nodejs postgresql-dev
 COPY Gemfile* .
 RUN bundle install
-
+COPY . .
+RUN bundle exec rake assets:precompile
 
 FROM ruby:3.1.2-alpine AS runner
-RUN apk add \
-    tzdata \
-    nodejs \
-    postgresql-dev
+ENV RAILS_ENV=production
 WORKDIR /app
+RUN apk add tzdata postgresql-dev
 # We copy over the entire gems directory for our builder image, containing the already built artifact
-COPY --from=builder /usr/local/bundle/ /usr/local/bundle/
 COPY . .
+COPY --from=builder /usr/local/bundle/ /usr/local/bundle/
+COPY --from=builder /app/public/assets/ /app/public/assets/
+
 EXPOSE 3000
 CMD ["rails", "server", "-b", "0.0.0.0"]
