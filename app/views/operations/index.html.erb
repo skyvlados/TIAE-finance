@@ -39,8 +39,11 @@
   <% end %>
 </section>
 
-<table class="table">
+<%= form_with url: operations_mass_delete_path, method: "delete"  do |form| %>
+  <%= form.submit "Mass delete", class: "button is-danger" %>
+  <table class="table">
       <tr>
+        <th></th>
         <th>id</th>
         <th>category</th>
         <th>direction</th>
@@ -49,8 +52,13 @@
         <th>data</th>
         <th>actions</th>
       </tr>
-<% @operations.each do |operation| %>
+    <% @operations.each do |operation| %>
       <tr>
+        <td>
+          <label>
+            <%= check_box_tag "cleaner[operations_ids][]", operation.id%>
+          </label>
+        </td>
         <td><%= operation.id %></td>
         <td><%= operation.category.name %></td>
         <td><%= operation.direction %></td>
@@ -66,8 +74,9 @@
                             } %>
         </td>
       </tr>
+    <% end %>
+  </table>
 <% end %>
-</table>
 
 <div class="field is-grouped">
   <nav class="pagination" role="navigation" aria-label="pagination">
