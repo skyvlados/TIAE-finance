@@ -66,10 +66,7 @@
         <td><%= operation.currency %></td>
         <td><%= operation.date %></td>
         <td>
-          <%= link_to 'Show', operation, data: {
-            turbo_method: :delete,
-            turbo_confirm: "Are you sure?"
-          } %>
+          <%= link_to 'Show', operation %>
           <%= link_to 'Edit', [:edit, operation] %>
           <%= link_to "Destroy", operation, data: {
                               turbo_method: :delete,
