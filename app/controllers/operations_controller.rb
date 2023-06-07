@@ -75,8 +75,7 @@ class OperationsController < ApplicationController
   end
 
   def mass_delete
-    operations = mass_delete_params
-    Operation.delete(operations[:operations_ids])
+    Operation.delete(mass_delete_params[:operations_ids])
     flash[:notice] = 'Operations successfully deleted!'
     redirect_to action: 'index'
   rescue ActionController::ParameterMissing
