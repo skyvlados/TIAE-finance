@@ -33,8 +33,8 @@ Rails.application.configure do
     port: 587,
     domain: 'mail.ru',
     authentication: 'plain',
-    user_name: ENV.fetch('email', nil),
-    password: ENV.fetch('password', nil),
+    user_name: Rails.application.credentials.email[:email],
+    password: Rails.application.credentials.email[:email_password],
     enable_starttls_auto: true
   }
 
