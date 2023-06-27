@@ -32,6 +32,3 @@
 /config/credentials/development.key
 /config/credentials/test.key
 /.idea
-
-/config/credentials.yml.enc
-/config/.credentials
