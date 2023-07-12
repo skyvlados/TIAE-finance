@@ -110,4 +110,19 @@ class OperationFlowTest < ActionDispatch::IntegrationTest
     assert flash[:info], 'This operation is dinied for you!'
     assert_redirected_to(root_path)
   end
+
+  test 'cant mass delete operation without params' do
+    login_as(users(:admin))
+    delete operations_mass_delete_path
+    assert flash[:info], 'First of all choose at least one operation!'
+    assert_redirected_to(operations_path)
+  end
+
+  test 'can mass delete operations' do
+    login_as(users(:admin))
+    delete operations_mass_delete_path, params: { cleaner: { operations_ids: [operations(:others).id.to_s,
+                                                                              operations(:food).id.to_s] } }
+    assert flash[:notice], 'Operations successfully deleted!'
+    assert_redirected_to(operations_path)
+  end
 end

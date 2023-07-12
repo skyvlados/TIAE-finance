@@ -138,4 +138,19 @@ class OperationsControllerTest < ActionDispatch::IntegrationTest
     assert_response :found
     assert_redirected_to(root_path)
   end
+
+  test 'shouldnt mass delete without choose' do
+    login_as(users(:admin))
+    delete operations_mass_delete_path, params: {}
+    assert_response :see_other
+    assert_redirected_to(operations_path)
+  end
+
+  test 'should mass delete' do
+    login_as(users(:admin))
+    delete operations_mass_delete_path, params: { cleaner: { operations_ids: [operations(:others).id.to_s,
+                                                                              operations(:food).id.to_s] } }
+    assert_response :found
+    assert_redirected_to(operations_path)
+  end
 end

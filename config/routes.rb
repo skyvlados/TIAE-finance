@@ -6,6 +6,7 @@ Rails.application.routes.draw do
   resources :users
   resources :operations
   resources :categories
+  delete '/operations_mass_delete' => 'operations#mass_delete', as: 'operations_mass_delete'
   get '/confirm_email/:token', to: 'users#confirm_email', as: 'confirm_email'
   get '/login' => 'sessions#new'
   post '/login' => 'sessions#create'
