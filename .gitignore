@@ -27,9 +27,7 @@
 
 /public/assets
 
-# Ignore master key for decrypting credentials and more.
+# Ignore master and development keys for decrypting credentials and more.
 /config/master.key
+/config/credentials/development.key
 /.idea
-
-# Ignore application configuration
-/config/application.yml

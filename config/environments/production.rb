@@ -3,7 +3,7 @@
 require 'active_support/core_ext/integer/time'
 
 Rails.application.configure do
-  config.hosts << "tiae.yakushka.ru"
+  config.hosts << 'tiae.yakushka.ru'
   # Settings specified here will take precedence over those in config/application.rb.
 
   # Code is not reloaded between requests.
@@ -21,7 +21,7 @@ Rails.application.configure do
 
   # Ensures that a master key has been made available in either ENV["RAILS_MASTER_KEY"]
   # or in config/master.key. This key is used to decrypt credentials (and other encrypted files).
-  # config.require_master_key = true
+  config.require_master_key = true
 
   # Disable serving static files from the `/public` folder by default since
   # Apache or NGINX already handles this.
@@ -74,8 +74,8 @@ Rails.application.configure do
     port: 587,
     domain: 'mail.ru',
     authentication: 'plain',
-    user_name: ENV.fetch('email'),
-    password: ENV.fetch('email_password'),
+    user_name: Rails.application.credentials.email[:email],
+    password: Rails.application.credentials.email[:email_password],
     enable_starttls_auto: true
   }
 
@@ -93,7 +93,7 @@ Rails.application.configure do
   config.active_support.report_deprecations = false
 
   # Use default logging formatter so that PID and timestamp are not suppressed.
-  config.log_formatter = ::Logger::Formatter.new
+  config.log_formatter = Logger::Formatter.new
 
   # Use a different logger for distributed setups.
   # require "syslog/logger"

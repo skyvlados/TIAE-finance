@@ -74,7 +74,20 @@ class OperationsController < ApplicationController
     redirect_to operations_path, status: 303
   end
 
+  def mass_delete
+    Operation.delete(mass_delete_params[:operations_ids])
+    flash[:notice] = 'Operations successfully deleted!'
+    redirect_to action: 'index'
+  rescue ActionController::ParameterMissing
+    flash[:info] = 'First of all choose at least one operation!'
+    redirect_to operations_path, status: 303
+  end
+
   private
+
+  def mass_delete_params
+    params.require(:cleaner).permit(operations_ids: [])
+  end
 
   def operation_params
     params.require(:operation).permit(:direction, :category_id, :date, :amount, :currency).merge(user: current_user)
