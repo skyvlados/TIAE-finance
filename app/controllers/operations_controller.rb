@@ -90,7 +90,9 @@ class OperationsController < ApplicationController
   end
 
   def operation_params
-    params.require(:operation).permit(:direction, :category_id, :date, :amount, :currency).merge(user: current_user)
+    params.require(:operation)
+          .permit(:direction, :category_id, :date, :amount, :currency, :comment)
+          .merge(user: current_user)
   end
 
   def index_params

@@ -12,4 +12,5 @@ class Operation < ApplicationRecord
   validates :date, presence: true
   validates :amount, presence: true, numericality: { only_float: true }
   validates :currency, presence: true
+  validates :comment, length: { maximum: 100 }
 end

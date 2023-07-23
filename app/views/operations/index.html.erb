@@ -50,6 +50,7 @@
         <th>amount</th>
         <th>currency</th>
         <th>data</th>
+        <th>comment</th>
         <th>actions</th>
       </tr>
     <% @operations.each do |operation| %>
@@ -65,6 +66,7 @@
         <td><%= operation.amount %></td>
         <td><%= operation.currency %></td>
         <td><%= operation.date %></td>
+        <td><%= operation.comment %></td>
         <td>
           <%= link_to 'Show', operation %>
           <%= link_to 'Edit', [:edit, operation] %>
