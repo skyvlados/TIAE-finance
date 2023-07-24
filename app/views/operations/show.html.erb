@@ -28,7 +28,7 @@
 
     <div class="field">
       <label class="label">Comment</label>
-      <input class="input" type="text" placeholder=<%= @operation.comment == "" ? "-" : @operation.comment%> disabled>
+      <input class="input" type="text" placeholder=<%= @operation.comment.presence || "-"%> disabled>
     </div>
 
     <div class="field is-grouped">
