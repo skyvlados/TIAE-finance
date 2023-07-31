@@ -23,12 +23,12 @@
 
     <div class="field">
         <label class="label">Currency</label>
-        <input class="input" type="text" placeholder=<%= @operation.currency  %> disabled>
+        <input class="input" type="text" placeholder=<%= @operation.currency %> disabled>
     </div>
 
     <div class="field">
       <label class="label">Comment</label>
-      <input class="input" type="text" placeholder=<%= @operation.comment.presence || "-"%> disabled>
+      <input class="input" type="text" placeholder="<%= @operation.comment %>" disabled>
     </div>
 
     <div class="field is-grouped">
