@@ -26,6 +26,11 @@
         <input class="input" type="text" placeholder=<%= @operation.currency %> disabled>
     </div>
 
+    <div class="field">
+      <label class="label">Comment</label>
+      <input class="input" type="text" placeholder="<%= @operation.comment %>" disabled>
+    </div>
+
     <div class="field is-grouped">
         <p class="control">
         <%= link_to 'Edit', edit_operation_path(@operation),  class: "button is-link"%>

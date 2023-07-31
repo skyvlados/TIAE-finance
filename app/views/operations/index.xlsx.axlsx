@@ -4,9 +4,14 @@ wb = xlsx_package.workbook
 wb.add_worksheet(name: 'Operations') do |sheet|
   green_background = wb.styles.add_style(bg_color: '006633', fg_color: 'FFFFFF')
   sheet.add_row ['Operations:'], style: green_background
-  sheet.add_row %w[ID Category Amount Currency Date]
+  sheet.add_row %w[ID Category Amount Currency Date Comment]
   @operations.each do |operation|
-    sheet.add_row [operation.id, operation.category.name, operation.amount, operation.currency, operation.date]
+    sheet.add_row [operation.id,
+                   operation.category.name,
+                   operation.amount,
+                   operation.currency,
+                   operation.date,
+                   operation.comment]
   end
   sheet.add_row
   sheet.add_row ['Totals:'], style: green_background

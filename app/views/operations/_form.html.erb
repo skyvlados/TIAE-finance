@@ -72,6 +72,18 @@
     </div>
   </div>
 
+  <div class="field">
+    <label class="label">
+      <%= form.label :comment %>
+    </label>
+    <%= form.text_field :comment, class: "input", placeholder: "Comment" %>
+    <% @operation.errors.full_messages_for(:comment).each do |message| %>
+      <p class="help is-danger">
+        <%= message %>
+      </p>
+    <% end %>
+  </div>
+
   <div class="field is-grouped">
     <p class="control">
       <%= form.submit button_text, class: "button is-link" %>
