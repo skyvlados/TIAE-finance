@@ -65,7 +65,7 @@
         <td><%= operation.direction %></td>
         <td><%= operation.amount %></td>
         <td><%= operation.currency %></td>
-        <td><%= operation.date %></td>
+        <td><%= operation.date.strftime("%d-%m-%Y %H:%M:%S") %></td>
         <td><%= operation.comment %></td>
         <td>
           <%= link_to 'Show', operation %>
