@@ -1,0 +1,17 @@
+name: "Docker Image CI"
+
+on:
+  push:
+    branches: [ "install_docker_build_ci" ]
+
+jobs:
+
+  build:
+    runs-on: ubuntu-latest
+
+    steps:
+      - uses: actions/checkout@v3
+      - name: Build the Docker image
+        env:
+          RAILS_MASTER_KEY: ${{ secrets.RAILS_MASTER_KEY }}
+        run: docker build --tag skyvlados/tiae .
