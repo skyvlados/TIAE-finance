@@ -13,5 +13,6 @@ jobs:
       - uses: actions/checkout@v3
       - name: Build the Docker image
         env:
+          RAILS_ENV: production
           RAILS_MASTER_KEY: ${{ secrets.RAILS_MASTER_KEY }}
         run: docker build --tag skyvlados/tiae .
