@@ -36,7 +36,7 @@
     <label class="label">
       <%= form.label :date %>
     </label> 
-    <%= form.date_field :date, type: "date", class: "input", :value => params[:date] %>
+    <%= form.datetime_field :date, type: "datetime-local", class: "input", :value => params[:date] %>
     <% @operation.errors.full_messages_for(:date).each do |message| %>
       <p class="help is-danger">
         <%= message %>
