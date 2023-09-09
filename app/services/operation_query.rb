@@ -20,10 +20,10 @@ class OperationQuery
   def filter_order_by_data(scope)
     if validate_order_by_value
       allowed_key_from_params = OperationQuery::TRANSLATE_ORDER_PARAMS
-              .select { |order| order.values[0] == params[:order_by_data] }
-              .first
-              .key(params[:order_by_data])
-              .to_sym
+                                .select { |order| order.values[0] == params[:order_by_data] }
+                                .first
+                                .key(params[:order_by_data])
+                                .to_sym
       scope.order(date: allowed_key_from_params)
     else
       scope.order(date: :desc)
