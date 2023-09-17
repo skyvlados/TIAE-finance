@@ -3,7 +3,7 @@
 class OperationQuery
   attr_reader :params
 
-  TRANSLATE_ORDER_PARAMS = [{ asc: 'Ascending' }, { desc: 'Descending' }].freeze
+  TRANSLATE_ORDER_PARAMS = [{ name: 'Descending', value: :desc }, { name: 'Ascending', value: :asc }].freeze
   def initialize(params)
     @params = params
   end
@@ -14,24 +14,27 @@ class OperationQuery
       .then { |scope| filter_by_direction scope }
       .then { |scope| filter_by_category scope }
       .then { |scope| filter_by_dates scope }
-      .then { |scope| filter_order_by_data scope }
+      .then { |scope| order_by_date scope }
   end
 
-  def filter_order_by_data(scope)
-    if validate_order_by_value
-      allowed_key_from_params = OperationQuery::TRANSLATE_ORDER_PARAMS
-                                .select { |order| order.values[0] == params[:order_by_data] }
-                                .first
-                                .key(params[:order_by_data])
-                                .to_sym
-      scope.order(date: allowed_key_from_params)
-    else
-      scope.order(date: :desc)
+  def order_by_date(scope)
+    param_is_valid = TRANSLATE_ORDER_PARAMS.pluck(:name).include?(params[:order_by_date]) ||
+                     !params.keys.include?('order_by_date')
+    raise ArgumentError unless param_is_valid
+
+    value = [].tap do |order|
+      TRANSLATE_ORDER_PARAMS.select do |element|
+        order << element.values.second if element.values.first == params[:order_by_date]
+      end
     end
-  end
 
-  def validate_order_by_value
-    OperationQuery::TRANSLATE_ORDER_PARAMS.map(&:values).flatten.include?(params[:order_by_data])
+    result = if value.present?
+               value.first
+             else
+               :desc
+             end
+
+    scope.order(date: result)
   end
 
   def filter_by_currency(scope)

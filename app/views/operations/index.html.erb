@@ -22,18 +22,21 @@
       </div>
       <div class="field is-grouped">
         <div class="control">
-          <%= form.label :start_date %>
+          <label class="label">Start date</label>
           <%= form.date_field :date_start, type: "date", class: "input", :value => params[:date_start] %>
         </div>
         <div class="control">
-          <%= form.label :finish_date %>
+          <label class="label">Finish date</label>
           <%= form.date_field :date_finish, type: "date", class: "input", :value => params[:date_finish] %>
+        </div>
+        <div class="control">
+          <label class="label">Order by date</label>
+          <dev class="select">
+            <%= form.select :order_by_date, %w[Descending Ascending ], selected: params[:order_by_date] || OperationQuery::TRANSLATE_ORDER_PARAMS.first.values.first %>
+          </dev>
         </div>
       </div>
         <div class="field">
-          <div class="select">
-            <%= form.select :order_by_data, %w[Ascending Descending], selected: params[:order_by_data], include_blank: "Sort by data" %>
-          </div>
           <div class="select">
             <% page_size=%i[5 10 25 50]%>
             <%= form.select :page_size, page_size.each { |key| [key, key] }, selected: params[:page_size], prompt: 'Select page size'%>
