@@ -18,23 +18,14 @@ class OperationQuery
   end
 
   def order_by_date(scope)
-    param_is_valid = TRANSLATE_ORDER_PARAMS.pluck(:name).include?(params[:order_by_date]) ||
-                     !params.keys.include?('order_by_date')
-    raise ArgumentError unless param_is_valid
+    return scope.order(date: :desc) if params[:order_by_date].blank?
+    raise ArgumentError unless TRANSLATE_ORDER_PARAMS.pluck(:name).include?(params[:order_by_date])
 
-    value = [].tap do |order|
-      TRANSLATE_ORDER_PARAMS.select do |element|
-        order << element.values.second if element.values.first == params[:order_by_date]
-      end
-    end
+    order_type = OperationQuery::TRANSLATE_ORDER_PARAMS.find do |order|
+      order.values[0] == params[:order_by_date]
+    end[:value]
 
-    result = if value.present?
-               value.first
-             else
-               :desc
-             end
-
-    scope.order(date: result)
+    scope.order(date: order_type)
   end
 
   def filter_by_currency(scope)
