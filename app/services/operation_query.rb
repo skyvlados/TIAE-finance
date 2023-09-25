@@ -39,8 +39,8 @@ class OperationQuery
   end
 
   def filter_by_dates(scope)
-    scope = scope.where('date>= ?', params[:date_start]) if params[:date_start].present?
-    scope = scope.where('date<= ?', params[:date_finish]) if params[:date_finish].present?
+    scope = scope.where('date::date>= ?', params[:date_start]) if params[:date_start].present?
+    scope = scope.where('date::date<= ?', params[:date_finish]) if params[:date_finish].present?
     scope
   end
 end
