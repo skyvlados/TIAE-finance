@@ -3,7 +3,7 @@
 class OperationQuery
   attr_reader :params
 
-  TRANSLATE_ORDER_PARAMS = [{ name: 'Descending', value: :desc }, { name: 'Ascending', value: :asc }].freeze
+  TRANSLATE_ORDER_PARAMS = { desc: 'Descending', asc: 'Ascending' }.freeze
   def initialize(params)
     @params = params
   end
@@ -19,11 +19,9 @@ class OperationQuery
 
   def order_by_date(scope)
     return scope.order(date: :desc) if params[:order_by_date].blank?
-    raise ArgumentError unless TRANSLATE_ORDER_PARAMS.pluck(:name).include?(params[:order_by_date])
+    raise ArgumentError unless TRANSLATE_ORDER_PARAMS.values.include?(params[:order_by_date])
 
-    order_type = OperationQuery::TRANSLATE_ORDER_PARAMS.find do |order|
-      order.values[0] == params[:order_by_date]
-    end[:value]
+    order_type = OperationQuery::TRANSLATE_ORDER_PARAMS.key(params[:order_by_date])
 
     scope.order(date: order_type)
   end
