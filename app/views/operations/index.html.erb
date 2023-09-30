@@ -32,7 +32,7 @@
         <div class="control">
           <label class="label">Order by date</label>
           <dev class="select">
-            <%= form.select :order_by_date, OperationQuery::TRANSLATE_ORDER_PARAMS.values, selected: params[:order_by_date] %>
+            <%= form.select :order_by_date, OperationQuery::TRANSLATE_ORDER_PARAMS.to_a, selected: params[:order_by_date] %>
           </dev>
         </div>
       </div>
