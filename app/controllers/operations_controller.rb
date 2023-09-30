@@ -96,7 +96,7 @@ class OperationsController < ApplicationController
   end
 
   def index_params
-    params.permit(:currency, :direction, :category, :date_start, :date_finish, :page_size)
+    params.permit(:currency, :direction, :category, :date_start, :date_finish, :order_by_date, :page_size)
   end
 
   def find_operation
