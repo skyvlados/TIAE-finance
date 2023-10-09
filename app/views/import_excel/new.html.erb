@@ -32,7 +32,7 @@
         <%= submit_tag "Upload", class: "button is-success" %>
       </p>
       <p class="control">
-        <%= link_to 'Back to list'.html_safe, operations_path, class: "button is-light" %>
+        <%= link_to 'Back to list'.html_safe, operations_path(cookies[:operations_filters].then { JSON.parse(_1) if _1 } ), class: "button is-light" %>
       </p>
     </div>
   </div>
