@@ -50,7 +50,8 @@ class OperationsController < ApplicationController
 
     if @operation.save
       flash[:notice] = "Operation '#{@operation.id}' successfully saved!"
-      redirect_to action: 'index', **JSON.parse(cookies[:operations_filters])
+      operations_filters = JSON.parse(cookies[:operations_filters] || '{}')
+      redirect_to action: 'index', **operations_filters
     else
       render :new, status: :unprocessable_entity
     end
@@ -68,7 +69,8 @@ class OperationsController < ApplicationController
 
     if @operation.update(operation_params)
       flash[:notice] = 'Operation successfully updated!'
-      redirect_to action: 'index', **JSON.parse(cookies[:operations_filters])
+      operations_filters = JSON.parse(cookies[:operations_filters] || '{}')
+      redirect_to action: 'index', **operations_filters
     else
       render :new, status: :unprocessable_entity
     end
