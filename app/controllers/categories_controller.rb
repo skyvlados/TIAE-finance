@@ -3,7 +3,7 @@
 class CategoriesController < ApplicationController
   before_action :find_category, only: %i[show edit update destroy]
   def index
-    if params[:page_size].present? || params[:page]
+    if params[:page_size].present? || params[:page].present?
       cookies[:page_size] = params[:page_size]
       cookies[:page] = params[:page]
     else
