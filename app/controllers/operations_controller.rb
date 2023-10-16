@@ -13,6 +13,12 @@ class OperationsController < ApplicationController
 
     @params = index_params
 
+    if index_params.present?
+      cookies[:operations_filters] = JSON.generate(**index_params)
+    else
+      cookies.delete :operations_filters
+    end
+
     respond_to do |format|
       format.xlsx do
         @operations = scope
@@ -44,7 +50,8 @@ class OperationsController < ApplicationController
 
     if @operation.save
       flash[:notice] = "Operation '#{@operation.id}' successfully saved!"
-      redirect_to action: 'index'
+      operations_filters = JSON.parse(cookies[:operations_filters] || '{}')
+      redirect_to action: 'index', **operations_filters
     else
       render :new, status: :unprocessable_entity
     end
@@ -62,7 +69,8 @@ class OperationsController < ApplicationController
 
     if @operation.update(operation_params)
       flash[:notice] = 'Operation successfully updated!'
-      redirect_to action: 'index'
+      operations_filters = JSON.parse(cookies[:operations_filters] || '{}')
+      redirect_to action: 'index', **operations_filters
     else
       render :new, status: :unprocessable_entity
     end
@@ -96,7 +104,7 @@ class OperationsController < ApplicationController
   end
 
   def index_params
-    params.permit(:currency, :direction, :category, :date_start, :date_finish, :order_by_date, :page_size)
+    params.permit(:currency, :direction, :category, :date_start, :date_finish, :order_by_date, :page_size, :page)
   end
 
   def find_operation
