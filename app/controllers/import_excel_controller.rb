@@ -11,7 +11,8 @@ class ImportExcelController < ApplicationController
       end
 
       flash[:notice] = 'Operations successfully saved!'
-      redirect_to operations_path
+      operations_filters = JSON.parse(cookies[:operations_filters] || '{}')
+      redirect_to operations_path(**operations_filters)
     else
       flash[:info] = 'You have not selected a file or selected another format file. Try again!'
       redirect_to new_import_path

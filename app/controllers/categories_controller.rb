@@ -3,6 +3,12 @@
 class CategoriesController < ApplicationController
   before_action :find_category, only: %i[show edit update destroy]
   def index
+    if params[:page_size].present? || params[:page].present?
+      cookies[:page_size] = params[:page_size]
+      cookies[:page] = params[:page]
+    else
+      cookies.delete :page_size
+    end
     @pagy, @categories = Category.order(id: :asc).where(user: current_user)
                                  .then { |scope| pagy(scope, items: params[:page_size]) }
   end
@@ -17,7 +23,7 @@ class CategoriesController < ApplicationController
     @category = Category.new(category_params)
     if @category.save
       flash[:notice] = "Category '#{@category.name}' successfully saved!"
-      redirect_to action: 'index'
+      redirect_to action: 'index', page_size: cookies[:page_size], page: cookies[:page]
     else
       render :new, status: :unprocessable_entity
     end
@@ -30,7 +36,7 @@ class CategoriesController < ApplicationController
 
     if @category.update(category_params)
       flash[:notice] = "Category '#{old_name}' successfully updated to '#{@category.name}'!"
-      redirect_to action: 'index'
+      redirect_to action: 'index', page_size: cookies[:page_size], page: cookies[:page]
     else
       render :new, status: :unprocessable_entity
     end
