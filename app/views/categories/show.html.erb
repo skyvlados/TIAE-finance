@@ -8,7 +8,7 @@
 
     <div class="field is-grouped">
         <p class="control">
-          <%= link_to 'Back to list'.html_safe, categories_path(url_category_parameters), class: "button is-light" %>
+          <%= back_to_list_button(categories_path({ page: cookies[:page], page_size: cookies[:page_size] })) %>
         </p>
     </div>
 </section>

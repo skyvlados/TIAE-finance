@@ -3,7 +3,7 @@
 module ApplicationHelper
   include Pagy::Frontend
 
-  def url_category_parameters
-    { page: cookies[:page], page_size: cookies[:page_size] }
+  def back_to_list_button(url)
+    link_to 'Back to list'.html_safe, url, class: 'button is-light'
   end
 end

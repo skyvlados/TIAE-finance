@@ -89,7 +89,7 @@
       <%= form.submit button_text, class: "button is-link" %>
     </p>
     <p class="control">
-      <%= link_to 'Back to list'.html_safe, operations_path(cookies[:operations_filters].then { JSON.parse(_1) if _1 } ), class: "button is-light" %>
+      <%= back_to_list_button(operations_path(cookies[:operations_filters].then { JSON.parse(_1) if _1 } )) %>
     </p>
   </div>
 <% end %>
