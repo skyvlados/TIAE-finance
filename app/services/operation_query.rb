@@ -50,7 +50,7 @@ class OperationQuery
   end
 
   def filter_by_comment(scope)
-    scope = scope.where("comment ILIKE '%#{params[:comment]}%'") if params[:comment].present?
+    scope = scope.where('comment ILIKE ?', "%#{params[:comment]}%") if params[:comment].present?
     scope
   end
 end
