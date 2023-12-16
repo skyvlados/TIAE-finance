@@ -108,7 +108,7 @@ class OperationsController < ApplicationController
                   :direction,
                   :category,
                   :date_start,
-                  date_finish,
+                  :date_finish,
                   :comment,
                   :order_by_date,
                   :page_size,
