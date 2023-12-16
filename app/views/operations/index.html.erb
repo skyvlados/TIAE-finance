@@ -30,6 +30,10 @@
           <%= form.date_field :date_finish, type: "date", class: "input", :value => params[:date_finish] %>
         </div>
         <div class="control">
+          <label class="label">Comment</label>
+          <%= form.text_field :comment, type: "text", class: "input", :value => params[:comment] %>
+        </div>
+        <div class="control">
           <label class="label">Order by date</label>
           <dev class="select">
             <%= form.select :order_by_date, OperationQuery::TRANSLATE_ORDER_PARAMS.to_a, selected: params[:order_by_date] %>
