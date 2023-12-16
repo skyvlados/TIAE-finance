@@ -14,6 +14,7 @@ class OperationQuery
       .then { |scope| filter_by_direction scope }
       .then { |scope| filter_by_category scope }
       .then { |scope| filter_by_dates scope }
+      .then { |scope| filter_by_comment scope }
       .then { |scope| order_by_date scope }
   end
 
@@ -45,6 +46,11 @@ class OperationQuery
   def filter_by_dates(scope)
     scope = scope.where('date::date>= ?', params[:date_start]) if params[:date_start].present?
     scope = scope.where('date::date<= ?', params[:date_finish]) if params[:date_finish].present?
+    scope
+  end
+
+  def filter_by_comment(scope)
+    scope = scope.where('comment ILIKE ? COLLATE "ru_RU.UTF-8"', "%#{params[:comment]}%") if params[:comment].present?
     scope
   end
 end
