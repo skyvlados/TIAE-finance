@@ -3,7 +3,7 @@
 class UsersController < ApplicationController
   before_action :user_is_admin, only: %i[index show edit update destroy]
   before_action :find_user, only: %i[show edit update destroy]
-  skip_before_action :check_session, only: %i[new create confirm_email]
+  skip_before_action :check_session, only: %i[new create]
   def index
     service = UserQuery.new(params)
     scope = service.call
@@ -19,12 +19,9 @@ class UsersController < ApplicationController
   end
 
   def create
-    user_params[:email].downcase!
     @user = User.new(user_params)
     if @user.save
-      @user.gen_token
-      UserMailer.with(user: @user).registration_confirmation.deliver_now
-      flash[:notice] = 'You are registered. To continue you need confirm email, check your email'
+      flash[:notice] = 'User created!'
       redirect_to root_path
     else
       render :new, status: :unprocessable_entity
@@ -36,11 +33,10 @@ class UsersController < ApplicationController
   end
 
   def update
-    user_params[:email].downcase!
     old_name = @user.name
-    old_email = @user.email
+    old_telegram_id = @user.telegram_id
     if @user.update(user_params)
-      flash[:notice] = if old_name != @user.name && old_email == @user.email
+      flash[:notice] = if old_name != @user.name && old_telegram_id == @user.telegram_id
                          "User '#{old_name}' successfully updated to '#{@user.name}'!"
                        else
                          "User '#{@user.name}' successfully updated!"
@@ -57,22 +53,10 @@ class UsersController < ApplicationController
     redirect_to users_path, status: 303
   end
 
-  def confirm_email
-    user = User.find_by_confirm_token(params[:token])
-    if user
-      service = ConfirmEmailAndGenerateToken.new(user)
-      service.email_activate
-      flash[:notice] = 'Welcome to the Sample App! Your email has been confirmed. Please sign in to continue.'
-    else
-      flash[:error] = 'Sorry. User does not exist'
-    end
-    redirect_to root_url
-  end
-
   private
 
   def user_params
-    params.require(:user).permit(:name, :email, :password)
+    params.require(:user).permit(:name, :telegram_id)
   end
 
   def find_user

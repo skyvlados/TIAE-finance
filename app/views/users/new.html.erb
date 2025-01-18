@@ -10,6 +10,9 @@
 
 <%= form_with model: @user do |form| %>
 
+  <div class="level-item has-text-centered">
+    <label class="label">Name</label>
+  </div>
     <div class="field">
         <div class="level-item has-text-centered">
             <div class="control has-icons-left">
@@ -29,35 +32,19 @@
         <% end %>
     </div>
 
+  <div class="level-item has-text-centered">
+    <label class="label">Telegram Id</label>
+  </div>
     <div class="field">
         <div class="level-item has-text-centered">
             <div class="control has-icons-left">
-                <%= form.text_field :email, class: "input", placeholder: "email@example.com" %>
+                <%= form.text_field :telegram_id, class: "input", placeholder: "123" %>
                 <span class="icon is-small is-left">
                     <i class="fas fa-envelope"></i>
                 </span>
             </div>
         </div>
-        <% @user.errors.full_messages_for(:email).each do |message| %>
-            <div class="level-item has-text-centered">
-                <br>
-                <p class="help is-danger">
-                    <%= message %>
-                </p>
-            </div>
-        <% end %>
-    </div>
-
-    <div class="field">
-        <div class="level-item has-text-centered">
-            <div class="control has-icons-left">
-                <%= form.password_field :password, class: "input", placeholder: "password" %>
-                <span class="icon is-small is-left">
-                    <i class="fas fa-lock"></i>
-                </span>
-            </div>
-        </div>
-        <% @user.errors.full_messages_for(:password).each do |message| %>
+        <% @user.errors.full_messages_for(:telegram_id).each do |message| %>
             <div class="level-item has-text-centered">
                 <br>
                 <p class="help is-danger">

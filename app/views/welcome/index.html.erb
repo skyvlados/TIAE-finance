@@ -1,46 +1,23 @@
-<% if logged_in? %>
+<section class="column is-one-quarter">
+  <aside class="menu">
+    <p class="menu-label">
+      General
+    </p>
+    <ul class="menu-list">
+      <li><%= link_to 'Categories', categories_path %></li>
+      <li><%= link_to 'Operations', operations_path %></li>
+    </ul>
+  </aside>
 
-  <section class="column is-one-quarter">
+  <%if current_user.is_admin? %>
     <aside class="menu">
       <p class="menu-label">
-        General
+        ADMINISTRATION
       </p>
       <ul class="menu-list">
-        <li><%= link_to 'Categories', categories_path %></li>
-        <li><%= link_to 'Operations', operations_path %></li>
+        <li data-turbo="false"><%= link_to 'Create User', new_user_path %></li>
+        <li><%= link_to 'Admin panel', users_path %></li>
       </ul>
     </aside>
-
-    <%if current_user.is_admin? %>
-      <aside class="menu">
-        <p class="menu-label">
-          ADMINISTRATION
-        </p>
-        <ul class="menu-list">
-          <li data-turbo="false"><%= link_to 'Create User', new_user_path %></li>
-          <li><%= link_to 'Admin panel', users_path %></li>
-        </ul>
-      </aside>
-    <% end %>
-  </section>
-
-<% else %>
-
-  <section class="section is-medium">
-    <div class="content is-vcentered has-text-centered">
-      <div class="container">
-        <div class="content is-large">
-          <div class="level-item has-text-centered">
-            <h1>Welcome to the TIAE finance App</h1>
-          </div>
-        </div>
-      </div>
-      <div class="container">
-        <div data-turbo="false", class="level-item has-text-centered">
-            <%= link_to "Sign up now!", new_user_path, class: 'button is-link' %>
-        </div>
-      </div>
-      </div>
-  </section>
-
-<% end %>
+  <% end %>
+</section>
