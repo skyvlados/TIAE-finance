@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 class AddTelegramIdColumnToUsers < ActiveRecord::Migration[7.0]
   def up
     add_column :users, :telegram_id, :bigint
