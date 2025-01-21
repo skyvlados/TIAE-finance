@@ -2,7 +2,7 @@
 
 Rails.application.routes.draw do
   root 'welcome#index'
-  resources :users
+  resources :users, only: %i[index show edit update destroy]
   resources :operations
   resources :categories
   delete '/operations_mass_delete' => 'operations#mass_delete', as: 'operations_mass_delete'

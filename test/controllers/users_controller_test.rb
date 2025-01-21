@@ -3,10 +3,7 @@
 require 'test_helper'
 
 class UsersControllerTest < ActionDispatch::IntegrationTest
-  include Loginable
-
   test 'should get index' do
-    login_as(users(:admin))
     get users_path
     assert_response :success
   end

@@ -9,13 +9,12 @@
     </ul>
   </aside>
 
-  <%if current_user.is_admin? %>
+  <%if @current_user.is_admin? %>
     <aside class="menu">
       <p class="menu-label">
         ADMINISTRATION
       </p>
       <ul class="menu-list">
-        <li data-turbo="false"><%= link_to 'Create User', new_user_path %></li>
         <li><%= link_to 'Admin panel', users_path %></li>
       </ul>
     </aside>
