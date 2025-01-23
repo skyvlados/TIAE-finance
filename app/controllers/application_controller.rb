@@ -1,7 +1,7 @@
 # frozen_string_literal: true
 
 class ApplicationController < ActionController::Base
-  before_action :current_user
+  helper_method :current_user
   include Pagy::Backend
 
   def current_user
@@ -13,7 +13,7 @@ class ApplicationController < ActionController::Base
       name = 'admin'
     end
 
-    user = User.find_by(telegram_id: telegram_id, name: name) ||
+    user = User.find_by(telegram_id: telegram_id) ||
            User.create(telegram_id: telegram_id, name: name)
     @current_user ||= user
   end

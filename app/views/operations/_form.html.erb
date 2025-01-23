@@ -22,7 +22,7 @@
     </label>
     <div class="control">
       <div class="select">
-        <%= form.select :category_id, Category.where(user_id: @current_user.id).all.collect {|p| [p.name, p.id]}%>
+        <%= form.select :category_id, Category.where(user_id: current_user.id).all.collect {|p| [p.name, p.id]}%>
         <% @operation.errors.full_messages_for(:category_id).each do |message| %>
           <p class="help is-danger">
             <%= message %>
