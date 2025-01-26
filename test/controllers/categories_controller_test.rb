@@ -3,108 +3,88 @@
 require 'test_helper'
 
 class CategoriesControllerTest < ActionDispatch::IntegrationTest
-  include Loginable
-
   test 'should get index' do
-    login_as(users(:admin))
-    get categories_path
+    get categories_path, headers: { 'Auth-User-Id' => '2', 'Auth-User-First-Name' => 'user' }
     assert_response :success
-  end
-
-  test 'shouldnt get index' do
-    get categories_path
-    assert_response :found
-    assert_redirected_to(root_path)
   end
 
   test 'should get show' do
-    login_as(users(:admin))
-    get category_path(categories(:food).id)
+    get category_path(categories(:food).id),
+        headers: { 'Auth-User-Id' => '1', 'Auth-User-First-Name' => 'admin' }
     assert_response :success
   end
 
-  test 'shouldnt get show' do
-    get category_path(categories(:food).id)
-    assert_response :found
-    assert_redirected_to(root_path)
-  end
-
   test 'shouldt get show category other users' do
-    login_as(users(:confirm_user))
+    get category_path(categories(:food).id),
+        headers: { 'Auth-User-Id' => '2', 'Auth-User-First-Name' => 'user' }
     assert_response :found
     assert_redirected_to(root_path)
   end
 
   test 'shouldnt show, bad id' do
-    login_as(users(:admin))
     assert_raises(ActiveRecord::RecordNotFound) do
-      get category_path(999)
+      get category_path(999),
+          headers: { 'Auth-User-Id' => '2', 'Auth-User-First-Name' => 'user' }
     end
   end
 
   test 'should get new' do
-    login_as(users(:admin))
-    get new_category_path
+    get new_category_path, headers: { 'Auth-User-Id' => '2', 'Auth-User-First-Name' => 'user' }
     assert_response :success
   end
 
-  test 'shouldnt get new' do
-    get new_category_path
-    assert_response :found
-    assert_redirected_to(root_path)
-  end
-
   test 'should get create' do
-    login_as(users(:admin))
-    post categories_path, params: { category: { name: 'test' } }
+    post categories_path,
+         params: { category: { name: 'test' } },
+         headers: { 'Auth-User-Id' => '2', 'Auth-User-First-Name' => 'user' }
     assert_response :found
-  end
-
-  test 'shouldnt get create' do
-    post categories_path, params: { category: { name: 'test' } }
-    assert_response :found
-    assert_redirected_to(root_path)
   end
 
   test 'shouldnt get create, empty params' do
-    login_as(users(:admin))
     assert_raises(ActionController::ParameterMissing) do
-      post categories_path, params: {}
+      post categories_path,
+           params: {},
+           headers: { 'Auth-User-Id' => '2', 'Auth-User-First-Name' => 'user' }
     end
   end
 
   test 'should get edit' do
-    login_as(users(:admin))
-    get edit_category_path(categories(:salary).id)
+    get edit_category_path(categories(:salary).id),
+        headers: { 'Auth-User-Id' => '1', 'Auth-User-First-Name' => 'admin' }
     assert_response :success
   end
 
-  test 'shouldnt get edit' do
-    get edit_category_path(categories(:salary).id)
+  test 'shouldnt get edit category other users' do
+    get edit_category_path(categories(:salary).id),
+        headers: { 'Auth-User-Id' => '2', 'Auth-User-First-Name' => 'user' }
     assert_response :found
     assert_redirected_to(root_path)
   end
 
   test 'should get update' do
-    login_as(users(:admin))
-    patch category_path(categories(:goods).id), params: { category: { name: 'relax2' } }
+    patch category_path(categories(:goods).id),
+          params: { category: { name: 'relax2' } },
+          headers: { 'Auth-User-Id' => '1', 'Auth-User-First-Name' => 'admin' }
     assert_response :found
   end
 
-  test 'shouldnt get update' do
-    patch category_path(categories(:goods).id), params: { category: { name: 'relax2' } }
+  test 'shouldnt get update category other users' do
+    patch category_path(categories(:goods).id),
+          params: { category: { name: 'relax2' } },
+          headers: { 'Auth-User-Id' => '2', 'Auth-User-First-Name' => 'user' }
     assert_response :found
     assert_redirected_to(root_path)
   end
 
   test 'should get destroy' do
-    login_as(users(:admin))
-    delete category_path(categories(:relax).id)
+    delete category_path(categories(:relax).id),
+           headers: { 'Auth-User-Id' => '1', 'Auth-User-First-Name' => 'admin' }
     assert_response :see_other
   end
 
-  test 'shouldnt get destroy' do
-    delete category_path(categories(:relax).id)
+  test 'shouldnt get destroy category other users' do
+    delete category_path(categories(:relax).id),
+           headers: { 'Auth-User-Id' => '2', 'Auth-User-First-Name' => 'user' }
     assert_response :found
     assert_redirected_to(root_path)
   end

@@ -5,12 +5,12 @@ class ApplicationController < ActionController::Base
   include Pagy::Backend
 
   def current_user
-    if Rails.env.production?
-      telegram_id = headers['Auth-User-Id']
-      name = headers['Auth-User-First-Name']
-    else
+    if Rails.env.development?
       telegram_id = 1
       name = 'admin'
+    else
+      telegram_id = request.headers['Auth-User-Id']
+      name = request.headers['Auth-User-First-Name']
     end
 
     user = User.find_by(telegram_id: telegram_id) ||

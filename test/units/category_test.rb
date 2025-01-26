@@ -20,7 +20,7 @@ class CategoryTest < ActiveSupport::TestCase
 
   test 'should edit category' do
     category = Category.create(name: 'Test name', user: users(:admin))
-    assert category.update(name: 'Test name2', user: users(:confirm_user))
+    assert category.update(name: 'Test name2', user: users(:user))
   end
 
   test 'should not delete category' do
