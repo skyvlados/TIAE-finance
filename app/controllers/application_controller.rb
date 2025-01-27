@@ -13,8 +13,7 @@ class ApplicationController < ActionController::Base
       name = request.headers['Auth-User-First-Name']
     end
 
-    user = User.find_by(telegram_id: telegram_id) ||
-           User.create(telegram_id: telegram_id, name: name)
+    user = User.find_or_create_by(telegram_id: telegram_id, name: name)
     @current_user ||= user
   end
 end
