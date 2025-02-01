@@ -7,7 +7,8 @@ class OperationQueryTest < ActiveSupport::TestCase
   end
 
   test 'by category' do
-    assert_equal OperationQuery.new(category: Category.find_by(name: 'relax').id).call.to_a, [operations(:relax)]
+    assert_equal OperationQuery.new(category: Category.find_by(name: 'relax').id).call.to_a,
+                 [operations(:relax)]
   end
 
   test 'by currency' do
@@ -20,7 +21,8 @@ class OperationQueryTest < ActiveSupport::TestCase
   end
 
   test 'by date finish' do
-    assert_equal OperationQuery.new(date_finish: '2020-01-05').call.order(date: :desc).to_a, operations(:goods, :salary)
+    assert_equal OperationQuery.new(date_finish: '2020-01-05').call.order(date: :desc).to_a,
+                 operations(:goods, :salary)
   end
 
   test 'by direction, category, currency, date' do
