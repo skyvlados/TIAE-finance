@@ -11,7 +11,7 @@ class UserQuery
     User
       .then { |scope| only_not_deleted_user scope }
       .then { |scope| filter_by_name scope }
-      .then { |scope| filter_by_email scope }
+      .then { |scope| filter_by_telegram_id scope }
       .then { |scope| order_id_desc scope }
   end
 
@@ -25,10 +25,10 @@ class UserQuery
     scope.where('name ILIKE ?', "%#{params[:name]}%")
   end
 
-  def filter_by_email(scope)
-    return scope if params[:email].blank?
+  def filter_by_telegram_id(scope)
+    return scope if params[:telegram_id].blank?
 
-    scope.where('email ILIKE ?', "%#{params[:email]}%")
+    scope.where(telegram_id: params[:telegram_id])
   end
 
   def order_id_desc(scope)

@@ -46,4 +46,4 @@ others:
   amount: 300
   currency: RUB
   date: '2020-01-22'
-  user: not_confirm_user
+  user: user

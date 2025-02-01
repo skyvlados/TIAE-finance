@@ -22,4 +22,4 @@ transport:
 
 others:
   name: others
-  user: not_confirm_user
+  user: user

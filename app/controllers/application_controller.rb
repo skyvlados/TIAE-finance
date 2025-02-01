@@ -1,14 +1,20 @@
 # frozen_string_literal: true
 
 class ApplicationController < ActionController::Base
-  before_action :check_session
+  helper_method :current_user
   include Pagy::Backend
-  include SessionsHelper
 
-  def check_session
-    if current_user.blank?
-      flash[:info] = 'First of all you must authorization!'
-      redirect_to root_path
+  def current_user
+    if Rails.env.development?
+      telegram_id = 1
+      name = 'admin'
+    else
+      telegram_id = request.headers['Auth-User-Id']
+      name = request.headers['Auth-User-First-Name']
+    end
+
+    @current_user ||= User.find_or_create_by(telegram_id: telegram_id) do |user|
+      user.name = name
     end
   end
 end

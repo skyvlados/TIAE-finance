@@ -12,9 +12,9 @@
       </div>
 
       <div class="field">
-            <label class="label">Email</label>
+            <label class="label">Telegram Id</label>
             <div class="control">
-                <%= form.text_field :email, value: params.dig(:email), class: "input", placeholder: "Email" %>
+                <%= form.text_field :telegram_id, value: params.dig(:telegram_id), class: "input", placeholder: "Telegram Id" %>
             </div>
       </div>
 
@@ -33,14 +33,14 @@
         <tr>
           <th>id</th>
           <th>name</th>
-          <th>email</th>
+          <th>telegram id</th>
           <th>actions</th>
         </tr>
   <% @users.each do |user|  %>
         <tr>
           <td><%= user.id %></td>
           <td><%= user.name %></td>
-          <td><%= user.email %></td>
+          <td><%= user.telegram_id %></td>
           <td>
               <%= link_to 'Show', user %>
               <%= link_to 'Edit', [:edit, user] %>
