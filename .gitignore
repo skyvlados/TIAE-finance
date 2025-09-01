@@ -27,6 +27,7 @@
 
 /public/assets
 .env
+.DS_Store
 
 # Ignore master and development keys for decrypting credentials and more.
 /config/master.key
