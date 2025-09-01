@@ -26,6 +26,7 @@
 !/tmp/storage/.keep
 
 /public/assets
+.env
 
 # Ignore master and development keys for decrypting credentials and more.
 /config/master.key
