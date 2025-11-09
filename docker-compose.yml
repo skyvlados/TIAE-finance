@@ -14,7 +14,7 @@ services:
     restart: unless-stopped
 
   app:
-    image: skyvlados/tiae_my_server:latest
+    image: skyvlados/tiae:latest
     container_name: tiae_app
     depends_on:
       - db
