@@ -8,7 +8,7 @@ services:
       POSTGRES_PASSWORD: ${POSTGRES_PASSWORD}
       POSTGRES_DB: ${POSTGRES_DB}
     volumes:
-      - ${POSTGRES_VOLUME_PATH}:/var/lib/postgresql/data
+      - ${POSTGRES_VOLUME_PATH:-db-data}:/var/lib/postgresql/data
     ports:
       - "5433:5432"
     restart: unless-stopped
