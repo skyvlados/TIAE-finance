@@ -3,7 +3,7 @@
 require 'active_support/core_ext/integer/time'
 
 Rails.application.configure do
-  config.hosts << 'tiae.ykvchk.ru'
+  config.hosts << 'tiae.repka-rvn.ru'
   # Settings specified here will take precedence over those in config/application.rb.
 
   # Code is not reloaded between requests.
