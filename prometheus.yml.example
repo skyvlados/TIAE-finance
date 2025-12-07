@@ -1,0 +1,17 @@
+global:
+  scrape_interval: 15s
+remote_write:
+  - url: "https://prometheus-prod-39-prod-eu-north-0.grafana.net/api/prom/push"
+    basic_auth:
+      username_file: /etc/prometheus/secrets/grafana_username
+      password_file: /etc/prometheus/secrets/grafana_password
+
+scrape_configs:
+  - job_name: "prometheus"
+    static_configs:
+      - targets: ["localhost:9090"]
+      
+  - job_name: "rails_app"
+    metrics_path: /metrics
+    static_configs:
+      - targets: ["app:3000"]

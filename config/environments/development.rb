@@ -80,4 +80,8 @@ Rails.application.configure do
 
   # Uncomment if you wish to allow Action Cable access from any origin.
   # config.action_cable.disable_request_forgery_protection = true
+
+  # Permitting requests from other Docker containers in the same network.
+  # Needed for services like Prometheus to scrape metrics from this Rails app.
+  config.hosts << "app"
 end
