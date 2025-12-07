@@ -108,5 +108,5 @@ Rails.application.configure do
 
   # Permitting requests from other Docker containers in the same network.
   # Needed for services like Prometheus to scrape metrics from this Rails app.
-  config.hosts << "app"
+  config.hosts << 'app'
 end
