@@ -24,6 +24,15 @@ services:
       - "3000:3000"
     restart: unless-stopped
 
+  prometheus-agent:
+    image: prom/prometheus:latest
+    container_name: tiae_prometheus_agent
+    volumes:
+      - ./config/prometheus.yml:/etc/prometheus/prometheus.yml:ro
+    depends_on:
+      - app
+    restart: unless-stopped
+
   # ==========================================
   # guardsman — опциональный сервис (нужен для прода)
   # Чтобы запустить его, используй:

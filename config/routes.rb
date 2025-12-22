@@ -1,6 +1,9 @@
 # frozen_string_literal: true
 
+require 'yabeda/rails'
+
 Rails.application.routes.draw do
+  mount Yabeda::Prometheus::Exporter, at: '/metrics'
   root 'welcome#index'
   resources :users, only: %i[index show edit update destroy]
   resources :operations
