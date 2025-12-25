@@ -33,3 +33,5 @@
 /config/master.key
 /config/credentials/development.key
 /.idea
+
+/config/credentials/production.key
