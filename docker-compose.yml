@@ -43,5 +43,23 @@ services:
       - 3001:3000
     restart: unless-stopped
 
+  # ==========================================
+  # prometheus — опциональный сервис (метрики для прода)
+  # Чтобы запустить его, используй:
+  #   docker compose --profile prometheus up -d
+  # или:
+  #   COMPOSE_PROFILES=prometheus docker compose up -d
+  # ==========================================
+  prometheus-agent:
+    image: prom/prometheus:latest
+    profiles: [ "prometheus" ]
+    container_name: tiae_prometheus_agent
+    volumes:
+      - ./config/prometheus.yml:/etc/prometheus/prometheus.yml:ro
+      - ./secrets/prometheus:/etc/prometheus/secrets:ro
+    depends_on:
+      - app
+    restart: unless-stopped
+
 volumes:
   db-data:
