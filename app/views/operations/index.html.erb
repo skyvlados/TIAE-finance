@@ -1,131 +1,153 @@
-<h1 class="title">Operations list</h1>
+<section class="section">
+  <div class="container is-fluid px-1">
+    <h1 class="title">Operations list</h1>
 
-<div class="field is-grouped">
-  <p class="control">
-    <%= link_to 'Create', new_operation_path, class: "button is-link" %>
-  </p>
-</div>
-
-<section class="column is-half">
-  <%= form_with url: operations_path, method: "get"  do |form| %>
-    <div class="control">
-      <div class="field">
-        <div class="select">
-          <%= form.select :currency, Operation.currencies.keys.map { |key| [key, key] }, selected: params[:currency], include_blank: "All currencies" %>
-        </div>
-        <div class="select">
-          <%= form.select :direction, Operation.directions.keys.map { |key| [key, key] }, selected: params[:direction], include_blank: "All directions" %>
-        </div>
-        <div class="select">
-          <%= form.select :category, Category.all.map { |object| [object.name, object.id] }, selected: params[:category], include_blank: "All categories" %>
-        </div>
+    <div class="is-hidden-mobile">
+      <div style="max-width: 50%;">
+        <%= render 'filters_desktop' %>
       </div>
-      <div class="field is-grouped">
-        <div class="control">
-          <label class="label">Start date</label>
-          <%= form.date_field :date_start, type: "date", class: "input", :value => params[:date_start] %>
-        </div>
-        <div class="control">
-          <label class="label">Finish date</label>
-          <%= form.date_field :date_finish, type: "date", class: "input", :value => params[:date_finish] %>
-        </div>
-        <div class="control">
-          <label class="label">Comment</label>
-          <%= form.text_field :comment, type: "text", class: "input", :value => params[:comment] %>
-        </div>
-        <div class="control">
-          <label class="label">Order by date</label>
-          <dev class="select">
-            <%= form.select :order_by_date, OperationQuery::TRANSLATE_ORDER_PARAMS.to_a, selected: params[:order_by_date] %>
-          </dev>
-        </div>
-      </div>
-        <div class="field">
-          <div class="select">
-            <% page_size=%i[5 10 25 50]%>
-            <%= form.select :page_size, page_size.each { |key| [key, key] }, selected: params[:page_size], prompt: 'Select page size'%>
-          </div>
-          <%= form.submit "Filter", class: "button is-link" %>
-        </div>
     </div>
-  <% end %>
-</section>
 
-<%= form_with url: operations_mass_delete_path, method: "delete", data: { turbo_confirm: "Are you sure?" }  do |form| %>
-  <%= form.submit "Mass delete", class: "button is-danger" %>
-  <table class="table">
-      <tr>
-        <th></th>
-        <th>id</th>
-        <th>category</th>
-        <th>direction</th>
-        <th>amount</th>
-        <th>currency</th>
-        <th>data</th>
-        <th>comment</th>
-        <th>actions</th>
-      </tr>
-    <% @operations.each do |operation| %>
-      <tr>
-        <td>
-          <label>
-            <%= check_box_tag "cleaner[operations_ids][]", operation.id%>
-          </label>
-        </td>
-        <td><%= operation.id %></td>
-        <td><%= operation.category.name %></td>
-        <td><%= operation.direction %></td>
-        <td><%= operation.amount %></td>
-        <td><%= operation.currency %></td>
-        <td><%= operation.date.strftime("%d-%m-%Y %H:%M:%S") %></td>
-        <td><%= operation.comment %></td>
-        <td>
-          <%= link_to 'Show', operation %>
-          <%= link_to 'Edit', [:edit, operation] %>
-          <%= link_to "Destroy", operation, data: {
-                              turbo_method: :delete,
-                              turbo_confirm: "Are you sure?"
-                            } %>
-        </td>
-      </tr>
-    <% end %>
-  </table>
-<% end %>
+    <div class="is-hidden-tablet">
+      <details class="mobile-filters">
+        <summary class="button is-light">
+          🔍 Filters
+        </summary>
 
-<div class="field is-grouped">
-  <nav class="pagination" role="navigation" aria-label="pagination">
-    <ul class="pagination-list">
+        <div class="box">
+          <%= render 'filters_mobile' %>
+        </div>
+      </details>
+    </div>
+
+    <div class="is-hidden-mobile mt-4">
+      <%= form_with url: operations_mass_delete_path, method: "delete", data: { turbo_confirm: "Are you sure?" }  do |form| %>
+        <div class="field is-grouped">
+          <p class="control">
+            <%= link_to 'Create', new_operation_path, class: "button is-link" %>
+          </p>
+
+          <p class="control">
+            <%= form.submit "Mass delete", class: "button is-danger" %>
+          </p>
+        </div>
+        <table class="table">
+            <tr>
+              <th></th>
+              <th>id</th>
+              <th>category</th>
+              <th>direction</th>
+              <th>amount</th>
+              <th>currency</th>
+              <th>data</th>
+              <th>comment</th>
+              <th>actions</th>
+            </tr>
+          <% @operations.each do |operation| %>
+            <tr>
+              <td>
+                <label>
+                  <%= check_box_tag "cleaner[operations_ids][]", operation.id%>
+                </label>
+              </td>
+              <td><%= operation.id %></td>
+              <td><%= operation.category.name %></td>
+              <td><%= operation.direction %></td>
+              <td><%= operation.amount %></td>
+              <td><%= operation.currency %></td>
+              <td><%= operation.date.strftime("%d-%m-%Y %H:%M:%S") %></td>
+              <td><%= operation.comment %></td>
+              <td>
+                <%= link_to 'Show', operation %>
+                <%= link_to 'Edit', [:edit, operation] %>
+                <%= link_to "Destroy", operation, data: {
+                                    turbo_method: :delete,
+                                    turbo_confirm: "Are you sure?"
+                                  } %>
+              </td>
+            </tr>
+          <% end %>
+        </table>
+        <p class="control">
+          <nav class="pagination" role="navigation" aria-label="pagination">
+            <ul class="pagination-list">
+              <%== render partial: 'shared/pagination', locals: {pagy: @pagy} %>
+            </ul>
+          </nav>
+        </p>
+      <% end %>
+    </div>
+
+    <div class="is-hidden-tablet mt-4">
+      <%= link_to 'Create', new_operation_path, class: "button is-link mb-4" %>
+      <%= render partial: 'operations_mobile', collection: @operations, as: :operation %>
       <%== render partial: 'shared/pagination', locals: {pagy: @pagy} %>
-  </nav>
-</div>
+    </div>
 
-<div class="field is-grouped">
+<div class="field is-grouped mt-4">
   <h2 class="subtitle">Totals</h2>
 </div>
 
-<table class="table">
-      <tr>
-        <th>amount</th>
-        <th>currency</th>
-        <th>direction</th>
-      </tr>
-<% @totals_operations.each do |operation| %>
-  <tr>
-    <% operation.each do |value| %>
-      <td><%= value %></td>
-    <% end %>
-  </tr>
-<% end %>
-</table>
+    <div class="is-hidden-mobile">
+      <table class="table">
+        <tr>
+          <th>Amount</th>
+          <th>Currency</th>
+          <th>Direction</th>
+        </tr>
+        <% @totals_operations.each do |operation| %>
+          <tr>
+            <% operation.each do |value| %>
+              <td><%= value %></td>
+            <% end %>
+          </tr>
+        <% end %>
+      </table>
+    </div>
 
-<div class="field is-grouped">
-  <p class="control">
-    <%= link_to 'Download as Excel', operations_path(**@params, format: :xlsx), class: "button is-success" %>
-  </p>
-  <p data-turbo="false", class="control">
-    <%= link_to 'Import from excel'.html_safe, new_import_path, class: "button is-link" %>
-  </p>
-  <p class="control">
-    <%= link_to 'Back to home page'.html_safe, root_path, class: "button is-light" %>
-  </p>
-</div>
+    <div class="is-hidden-tablet">
+      <div class="box">
+        <% @totals_operations.each do |operation| %>
+          <% amount, currency, direction = operation %>
+
+          <div class="tags has-addons is-justify-content-space-between mb-2">
+          <span class="tag <%= direction == 'income' ? 'is-success' : 'is-danger' %>">
+            <%= direction %>
+          </span>
+          <span class="tag is-light">
+            <%= amount %> <%= currency %>
+          </span>
+          </div>
+        <% end %>
+      </div>
+    </div>
+
+    <div class="is-hidden-mobile mt-4">
+      <div class="field is-grouped">
+        <p class="control">
+          <%= link_to 'Download as Excel', operations_path(**@params, format: :xlsx), class: "button is-success" %>
+        </p>
+        <p data-turbo="false", class="control">
+          <%= link_to 'Import from excel'.html_safe, new_import_path, class: "button is-link" %>
+        </p>
+        <p class="control">
+          <%= link_to 'Back to home page'.html_safe, root_path, class: "button is-light" %>
+        </p>
+      </div>
+    </div>
+
+    <div class="is-hidden-tablet mt-4">
+      <div class="field is-grouped is-grouped-multiline">
+        <p class="control is-expanded">
+          <%= link_to 'Download as Excel', operations_path(**@params, format: :xlsx), class: "button is-success" %>
+        </p>
+        <p class="control is-expanded" data-turbo="false">
+          <%= link_to 'Import from excel'.html_safe, new_import_path, class: "button is-link" %>
+        </p>
+        <p class="control is-expanded">
+          <%= link_to 'Back to home page'.html_safe, root_path, class: "button is-light" %>
+        </p>
+      </div>
+    </div>
+  </div>
+</section>
