@@ -13,17 +13,24 @@
     <script defer src="https://use.fontawesome.com/releases/v5.0.7/js/all.js"></script>
     <link href="https://unpkg.com/bulma-calendar@6.0.7/dist/css/bulma-calendar.min.css" rel="stylesheet">
     <script src="https://unpkg.com/bulma-calendar@6.0.7/dist/js/bulma-calendar.min.js"></script>
+    <link href="https://cdn.jsdelivr.net/npm/tom-select/dist/css/tom-select.css" rel="stylesheet">
+    <script src="https://cdn.jsdelivr.net/npm/tom-select/dist/js/tom-select.complete.min.js"></script>
   </head>
 
   <body>
     <%= render "layouts/header"%>
-      <div class="container mt-2">
-          <% flash.each do |type, msg| %>
-            <div class="notification <%= notification_text %>">
-              <span><%= msg %></span>
-            </div>
-          <% end %>
-          <%= yield %>
-      </div>
+
+    <div id="flash-container">
+      <% flash.each do |type, msg| %>
+        <div class="notification <%= notification_text %> flash-toast">
+          <button class="delete"></button>
+          <%= msg %>
+        </div>
+      <% end %>
+    </div>
+
+    <div class="container mt-2">
+      <%= yield %>
+    </div>
   </body>
 </html>

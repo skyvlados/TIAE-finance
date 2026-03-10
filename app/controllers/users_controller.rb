@@ -6,7 +6,7 @@ class UsersController < ApplicationController
   def index
     service = UserQuery.new(params)
     scope = service.call
-    @pagy, @users = pagy(scope, items: params[:page_size])
+    @pagy, @users = pagy(scope, items: page_size(params[:page_size]))
   end
 
   def show

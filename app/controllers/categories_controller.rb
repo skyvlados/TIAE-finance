@@ -3,14 +3,19 @@
 class CategoriesController < ApplicationController
   before_action :find_category, only: %i[show edit update destroy]
   def index
-    if params[:page_size].present? || params[:page].present?
-      cookies[:page_size] = params[:page_size]
-      cookies[:page] = params[:page]
+    @params = index_params
+
+    if index_params.present?
+      cookies[:categories_filters] = JSON.generate(**index_params)
     else
-      cookies.delete :page_size
+      cookies.delete :categories_filters
     end
-    @pagy, @categories = Category.order(id: :asc).where(user: current_user)
-                                 .then { |scope| pagy(scope, items: params[:page_size]) }
+
+    @pagy, @categories = Category
+                         .order(id: :asc)
+                         .where(user: current_user)
+                         .then { |scope| filter_by_name scope }
+                         .then { |scope| pagy(scope, items: page_size(@params[:page_size])) }
   end
 
   def show; end
@@ -23,7 +28,8 @@ class CategoriesController < ApplicationController
     @category = Category.new(category_params)
     if @category.save
       flash[:notice] = "Category '#{@category.name}' successfully saved!"
-      redirect_to action: 'index', page_size: cookies[:page_size], page: cookies[:page]
+      categories_filters = JSON.parse(cookies[:categories_filters] || '{}')
+      redirect_to action: 'index', **categories_filters
     else
       render :new, status: :unprocessable_entity
     end
@@ -36,7 +42,8 @@ class CategoriesController < ApplicationController
 
     if @category.update(category_params)
       flash[:notice] = "Category '#{old_name}' successfully updated to '#{@category.name}'!"
-      redirect_to action: 'index', page_size: cookies[:page_size], page: cookies[:page]
+      categories_filters = JSON.parse(cookies[:categories_filters] || '{}')
+      redirect_to action: 'index', **categories_filters
     else
       render :new, status: :unprocessable_entity
     end
@@ -47,7 +54,8 @@ class CategoriesController < ApplicationController
     flash[:notice] = "Category '#{@category.name}' successfully deleted!"
     redirect_to categories_path, status: 303
   rescue ActiveRecord::InvalidForeignKey
-    flash[:error] = "Category '#{@category.name}' cannot be deleted due to being associated with an operation!"
+    flash[:error] =
+      "Category '#{@category.name}' cannot be deleted due to being associated with an operation!"
     redirect_to categories_path, status: 303
   end
 
@@ -55,6 +63,12 @@ class CategoriesController < ApplicationController
 
   def category_params
     params.require(:category).permit(:name).merge(user: current_user)
+  end
+
+  def index_params
+    params.permit(:name,
+                  :page_size,
+                  :page)
   end
 
   def find_category
@@ -65,5 +79,10 @@ class CategoriesController < ApplicationController
       flash[:info] = 'This category is dinied for you!'
       redirect_to root_path
     end
+  end
+
+  def filter_by_name(scope)
+    scope = scope.where('name ILIKE ?', "%#{params[:name]}%") if params[:name].present?
+    scope
   end
 end

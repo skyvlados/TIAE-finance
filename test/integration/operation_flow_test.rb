@@ -30,7 +30,8 @@ class OperationFlowTest < ActionDispatch::IntegrationTest
     follow_redirect!
     assert_response :success
     operation = Operation.find_by(amount: 100)
-    assert_select 'span', "Operation '#{operation.id}' successfully saved!"
+    assert_select '.notification.flash-toast',
+                  text: "Operation '#{operation.id}' successfully saved!"
   end
 
   test 'cant create an operation, category another user' do
@@ -49,7 +50,8 @@ class OperationFlowTest < ActionDispatch::IntegrationTest
         headers: { 'Auth-User-Id' => '1', 'Auth-User-First-Name' => 'admin' }
     follow_redirect!
     assert_response :success
-    assert_select 'span', 'Operation successfully updated!'
+    assert_select '.notification.flash-toast',
+                  text: 'Operation successfully updated!'
   end
 
   test 'cant edit an operation, category another user' do
@@ -76,7 +78,8 @@ class OperationFlowTest < ActionDispatch::IntegrationTest
            headers: { 'Auth-User-Id' => '1', 'Auth-User-First-Name' => 'admin' }
     assert_response :see_other
     follow_redirect!
-    assert_select 'span', "Operation '#{operations(:food).id}' successfully deleted!"
+    assert_select '.notification.flash-toast',
+                  text: "Operation '#{operations(:food).id}' successfully deleted!"
   end
 
   test 'cant delete an other users operation' do

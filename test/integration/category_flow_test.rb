@@ -32,7 +32,8 @@ class CategoryFlowTest < ActionDispatch::IntegrationTest
     assert_response :redirect
     follow_redirect!
     assert_response :success
-    assert_select 'span', "Category 'test' successfully saved!"
+    assert_select '.notification.flash-toast',
+                  text: "Category 'test' successfully saved!"
   end
 
   test 'can edit an caregory' do
@@ -41,7 +42,8 @@ class CategoryFlowTest < ActionDispatch::IntegrationTest
         headers: { 'Auth-User-Id' => '1', 'Auth-User-First-Name' => 'admin' }
     follow_redirect!
     assert_response :success
-    assert_select 'span', "Category 'goods' successfully updated to 'test2'!"
+    assert_select '.notification.flash-toast',
+                  text: "Category 'goods' successfully updated to 'test2'!"
   end
 
   test 'cant edit an other users caregory' do
@@ -58,7 +60,8 @@ class CategoryFlowTest < ActionDispatch::IntegrationTest
            headers: { 'Auth-User-Id' => '1', 'Auth-User-First-Name' => 'admin' }
     assert_response :see_other
     follow_redirect!
-    assert_select 'span', "Category 'transport' successfully deleted!"
+    assert_select '.notification.flash-toast',
+                  text: "Category 'transport' successfully deleted!"
   end
 
   test 'cant delete an other users caregory' do

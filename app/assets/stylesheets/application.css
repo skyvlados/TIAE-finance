@@ -13,3 +13,118 @@
  *= require_tree .
  *= require_self
  */
+
+.custom-navbar {
+    min-height: 2.5rem;
+    padding-top: 0.25rem;
+    padding-bottom: 0.25rem;
+}
+
+.custom-navbar .navbar-item {
+    padding-top: 0.25rem;
+    padding-bottom: 0.25rem;
+}
+
+.is-hidden-tablet .is-flex {
+    position: relative;
+}
+
+.filters-dropdown {
+    position: absolute;
+    top: 100%;
+    left: 0;
+    right: 0;
+    width: auto;
+    max-width: 100vw;
+    z-index: 20;
+    box-sizing: border-box;
+}
+
+.filters-dropdown .field {
+    margin-bottom: 0.2rem;
+}
+
+.filters-dropdown .label {
+    margin-bottom: 0.15rem;
+    font-size: 0.9rem;
+}
+
+.filters-dropdown .input,
+.filters-dropdown .select select {
+    height: 2.2em;
+}
+
+.mobile-filters {
+    position: static;
+}
+
+.mobile-filters summary {
+    list-style: none;
+}
+
+.mobile-filters summary::-webkit-details-marker {
+    display: none;
+}
+
+.mobile-filters summary.button {
+    padding: 0.45rem 0.75rem;
+    font-size: 1rem;
+    height: auto;
+}
+
+.operation-row {
+    border-bottom: 1px solid #f0f0f0;
+}
+
+.operation-row:last-child {
+    border-bottom: none;
+}
+
+.tablet-totals {
+    position: relative;
+}
+
+.tablet-totals table {
+    position: absolute;
+    top: 100%;
+    left: 0;
+    z-index: 10;
+    background: white;
+    border: 1px solid #dbdbdb;
+    width: max-content;
+    min-width: 200px;
+    box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+    margin-top: 0.5rem;
+}
+
+.tablet-totals summary {
+    list-style: none;
+}
+
+.tablet-totals summary::-webkit-details-marker {
+    display: none;
+}
+
+.tablet-totals summary.button {
+    padding: 0.45rem 0.75rem;
+    font-size: 1rem;
+    height: auto;
+}
+
+html {
+    scroll-behavior: smooth;
+}
+
+#flash-container {
+    position: fixed;
+    top: 20px;
+    left: 50%;
+    transform: translateX(-50%);
+    z-index: 1000;
+    width: 400px;
+    max-width: 90%;
+}
+
+.flash-toast {
+    margin-bottom: 10px;
+}
