@@ -34,4 +34,22 @@ class CategoryTest < ActiveSupport::TestCase
     category = Category.create(name: 'Test name', user: users(:admin))
     assert category.destroy
   end
+
+  test 'cannot create category with same name for same user' do
+    user = users(:admin)
+    Category.create!(name: 'first category', user: user)
+
+    duplicate_category = Category.new(name: 'first category', user: user)
+    assert_not duplicate_category.save
+    assert_includes duplicate_category.errors[:name], 'has already been taken'
+  end
+
+  test 'cannot update category with same name for same user' do
+    user = users(:admin)
+    first_category = Category.create!(name: 'first category', user: user)
+    Category.create!(name: 'second category', user: user)
+
+    assert_not first_category.update(name: 'second category')
+    assert_includes first_category.errors[:name], 'has already been taken'
+  end
 end
