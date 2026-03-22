@@ -1,12 +1,11 @@
-  <%= form_with model: @operation do |form| %>
-
+<%= form_with model: @operation, class: "mt-4" do |form| %>
   <div class="field">
     <label class="label">
       <%= form.label :direction %>
     </label>
     <div class="control">
-      <div class="select">
-        <%= form.select :direction, Operation.directions.keys.map { |key| [key, key] } %>
+      <div class="select is-fullwidth">
+      <%= form.select :direction, Operation.directions.keys.map { |key| [key, key] } %>
         <% @operation.errors.full_messages_for(:direction).each do |message| %>
           <p class="help is-danger">
             <%= message %>
@@ -20,23 +19,27 @@
     <label class="label">
       <%= form.label :categories %>
     </label>
+
     <div class="control">
-      <div class="select">
-        <%= form.select :category_id, Category.where(user_id: current_user.id).all.collect {|p| [p.name, p.id]}%>
-        <% @operation.errors.full_messages_for(:category_id).each do |message| %>
-          <p class="help is-danger">
-            <%= message %>
-          </p>
-        <% end %>
-      </div>
+        <%= form.select :category_id,
+                        Category.where(user_id: current_user.id).map { |c| [c.name, c.id] },
+                        { prompt: "Select category" },
+                        { id: "category-select" } %>
     </div>
+
+    <% @operation.errors.full_messages_for(:category_id).each do |message| %>
+      <p class="help is-danger"><%= message %></p>
+    <% end %>
   </div>
 
   <div class="field">
     <label class="label">
       <%= form.label :date %>
-    </label> 
-    <%= form.datetime_field :date, type: "datetime-local", class: "input", :value => params[:date] %>
+    </label>
+    <%= form.datetime_field :date,
+                            type: "datetime-local",
+                            class: "input is-fullwidth",
+                            :value => params[:date] %>
     <% @operation.errors.full_messages_for(:date).each do |message| %>
       <p class="help is-danger">
         <%= message %>
@@ -61,8 +64,8 @@
       <%= form.label :currency %>
     </label>
     <div class="control">
-      <div class="select">
-        <%= form.select :currency, Operation.currencies.keys.map { |key| [key, key] } %>
+      <div class="select is-fullwidth">
+      <%= form.select :currency, Operation.currencies.keys.map { |key| [key, key] } %>
         <% @operation.errors.full_messages_for(:currency).each do |message| %>
             <p class="help is-danger">
               <%= message %>
@@ -84,12 +87,14 @@
     <% end %>
   </div>
 
-  <div class="field is-grouped">
+    <div class="field is-grouped is-grouped-multiline">
     <p class="control">
-      <%= form.submit button_text, class: "button is-link" %>
+      <%= form.submit button_text, class: "button is-link is-fullwidth" %>
     </p>
-    <p class="control">
-      <%= back_to_list_button(operations_path(cookies[:operations_filters].then { JSON.parse(_1) if _1 } )) %>
+    <p class="control is-fullwidth-mobile">
+      <%= back_to_list_button(
+            operations_path(cookies[:operations_filters].then { JSON.parse(_1) if _1 } )
+          ) %>
     </p>
   </div>
 <% end %>

@@ -21,6 +21,10 @@ gem 'rubyzip', '>= 1.2.1'
 gem 'spreadsheet'
 gem 'with_advisory_lock'
 
+# For metrics to grafana
+gem 'yabeda-prometheus'
+gem 'yabeda-rails'
+
 # The original asset pipeline for Rails [https://github.com/rails/sprockets-rails]
 gem 'sprockets-rails'
 

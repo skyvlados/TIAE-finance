@@ -1,5 +1,4 @@
-<%= form_with model: @category do |form| %>
-
+<%= form_with model: @category, class: "mt-4" do |form| %>
   <div class="field">
     <label class="label">Name</label>
         <%= form.text_field :name, class: "input", placeholder: "category name" %>
@@ -10,13 +9,14 @@
     <% end %>
   </div>
 
-  <div class="field is-grouped">
+  <div class="field is-grouped is-grouped-multiline">
     <p class="control">
-        <%= form.submit button_text, class: "button is-link" %>
+      <%= form.submit button_text, class: "button is-link is-fullwidth" %>
     </p>
-    <p class="control">
-      <%= back_to_list_button(categories_path({ page: cookies[:page], page_size: cookies[:page_size] })) %>
+    <p class="control is-fullwidth-mobile">
+      <%= back_to_list_button(
+            categories_path(cookies[:categories_filters].then { JSON.parse(_1) if _1 } )
+          ) %>
     </p>
   </div>
-
 <% end %>

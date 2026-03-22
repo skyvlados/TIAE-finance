@@ -1,7 +1,7 @@
 <section class="column is-half">
-  <h1 class="title">Show form</h1>
+  <h1 class="has-text-weight-bold is-size-5">Show form</h1>
 
-  <div class="field">
+  <div class="field mt-4">
       <label class="label">Name</label>
       <input class="input" type="text" placeholder=<%= @user.name %> disabled>
   </div>
@@ -12,9 +12,6 @@
   </div>
 
   <div class="field is-grouped">
-      <p class="control">
-        <%= link_to 'Edit', edit_user_path(@user),  class: "button is-link"%>
-      </p>
       <p class="control">
         <%= link_to 'Back to list'.html_safe, users_path, class: "button is-light" %>
       </p>

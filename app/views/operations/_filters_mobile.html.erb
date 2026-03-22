@@ -1,0 +1,75 @@
+<%= form_with url: operations_path, method: "get" do |form| %>
+  <div class="field">
+    <label class="label">Currency</label>
+    <div class="control">
+      <div class="select is-fullwidth">
+        <%= form.select :currency,
+                        Operation.currencies.keys,
+                        selected: params[:currency],
+                        include_blank: "All currencies" %>
+      </div>
+    </div>
+  </div>
+  <div class="field">
+    <label class="label">Direction</label>
+    <div class="control">
+      <div class="select is-fullwidth">
+        <%= form.select :direction,
+                        Operation.directions.keys,
+                        selected: params[:direction],
+                        include_blank: "All directions" %>
+        </div>
+      </div>
+  </div>
+  <div class="field">
+    <label class="label">Category</label>
+    <div class="control">
+      <div class="select is-fullwidth">
+        <%= form.select :category,
+                        Category.all.map { |c| [c.name, c.id] },
+                        selected: params[:category],
+                        include_blank: "All categories",
+                        class: "is-fullwidth" %>
+      </div>
+    </div>
+  </div>
+  <div class="field">
+    <label class="label">Start date</label>
+    <div class="control">
+      <%= form.date_field :date_start, class: "input", value: params[:date_start] %>
+    </div>
+  </div>
+  <div class="field">
+    <label class="label">Finish date</label>
+    <div class="control">
+      <%= form.date_field :date_finish, class: "input", value: params[:date_finish] %>
+    </div>
+  </div>
+  <div class="field">
+    <label class="label">Comment</label>
+    <div class="control">
+      <%= form.text_field :comment, class: "input", value: params[:comment] %>
+    </div>
+  </div>
+  <div class="field">
+    <label class="label">Order by date</label>
+    <div class="control">
+      <dev class="select is-fullwidth">
+        <%= form.select :order_by_date, OperationQuery::TRANSLATE_ORDER_PARAMS.to_a, selected: params[:order_by_date] %>
+      </dev>
+    </div>
+  </div>
+  <div class="field">
+    <div class="control">
+      <div class="select is-fullwidth">
+        <% page_size=%i[5 10 25 50]%>
+        <%= form.select :page_size, page_size.each { |key| [key, key] }, selected: params[:page_size], prompt: 'Select page size'%>
+      </div>
+    </div>
+  </div>
+  <div class="field">
+    <div class="control">
+      <%= form.submit "Filter", class: "button is-link is-fullwidth" %>
+    </div>
+  </div>
+<% end %>

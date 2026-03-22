@@ -1,7 +1,7 @@
 <section class="column is-half">
-    <h1 class="title">Show form</h1>
+  <h1 class="has-text-weight-bold is-size-5">Show form</h1>
 
-    <div class="field">
+    <div class="field mt-4">
         <label class="label">Direction</label>
         <input class="input" type="text" placeholder="<%= @operation.direction %>" disabled>
     </div>
@@ -13,12 +13,14 @@
 
     <div class="field">
         <label class="label">Date</label>
-        <input class="input" type="text" placeholder="<%= @operation.date.strftime("%d-%m-%Y %H:%M:%S") %>" disabled>
+        <input class="input" type="text"
+               placeholder="<%= @operation.date.strftime("%d-%m-%Y %H:%M:%S") %>" disabled>
     </div>
 
     <div class="field">
         <label class="label">Amount</label>
-        <input class="input" type="text" placeholder="<%= human_amount(@operation.amount, @operation.currency) %>" disabled>
+        <input class="input" type="text"
+               placeholder="<%= human_amount(@operation.amount, @operation.currency) %>" disabled>
     </div>
 
     <div class="field">
@@ -33,10 +35,9 @@
 
     <div class="field is-grouped">
         <p class="control">
-        <%= link_to 'Edit', edit_operation_path(@operation),  class: "button is-link"%>
-        </p>
-        <p class="control">
-          <%= back_to_list_button(operations_path(cookies[:operations_filters].then { JSON.parse(_1) if _1 } )) %>
+          <%= back_to_list_button(
+                operations_path(cookies[:operations_filters].then { JSON.parse(_1) if _1 } )
+              ) %>
         </p>
     </div>
 </section>

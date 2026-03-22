@@ -25,10 +25,7 @@ class OperationsController < ApplicationController
       end
 
       format.html do
-        @pagy, @operations = pagy(
-          scope,
-          items: @params[:page_size]
-        )
+        @pagy, @operations = pagy(scope, items: page_size(@params[:page_size]))
       end
     end
   end
@@ -43,7 +40,7 @@ class OperationsController < ApplicationController
     @operation = Operation.new(operation_params)
     category = available_categories_for_user(operation_params[:category_id])
 
-    if category.blank?
+    if category.blank? && operation_params[:category_id].present?
       render :new, status: :forbidden
       return
     end
@@ -62,7 +59,7 @@ class OperationsController < ApplicationController
   def update
     category = available_categories_for_user(operation_params[:category_id])
 
-    if category.blank?
+    if category.blank? && operation_params[:category_id].present?
       render :new, status: :forbidden
       return
     end
