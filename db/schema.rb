@@ -10,46 +10,47 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[7.0].define(version: 2025_01_14_152819) do
+ActiveRecord::Schema[7.0].define(version: 20_260_322_185_857) do
   # These are extensions that must be enabled in order to support this database
-  enable_extension "plpgsql"
+  enable_extension 'plpgsql'
 
-  create_table "categories", force: :cascade do |t|
-    t.text "name"
-    t.bigint "user_id", null: false
-    t.datetime "created_at", null: false
-    t.datetime "updated_at", null: false
-    t.index ["user_id"], name: "index_categories_on_user_id"
+  create_table 'categories', force: :cascade do |t|
+    t.text 'name'
+    t.bigint 'user_id', null: false
+    t.datetime 'created_at', null: false
+    t.datetime 'updated_at', null: false
+    t.index %w[name user_id], name: 'index_categories_on_name_and_user_id', unique: true
+    t.index ['user_id'], name: 'index_categories_on_user_id'
   end
 
-  create_table "operations", force: :cascade do |t|
-    t.integer "direction", null: false
-    t.datetime "date", precision: nil, null: false
-    t.decimal "amount", null: false
-    t.integer "currency", null: false
-    t.bigint "user_id", null: false
-    t.bigint "category_id", null: false
-    t.datetime "created_at", null: false
-    t.datetime "updated_at", null: false
-    t.string "comment"
-    t.index ["category_id"], name: "index_operations_on_category_id"
-    t.index ["user_id"], name: "index_operations_on_user_id"
+  create_table 'operations', force: :cascade do |t|
+    t.integer 'direction', null: false
+    t.datetime 'date', precision: nil, null: false
+    t.decimal 'amount', null: false
+    t.integer 'currency', null: false
+    t.bigint 'user_id', null: false
+    t.bigint 'category_id', null: false
+    t.datetime 'created_at', null: false
+    t.datetime 'updated_at', null: false
+    t.string 'comment'
+    t.index ['category_id'], name: 'index_operations_on_category_id'
+    t.index ['user_id'], name: 'index_operations_on_user_id'
   end
 
-  create_table "users", force: :cascade do |t|
-    t.string "name", null: false
-    t.string "email"
-    t.string "password_digest"
-    t.boolean "is_admin", default: false, null: false
-    t.boolean "is_deleted", default: false, null: false
-    t.datetime "created_at", null: false
-    t.datetime "updated_at", null: false
-    t.bigint "telegram_id"
-    t.index ["telegram_id", "name"], name: "index_users_on_telegram_id_and_name", unique: true
-    t.index ["telegram_id"], name: "index_users_on_telegram_id", unique: true
+  create_table 'users', force: :cascade do |t|
+    t.string 'name', null: false
+    t.string 'email'
+    t.string 'password_digest'
+    t.boolean 'is_admin', default: false, null: false
+    t.boolean 'is_deleted', default: false, null: false
+    t.datetime 'created_at', null: false
+    t.datetime 'updated_at', null: false
+    t.bigint 'telegram_id'
+    t.index %w[telegram_id name], name: 'index_users_on_telegram_id_and_name', unique: true
+    t.index ['telegram_id'], name: 'index_users_on_telegram_id', unique: true
   end
 
-  add_foreign_key "categories", "users"
-  add_foreign_key "operations", "categories"
-  add_foreign_key "operations", "users"
+  add_foreign_key 'categories', 'users'
+  add_foreign_key 'operations', 'categories'
+  add_foreign_key 'operations', 'users'
 end

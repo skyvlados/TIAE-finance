@@ -45,7 +45,7 @@ class CategoriesController < ApplicationController
       categories_filters = JSON.parse(cookies[:categories_filters] || '{}')
       redirect_to action: 'index', **categories_filters
     else
-      render :new, status: :unprocessable_entity
+      render :edit, status: :unprocessable_entity
     end
   end
 
